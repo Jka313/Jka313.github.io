@@ -13,26 +13,60 @@
       margin: 0; padding: 0;
       height: 100%;
       font-family: 'JetBrains Mono', monospace;
-      background: linear-gradient(135deg, #00102d, #003366);
+      background: #00102d;
       color: #c0eaff;
       overflow-x: hidden;
+      position: relative;
+      z-index: 1;
     }
 
-    /* خلفية متطورة متحركة */
+    /* خلفية شبكة متوهجة */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background:
-        radial-gradient(circle at center, rgba(0, 255, 255, 0.15), transparent 70%),
-        repeating-conic-gradient(#00ffff22 0deg 1deg, transparent 1deg 4deg);
-      animation: rotateBG 30s linear infinite;
+      background: #00102d;
       z-index: 0;
       pointer-events: none;
+      overflow: hidden;
     }
-    @keyframes rotateBG {
-      from {transform: rotate(0deg);}
-      to {transform: rotate(360deg);}
+    .network-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        linear-gradient(0deg, rgba(0,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: moveGrid 40s linear infinite;
+    }
+
+    /* نقاط متوهجة متحركة */
+    .network-points {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .network-points span {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: #00ffffaa;
+      border-radius: 50%;
+      box-shadow:
+        0 0 8px 2px #00ffffcc;
+      animation: pulsePoint 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes moveGrid {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 60px 60px, 60px 60px; }
+    }
+
+    @keyframes pulsePoint {
+      0% { opacity: 0.4; transform: scale(0.7);}
+      100% { opacity: 1; transform: scale(1.3);}
     }
 
     /* الحاوية الرئيسية */
@@ -209,6 +243,7 @@
       .main-wrapper {
         flex-direction: column;
         padding: 30px 15px;
+        height: auto;
       }
       .logo-container {
         margin: 0 0 30px 0;
@@ -227,6 +262,10 @@
   </style>
 </head>
 <body>
+
+  <!-- الخلفية -->
+  <div class="network-bg"></div>
+  <div class="network-points" id="network-points"></div>
 
   <div class="main-wrapper" role="main">
     <section class="logo-container" aria-label="شعار الموقع">
@@ -261,6 +300,18 @@
   <footer>© 2025 JKA5.xyz - جميع الحقوق محفوظة</footer>
 
   <script>
+    // إنشاء نقاط متوهجة متحركة على الخلفية
+    const pointsContainer = document.getElementById('network-points');
+    const pointsCount = 60;
+
+    for(let i = 0; i < pointsCount; i++) {
+      const point = document.createElement('span');
+      point.style.top = Math.random() * 100 + 'vh';
+      point.style.left = Math.random() * 100 + 'vw';
+      point.style.animationDelay = (Math.random() * 3) + 's';
+      pointsContainer.appendChild(point);
+    }
+
     // جلب الأخبار من The Hacker News (RSS -> JSON)
     async function fetchRSS() {
       const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
