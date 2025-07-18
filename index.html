@@ -2,152 +2,146 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>موقعي الأمني - jka5.xyz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jka5.xyz - الموقع الرسمي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Cairo', sans-serif;
-      background: #1e1e2f;
+    }
+    body {
+      background: linear-gradient(135deg, #1e1e2f, #2e2e3a);
       color: white;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
+      padding: 40px;
+      min-height: 100vh;
     }
     header {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 30px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    h1 {
+    header h1 {
+      font-size: 2.5rem;
       color: #00ffff;
-      font-size: 2rem;
       margin: 0;
     }
-    a {
-      color: #00ffff;
-      text-decoration: none;
+    nav {
+      margin-top: 10px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    a:hover {
-      text-decoration: underline;
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      font-size: 1.1rem;
+    }
+    nav a:hover {
+      color: #00ffff;
+    }
+    main {
+      margin-top: 60px;
+      max-width: 900px;
+      line-height: 1.8;
+      font-size: 1.3rem;
     }
     section {
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
-    article {
-      margin-bottom: 20px;
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #00ffff;
+      border-bottom: 2px solid #00ffff;
+      display: inline-block;
+      padding-bottom: 5px;
     }
-    /* شعار SVG */
-    .logo {
-      width: 50px;
-      height: 50px;
-      flex-shrink: 0;
+    a.inline-link {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+    }
+    /* شعار SVG في الهيدر */
+    svg.logo {
+      vertical-align: middle;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
   <header>
     <!-- شعار SVG -->
-    <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" >
+    <svg class="logo" width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="48" stroke="#00ffff" stroke-width="4"/>
-      <text x="50%" y="58%" text-anchor="middle" fill="#00ffff" font-size="48" font-family="Cairo, sans-serif" font-weight="700" dy=".3em">jka5</text>
+      <text x="50%" y="58%" text-anchor="middle" fill="#00ffff" font-size="40" font-family="Cairo, sans-serif" font-weight="700" dy=".3em">jka5</text>
     </svg>
-    <h1>مرحباً بك في jka5.xyz - بوابة الأمن السيبراني</h1>
+    <h1>jka5.xyz</h1>
   </header>
 
+  <nav>
+    <a href="#about">عنّي</a>
+    <a href="#projects">مشاريعي</a>
+    <a href="#security-news">أخبار الأمن السيبراني</a>
+    <a href="#contact">تواصل</a>
+  </nav>
+
   <main>
-    <section id="github-projects">
-      <h2>مشاريعي على GitHub</h2>
-      <div id="projects-list">جاري تحميل المشاريع...</div>
+    <section id="about">
+      <h2>مرحباً بك!</h2>
+      <p>
+        أنا JKA313، وهذا موقعي الرسمي. هنا أشارك أفكاري، مشاريعي البرمجية، وأي شيء أعتقد أنه مفيد للعالم.
+      </p>
+    </section>
+
+    <section id="projects">
+      <h2>مشاريعي</h2>
+      <p>
+        سأعرض هنا بعض المشاريع التي أعمل عليها في مجالات متعددة مثل الذكاء الاصطناعي، الأمن السيبراني، وتطبيقات الويب.
+      </p>
+      <ul>
+        <li><a href="https://github.com/jka313/project1" target="_blank" class="inline-link">مشروع 1: نظام حماية الشبكات</a></li>
+        <li><a href="https://github.com/jka313/project2" target="_blank" class="inline-link">مشروع 2: تحليل الثغرات الأمنية</a></li>
+        <li><a href="https://github.com/jka313/project3" target="_blank" class="inline-link">مشروع 3: تطبيق ويب لتعلم البرمجة</a></li>
+      </ul>
     </section>
 
     <section id="security-news">
-      <h2>آخر أخبار الثغرات الأمنية</h2>
-      <div id="news-list">جاري تحميل الأخبار...</div>
+      <h2>أحدث أخبار الأمن السيبراني</h2>
+      <p>
+        أحدث الثغرات، التحذيرات، وأخبار الأمن السيبراني تجمعها لك من مصادر موثوقة لتبقى على اطلاع دائم.
+      </p>
+      <ul>
+        <li>ثغرة جديدة في نظام ويندوز تم اكتشافها مؤخراً تنصح بتحديث النظام فوراً.</li>
+        <li>هجمات تصيد متطورة تستهدف مستخدمي البنوك الإلكترونية.</li>
+        <li>أداة جديدة مفتوحة المصدر لتحليل أمن الشبكات.</li>
+      </ul>
+      <p>تابعني على <a href="https://github.com/jka313" target="_blank" class="inline-link">GitHub</a> لمزيد من المشاريع والأخبار.</p>
     </section>
 
-    <section id="cybersecurity-articles">
-      <h2>مقالات الأمن السيبراني والوقاية</h2>
-      <article>
-        <h3>ما هو الأمن السيبراني الأخلاقي؟</h3>
-        <p>الأمن السيبراني الأخلاقي هو مجال يهدف لحماية الأنظمة والشبكات عبر اكتشاف الثغرات وإصلاحها بطريقة قانونية وأخلاقية.</p>
-      </article>
-      <article>
-        <h3>نصائح للوقاية من الهجمات الإلكترونية</h3>
-        <ul>
-          <li>تحديث الأنظمة والبرامج باستمرار</li>
-          <li>استخدام كلمات مرور قوية وفريدة</li>
-          <li>تفعيل المصادقة الثنائية (2FA)</li>
-          <li>الحذر من رسائل البريد المجهولة والروابط المشبوهة</li>
-        </ul>
-      </article>
+    <section id="contact">
+      <h2>تواصل معي</h2>
+      <p>
+        راسلني على البريد الإلكتروني: 
+        <a href="mailto:your@email.com" class="inline-link">your@email.com</a><br />
+        أو تابعني على GitHub: 
+        <a href="https://github.com/jka313" target="_blank" class="inline-link">jka313</a>
+      </p>
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/rss-parser/dist/rss-parser.min.js"></script>
-  <script>
-    async function fetchGitHubRepos() {
-      const username = 'Jka313'; // غير اسم حسابك هنا بالضبط
-      const url = `https://api.github.com/users/${username}/repos?sort=updated`;
-
-      try {
-        const response = await fetch(url);
-        const repos = await response.json();
-
-        const container = document.getElementById('projects-list');
-        container.innerHTML = '';
-
-        repos.forEach(repo => {
-          const repoElem = document.createElement('div');
-          repoElem.style.marginBottom = '15px';
-          repoElem.innerHTML = `
-            <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
-            <p>${repo.description ? repo.description : 'لا يوجد وصف للمشروع'}</p>
-            <small>لغة البرمجة: ${repo.language ? repo.language : 'غير محددة'}</small>
-          `;
-          container.appendChild(repoElem);
-        });
-      } catch (error) {
-        document.getElementById('projects-list').innerText = 'حدث خطأ في تحميل المشاريع.';
-        console.error(error);
-      }
-    }
-
-    async function fetchSecurityNews() {
-      const RSS_URL = 'https://feeds.feedburner.com/TheHackersNews?format=xml';
-      const CORS_PROXY = 'https://api.allorigins.win/get?url=' + encodeURIComponent(RSS_URL);
-
-      try {
-        const response = await fetch(CORS_PROXY);
-        const data = await response.json();
-
-        const parser = new RSSParser();
-        const feed = await parser.parseString(data.contents);
-
-        const newsContainer = document.getElementById('news-list');
-        newsContainer.innerHTML = '';
-
-        feed.items.slice(0, 5).forEach(item => {
-          const newsItem = document.createElement('div');
-          newsItem.style.marginBottom = '20px';
-          newsItem.innerHTML = `
-            <a href="${item.link}" target="_blank" rel="noopener" style="font-weight:bold; color:#00ffff;">
-              ${item.title}
-            </a>
-            <p>${item.contentSnippet}</p>
-            <small>${new Date(item.pubDate).toLocaleDateString()}</small>
-          `;
-          newsContainer.appendChild(newsItem);
-        });
-      } catch (error) {
-        document.getElementById('news-list').innerText = 'حدث خطأ في تحميل الأخبار.';
-        console.error(error);
-      }
-    }
-
-    fetchGitHubRepos();
-    fetchSecurityNews();
-  </script>
+  <footer>
+    &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
+  </footer>
 </body>
 </html>
