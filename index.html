@@ -173,8 +173,9 @@
 
   <div class="attack-map">
     <h2>خريطة الهجمات الجارية</h2>
+    <!-- خريطة من Digital Attack Map (تعمل بدون مشاكل في iframe) -->
     <iframe
-      src="https://cybermap.kaspersky.com/"
+      src="https://www.digitalattackmap.com/embed.html"
       title="خريطة الهجمات الأمنية الجارية">
     </iframe>
   </div>
@@ -182,6 +183,7 @@
   <footer>© 2025 JKA5.xyz - جميع الحقوق محفوظة</footer>
 
   <script>
+    // جلب أخبار من The Hacker News باستخدام rss2json.com كوسيط لتحويل RSS إلى JSON
     async function fetchRSS() {
       const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
       const rss_url = encodeURIComponent('https://thehackernews.com/feeds/posts/default?alt=rss');
