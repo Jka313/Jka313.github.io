@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JKA5 - بوابة الأمن السيبراني</title>
   <style>
-    /* الخطوط والألوان الأساسية */
+    /* استيراد خط JetBrains Mono */
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
+    /* قواعد أساسية */
     body, html {
       margin: 0; padding: 0;
       height: 100%;
@@ -17,7 +18,7 @@
       overflow-x: hidden;
     }
 
-    /* الخلفية المتطورة */
+    /* خلفية متطورة متحركة */
     body::before {
       content: "";
       position: fixed;
@@ -38,23 +39,23 @@
     .main-wrapper {
       display: flex;
       height: 100vh;
-      max-width: 1200px;
+      max-width: 1140px;
       margin: 0 auto;
       position: relative;
       z-index: 10;
-      padding: 40px 20px;
+      padding: 60px 40px;
       box-sizing: border-box;
+      gap: 20px;
     }
 
-    /* الشعار */
+    /* شعار الموقع */
     .logo-container {
-      flex: 1 1 50%;
+      flex: 1 1 45%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
-      /* خلفية شفافة مع توهج */
       background: rgba(0, 51, 102, 0.15);
       border-radius: 20px;
       padding: 40px;
@@ -63,7 +64,6 @@
         inset 0 0 60px #00eaffaa;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      margin-right: 20px;
     }
     .logo-container .logo {
       font-size: 6rem;
@@ -74,11 +74,12 @@
         0 0 40px #00ffff,
         0 0 60px #00ffff;
       user-select: none;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      line-height: 1;
       mix-blend-mode: screen;
     }
     .logo-container .subtitle {
-      font-size: 1.8rem;
+      font-size: 1.85rem;
       color: #a0e0ffcc;
       letter-spacing: 0.1em;
       text-align: center;
@@ -88,7 +89,7 @@
 
     /* قسم الأخبار */
     .news-section {
-      flex: 1 1 35%;
+      flex: 1 1 25%;
       background: rgba(0, 25, 50, 0.6);
       border-radius: 20px;
       padding: 25px 30px;
@@ -101,19 +102,19 @@
     }
     .news-section h2 {
       margin-top: 0;
-      font-size: 1.9rem;
+      font-size: 2rem;
       text-align: center;
       color: #00eaff;
       text-shadow: 0 0 10px #00b8ff;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
     .news-section ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    .news-section li {
-      margin-bottom: 14px;
+    .news-section ul li {
+      margin-bottom: 15px;
       line-height: 1.4;
     }
     .news-section a {
@@ -136,8 +137,7 @@
 
     /* قسم الإحصائيات */
     .stats-section {
-      flex: 1 1 35%;
-      margin-left: 20px;
+      flex: 1 1 30%;
       background: rgba(0, 25, 50, 0.6);
       border-radius: 20px;
       padding: 30px 25px;
@@ -154,7 +154,7 @@
     }
     .stats-section h2 {
       margin-top: 0;
-      font-size: 1.9rem;
+      font-size: 2rem;
       color: #00eaff;
       text-align: center;
       text-shadow: 0 0 10px #00b8ff;
@@ -162,8 +162,8 @@
     }
     .stats-section .stat-item {
       background: rgba(0, 255, 255, 0.1);
-      padding: 18px 25px;
-      margin-bottom: 20px;
+      padding: 22px 30px;
+      margin-bottom: 25px;
       border-radius: 12px;
       box-shadow:
         inset 0 0 15px #00d8ff55;
@@ -191,9 +191,10 @@
 
     /* الفوتر */
     footer {
+      height: 60px;
+      line-height: 60px;
       text-align: center;
-      padding: 18px 10px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       background: #001933;
       color: #99bbffcc;
       user-select: none;
@@ -227,7 +228,7 @@
 </head>
 <body>
 
-  <div class="main-wrapper">
+  <div class="main-wrapper" role="main">
     <section class="logo-container" aria-label="شعار الموقع">
       <div class="logo" aria-label="شعار JKA5">JKA5</div>
       <div class="subtitle">بوابتك إلى عالم الأمن السيبراني</div>
@@ -260,7 +261,7 @@
   <footer>© 2025 JKA5.xyz - جميع الحقوق محفوظة</footer>
 
   <script>
-    // جلب أخبار من The Hacker News (RSS -> JSON)
+    // جلب الأخبار من The Hacker News (RSS -> JSON)
     async function fetchRSS() {
       const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
       const rss_url = encodeURIComponent('https://thehackernews.com/feeds/posts/default?alt=rss');
@@ -273,7 +274,7 @@
 
         data.items.slice(0, 7).forEach(item => {
           const li = document.createElement('li');
-          li.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>`;
+          li.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer" title="${item.title}">${item.title}</a>`;
           newsList.appendChild(li);
         });
       } catch (error) {
@@ -283,7 +284,7 @@
     }
     fetchRSS();
 
-    // محاكاة بيانات إحصائية (يمكن استبدالها لاحقًا ببيانات حية من API)
+    // بيانات إحصائية تجريبية (يمكن تحديثها لاحقًا ببيانات حقيقية)
     document.getElementById('attacks-count').textContent = "1,283,675 هجمة";
     document.getElementById('top-vulns').textContent = "CVE-2024-5678, CVE-2024-9876, CVE-2024-3456";
     document.getElementById('top-regions').textContent = "أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط";
