@@ -14,8 +14,16 @@
       max-width: 900px;
       margin: auto;
     }
-    h1, h2 {
+    header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    h1 {
       color: #00ffff;
+      font-size: 2rem;
+      margin: 0;
     }
     a {
       color: #00ffff;
@@ -30,10 +38,21 @@
     article {
       margin-bottom: 20px;
     }
+    /* شعار SVG */
+    .logo {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
   <header>
+    <!-- شعار SVG -->
+    <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" >
+      <circle cx="50" cy="50" r="48" stroke="#00ffff" stroke-width="4"/>
+      <text x="50%" y="58%" text-anchor="middle" fill="#00ffff" font-size="48" font-family="Cairo, sans-serif" font-weight="700" dy=".3em">jka5</text>
+    </svg>
     <h1>مرحباً بك في jka5.xyz - بوابة الأمن السيبراني</h1>
   </header>
 
