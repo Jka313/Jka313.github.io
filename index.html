@@ -3,321 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>jka5.xyz - الموقع الرسمي</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+  <title>موقعي الأمني - jka5.xyz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-    }
     body {
-      background: linear-gradient(135deg, #121212, #1f1f2e);
-      color: #eee;
-      line-height: 1.6;
-      min-height: 100vh;
-      scroll-behavior: smooth;
+      font-family: 'Cairo', sans-serif;
+      background: #1e1e2f;
+      color: white;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #00ffff;
     }
     a {
       color: #00ffff;
       text-decoration: none;
-      transition: color 0.3s ease;
     }
     a:hover {
-      color: #00cccc;
-    }
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background-color: #111;
-      padding: 15px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      z-index: 1000;
-      transition: top 0.3s;
-    }
-    header.hidden {
-      top: -80px;
-    }
-    header h1 {
-      font-size: 1.8rem;
-      color: #00ffff;
-      cursor: default;
-    }
-    nav a {
-      margin-left: 20px;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    main {
-      max-width: 900px;
-      margin: 110px auto 50px;
-      padding: 0 20px;
+      text-decoration: underline;
     }
     section {
-      margin-bottom: 60px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease-out;
+      margin-bottom: 40px;
     }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      border-bottom: 3px solid #00ffff;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
-    section p {
-      font-size: 1.15rem;
-      color: #ccc;
-    }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .project-card {
-      background: #222;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,255,255,0.2);
-      transition: transform 0.3s ease;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 20px rgba(0,255,255,0.5);
-    }
-    .project-card img {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-    .project-card h3 {
-      margin-bottom: 8px;
-      color: #00ffff;
-      font-size: 1.3rem;
-    }
-    .project-card p {
-      font-size: 1rem;
-      color: #bbb;
-    }
-    .project-card a {
-      display: inline-block;
-      margin-top: 10px;
-      font-weight: 700;
-      color: #00ffff;
-      border: 1.5px solid #00ffff;
-      padding: 5px 10px;
-      border-radius: 6px;
-    }
-    .project-card a:hover {
-      background-color: #00ffff;
-      color: #111;
-    }
-    form {
-      max-width: 500px;
-      background: #222;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,255,255,0.2);
-    }
-    form label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 700;
-      color: #00ffff;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
+    article {
       margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      background: #111;
-      color: #eee;
-      font-size: 1rem;
-    }
-    form button {
-      background: #00ffff;
-      border: none;
-      padding: 12px 25px;
-      color: #111;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    form button:hover {
-      background: #00cccc;
-    }
-    footer {
-      text-align: center;
-      color: #555;
-      padding: 25px 10px;
-      border-top: 1px solid #222;
-      font-size: 0.9rem;
-      margin-top: 50px;
-    }
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav a {
-        margin-left: 0;
-        margin-right: 15px;
-      }
-      main {
-        margin: 130px 15px 50px;
-      }
-    }
-    /* زر العودة للأعلى */
-    #backToTop {
-      position: fixed;
-      bottom: 40px;
-      left: 40px;
-      background: #00ffff;
-      color: #111;
-      padding: 12px 15px;
-      border-radius: 50%;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0,255,255,0.5);
-      display: none;
-      z-index: 1001;
-      transition: background 0.3s ease;
-    }
-    #backToTop:hover {
-      background: #00cccc;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>مرحباً بك في jka5.xyz - بوابة الأمن السيبراني</h1>
+  </header>
 
-<header id="header">
-  <h1>jka5.xyz</h1>
-  <nav>
-    <a href="#about">عنّي</a>
-    <a href="#projects">مشاريعي</a>
-    <a href="#contact">تواصل</a>
-  </nav>
-</header>
+  <main>
+    <section id="github-projects">
+      <h2>مشاريعي على GitHub</h2>
+      <div id="projects-list">جاري تحميل المشاريع...</div>
+    </section>
 
-<main>
-  <section id="about">
-    <h2>عنّي</h2>
-    <p>أنا JKA313، مطور برمجيات ومحب للتقنية. أشارك هنا مشاريعي وأفكاري التقنية بهدف التعلم والنمو المستمر.</p>
-  </section>
+    <section id="security-news">
+      <h2>آخر أخبار الثغرات الأمنية</h2>
+      <div id="news-list">جاري تحميل الأخبار...</div>
+    </section>
 
-  <section id="projects">
-    <h2>مشاريعي</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="https://via.placeholder.com/400x200?text=مشروع+1" alt="مشروع 1" />
-        <h3>مشروع الذكاء الاصطناعي</h3>
-        <p>تطبيق يستخدم تقنيات التعلم الآلي لتحليل البيانات.</p>
-        <a href="https://github.com/jka313/project-ai" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
-      </div>
+    <section id="cybersecurity-articles">
+      <h2>مقالات الأمن السيبراني والوقاية</h2>
+      <article>
+        <h3>ما هو الأمن السيبراني الأخلاقي؟</h3>
+        <p>الأمن السيبراني الأخلاقي هو مجال يهدف لحماية الأنظمة والشبكات عبر اكتشاف الثغرات وإصلاحها بطريقة قانونية وأخلاقية.</p>
+      </article>
+      <article>
+        <h3>نصائح للوقاية من الهجمات الإلكترونية</h3>
+        <ul>
+          <li>تحديث الأنظمة والبرامج باستمرار</li>
+          <li>استخدام كلمات مرور قوية وفريدة</li>
+          <li>تفعيل المصادقة الثنائية (2FA)</li>
+          <li>الحذر من رسائل البريد المجهولة والروابط المشبوهة</li>
+        </ul>
+      </article>
+    </section>
+  </main>
 
-      <div class="project-card">
-        <img src="https://via.placeholder.com/400x200?text=مشروع+2" alt="مشروع 2" />
-        <h3>موقع تواصل اجتماعي</h3>
-        <p>منصة تفاعلية تسمح للمستخدمين بالتواصل ومشاركة المحتوى.</p>
-        <a href="https://github.com/jka313/project-social" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
-      </div>
+  <script src="https://cdn.jsdelivr.net/npm/rss-parser/dist/rss-parser.min.js"></script>
+  <script>
+    async function fetchGitHubRepos() {
+      const username = 'Jka313'; // غير اسم حسابك هنا بالضبط
+      const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 
-      <div class="project-card">
-        <img src="https://via.placeholder.com/400x200?text=مشروع+3" alt="مشروع 3" />
-        <h3>أداة أمن سيبراني</h3>
-        <p>أداة تساعد في فحص الشبكات وتحليلها للكشف عن الثغرات.</p>
-        <a href="https://github.com/jka313/project-cybersec" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
-      </div>
-    </div>
-  </section>
+      try {
+        const response = await fetch(url);
+        const repos = await response.json();
 
-  <section id="contact">
-    <h2>تواصل معي</h2>
-    <form onsubmit="alert('شكرًا لتواصلك، سأرد عليك قريبًا!'); return false;">
-      <label for="name">الاسم</label>
-      <input type="text" id="name" name="name" required placeholder="أدخل اسمك" />
+        const container = document.getElementById('projects-list');
+        container.innerHTML = '';
 
-      <label for="email">البريد الإلكتروني</label>
-      <input type="email" id="email" name="email" required placeholder="أدخل بريدك" />
-
-      <label for="message">رسالتك</label>
-      <textarea id="message" name="message" rows="5" required placeholder="اكتب رسالتك هنا"></textarea>
-
-      <button type="submit">إرسال</button>
-    </form>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
-</footer>
-
-<!-- زر العودة للأعلى -->
-<div id="backToTop" title="العودة للأعلى">
-  <i class="fas fa-arrow-up"></i>
-</div>
-
-<script>
-  // إخفاء/إظهار شريط التنقل عند التمرير
-  let lastScroll = 0;
-  const header = document.getElementById('header');
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll <= 0) {
-      header.classList.remove('hidden');
-      return;
-    }
-    if (currentScroll > lastScroll) {
-      // تمرير للأسفل - اخفاء الهيدر
-      header.classList.add('hidden');
-    } else {
-      // تمرير لأعلى - اظهار الهيدر
-      header.classList.remove('hidden');
-    }
-    lastScroll = currentScroll;
-  });
-
-  // ظهور زر العودة للأعلى عند التمرير
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      backToTop.style.display = 'block';
-    } else {
-      backToTop.style.display = 'none';
-    }
-  });
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // ظهور تدريجي للأقسام عند التمرير
-  const sections = document.querySelectorAll('section');
-  const revealSection = () => {
-    const triggerBottom = window.innerHeight * 0.85;
-    sections.forEach(section => {
-      const sectionTop = section.getBoundingClientRect().top;
-      if (sectionTop < triggerBottom) {
-        section.classList.add('visible');
+        repos.forEach(repo => {
+          const repoElem = document.createElement('div');
+          repoElem.style.marginBottom = '15px';
+          repoElem.innerHTML = `
+            <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
+            <p>${repo.description ? repo.description : 'لا يوجد وصف للمشروع'}</p>
+            <small>لغة البرمجة: ${repo.language ? repo.language : 'غير محددة'}</small>
+          `;
+          container.appendChild(repoElem);
+        });
+      } catch (error) {
+        document.getElementById('projects-list').innerText = 'حدث خطأ في تحميل المشاريع.';
+        console.error(error);
       }
-    });
-  };
-  window.addEventListener('scroll', revealSection);
-  window.addEventListener('load', revealSection);
-</script>
+    }
 
+    async function fetchSecurityNews() {
+      const RSS_URL = 'https://feeds.feedburner.com/TheHackersNews?format=xml';
+      const CORS_PROXY = 'https://api.allorigins.win/get?url=' + encodeURIComponent(RSS_URL);
+
+      try {
+        const response = await fetch(CORS_PROXY);
+        const data = await response.json();
+
+        const parser = new RSSParser();
+        const feed = await parser.parseString(data.contents);
+
+        const newsContainer = document.getElementById('news-list');
+        newsContainer.innerHTML = '';
+
+        feed.items.slice(0, 5).forEach(item => {
+          const newsItem = document.createElement('div');
+          newsItem.style.marginBottom = '20px';
+          newsItem.innerHTML = `
+            <a href="${item.link}" target="_blank" rel="noopener" style="font-weight:bold; color:#00ffff;">
+              ${item.title}
+            </a>
+            <p>${item.contentSnippet}</p>
+            <small>${new Date(item.pubDate).toLocaleDateString()}</small>
+          `;
+          newsContainer.appendChild(newsItem);
+        });
+      } catch (error) {
+        document.getElementById('news-list').innerText = 'حدث خطأ في تحميل الأخبار.';
+        console.error(error);
+      }
+    }
+
+    fetchGitHubRepos();
+    fetchSecurityNews();
+  </script>
 </body>
 </html>
