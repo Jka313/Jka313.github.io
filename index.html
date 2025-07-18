@@ -3,141 +3,205 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>jka5 - الموقع الرسمي</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="icon" href="https://i.imgur.com/OuHqVwW.png" /> <!-- فافيكون صغير -->
+  <title>jka5.xyz - الموقع الرسمي</title>
+
+  <!-- خطوط Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- أيقونات FontAwesome مجانية -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
+    /* --- التنسيقات العامة --- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Cairo', sans-serif;
     }
+
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #e0e0e0;
-      padding: 40px 20px;
+      background: linear-gradient(135deg, #121212, #1f1f2e);
+      color: #eee;
+      line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #00cccc;
+    }
+
+    /* --- التنسيق للرأس (الهيدر) --- */
     header {
-      width: 100%;
-      max-width: 900px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: #111;
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-      border-bottom: 2px solid #00ffff;
-      padding-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
-    h1 {
-      font-size: 2.8rem;
+
+    header h1 {
+      font-size: 1.8rem;
       color: #00ffff;
       cursor: default;
     }
+
     nav a {
-      margin-left: 25px;
-      color: #e0e0e0;
-      text-decoration: none;
+      margin-left: 20px;
       font-weight: 700;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
-      cursor: pointer;
+      font-size: 1rem;
     }
-    nav a:hover {
-      color: #00ffff;
-    }
+
+    /* --- المحتوى الرئيسي --- */
     main {
-      width: 100%;
       max-width: 900px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 30px 40px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      margin: 110px auto 50px;
+      padding: 0 20px;
     }
+
     section {
-      margin-bottom: 50px;
+      margin-bottom: 60px;
     }
+
     section h2 {
-      margin-bottom: 20px;
-      color: #00ffff;
       font-size: 2rem;
-      border-bottom: 2px solid #00ffff;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #00ffff;
       display: inline-block;
       padding-bottom: 5px;
     }
-    #about {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    #about img {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 15px #00ffff;
-      transition: transform 0.3s ease;
-      cursor: default;
-    }
-    #about img:hover {
-      transform: scale(1.05);
-    }
-    #about p {
-      flex: 1;
-      font-size: 1.3rem;
-      line-height: 1.7;
-      min-width: 250px;
-    }
-    #projects p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
-    #contact p {
-      font-size: 1.2rem;
-    }
-    #contact a {
-      color: #00ffff;
-      text-decoration: none;
-      font-weight: 700;
-      transition: color 0.3s ease;
-    }
-    #contact a:hover {
-      color: #33ffff;
-      text-decoration: underline;
-    }
-    footer {
-      margin-top: 60px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #999;
-      width: 100%;
-      max-width: 900px;
+
+    section p {
+      font-size: 1.15rem;
+      color: #ccc;
     }
 
-    /* تصميم للأجهزة الصغيرة */
+    /* --- معرض المشاريع --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,255,255,0.2);
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,255,255,0.5);
+    }
+    .project-card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .project-card h3 {
+      margin-bottom: 8px;
+      color: #00ffff;
+      font-size: 1.3rem;
+    }
+    .project-card p {
+      font-size: 1rem;
+      color: #bbb;
+    }
+    .project-card a {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: 700;
+      color: #00ffff;
+      border: 1.5px solid #00ffff;
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .project-card a:hover {
+      background-color: #00ffff;
+      color: #111;
+    }
+
+    /* --- نموذج التواصل --- */
+    form {
+      max-width: 500px;
+      background: #222;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,255,255,0.2);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #00ffff;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #111;
+      color: #eee;
+      font-size: 1rem;
+    }
+
+    form button {
+      background: #00ffff;
+      border: none;
+      padding: 12px 25px;
+      color: #111;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background: #00cccc;
+    }
+
+    /* --- الفوتر --- */
+    footer {
+      text-align: center;
+      color: #555;
+      padding: 25px 10px;
+      border-top: 1px solid #222;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+
+    /* --- استجابة الهواتف --- */
     @media (max-width: 600px) {
-      #about {
-        flex-direction: column;
-        text-align: center;
-      }
-      #about p {
-        min-width: 100%;
-      }
       header {
-        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
       }
       nav a {
-        margin: 10px 15px;
+        margin-left: 0;
+        margin-right: 15px;
+      }
+      main {
+        margin: 130px 15px 50px;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- رأس الموقع -->
   <header>
     <h1>jka5.xyz</h1>
     <nav>
@@ -147,36 +211,63 @@
     </nav>
   </header>
 
+  <!-- المحتوى الرئيسي -->
   <main>
+    <!-- قسم عني -->
     <section id="about">
-      <img src="https://i.imgur.com/6RLkqgf.jpg" alt="صورة شخصية" />
-      <p>
-        أنا JKA313، مبرمج ومهتم بالتقنية، أعمل على مشاريع الذكاء الاصطناعي والأمن السيبراني وتطوير الويب.  
-        أشارك هنا أفكاري وأعمالي وكل ما يفيد مجتمعنا العربي والعالمي.  
-        يسعدني تواصلك ومتابعتك.
-      </p>
+      <h2>عنّي</h2>
+      <p>أنا JKA313، مطور برمجيات ومحب للتقنية. أشارك هنا مشاريعي وأفكاري التقنية بهدف التعلم والنمو المستمر.</p>
     </section>
 
+    <!-- قسم المشاريع -->
     <section id="projects">
       <h2>مشاريعي</h2>
-      <p>
-        سأعرض قريبًا بعض المشاريع المهمة التي أطورها في مجالات مثل الذكاء الاصطناعي، الأمن السيبراني، وتطبيقات الويب.
-      </p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200?text=مشروع+1" alt="مشروع 1" />
+          <h3>مشروع الذكاء الاصطناعي</h3>
+          <p>تطبيق يستخدم تقنيات التعلم الآلي لتحليل البيانات.</p>
+          <a href="https://github.com/jka313/project-ai" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
+        </div>
+
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200?text=مشروع+2" alt="مشروع 2" />
+          <h3>موقع تواصل اجتماعي</h3>
+          <p>منصة تفاعلية تسمح للمستخدمين بالتواصل ومشاركة المحتوى.</p>
+          <a href="https://github.com/jka313/project-social" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
+        </div>
+
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x200?text=مشروع+3" alt="مشروع 3" />
+          <h3>أداة أمن سيبراني</h3>
+          <p>أداة تساعد في فحص الشبكات وتحليلها للكشف عن الثغرات.</p>
+          <a href="https://github.com/jka313/project-cybersec" target="_blank" rel="noopener noreferrer">مشاهدة المشروع</a>
+        </div>
+      </div>
     </section>
 
+    <!-- قسم التواصل -->
     <section id="contact">
       <h2>تواصل معي</h2>
-      <p>
-        يمكنك مراسلتي عبر البريد الإلكتروني:  
-        <a href="mailto:your@email.com">your@email.com</a>  
-        أو متابعتي على GitHub:  
-        <a href="https://github.com/jka313" target="_blank" rel="noopener">jka313</a>
-      </p>
+      <form onsubmit="alert('شكرًا لتواصلك، سأرد عليك قريبًا!'); return false;">
+        <label for="name">الاسم</label>
+        <input type="text" id="name" name="name" required placeholder="أدخل اسمك" />
+
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" name="email" required placeholder="أدخل بريدك" />
+
+        <label for="message">رسالتك</label>
+        <textarea id="message" name="message" rows="5" required placeholder="اكتب رسالتك هنا"></textarea>
+
+        <button type="submit">إرسال</button>
+      </form>
     </section>
   </main>
 
+  <!-- الفوتر -->
   <footer>
     &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
   </footer>
+
 </body>
 </html>
