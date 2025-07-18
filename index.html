@@ -2,9 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>jka5 - الموقع الرسمي</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://i.imgur.com/OuHqVwW.png" /> <!-- فافيكون صغير -->
   <style>
     * {
       margin: 0;
@@ -13,44 +14,126 @@
       font-family: 'Cairo', sans-serif;
     }
     body {
-      background: linear-gradient(135deg, #1e1e2f, #2e2e3a);
-      color: white;
-      padding: 40px;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #e0e0e0;
+      padding: 40px 20px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     header {
+      width: 100%;
+      max-width: 900px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 40px;
+      border-bottom: 2px solid #00ffff;
+      padding-bottom: 15px;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: #00ffff;
+      cursor: default;
     }
     nav a {
-      margin-left: 20px;
-      color: white;
+      margin-left: 25px;
+      color: #e0e0e0;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 1.1rem;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
     nav a:hover {
       color: #00ffff;
     }
     main {
-      margin-top: 60px;
-      max-width: 800px;
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px 40px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
     }
-    p {
+    section {
+      margin-bottom: 50px;
+    }
+    section h2 {
+      margin-bottom: 20px;
+      color: #00ffff;
+      font-size: 2rem;
+      border-bottom: 2px solid #00ffff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    #about {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    #about img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 15px #00ffff;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    #about img:hover {
+      transform: scale(1.05);
+    }
+    #about p {
+      flex: 1;
       font-size: 1.3rem;
-      line-height: 1.8;
+      line-height: 1.7;
+      min-width: 250px;
+    }
+    #projects p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    #contact p {
+      font-size: 1.2rem;
+    }
+    #contact a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    #contact a:hover {
+      color: #33ffff;
+      text-decoration: underline;
     }
     footer {
-      margin-top: 80px;
+      margin-top: 60px;
       text-align: center;
       font-size: 0.9rem;
       color: #999;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* تصميم للأجهزة الصغيرة */
+    @media (max-width: 600px) {
+      #about {
+        flex-direction: column;
+        text-align: center;
+      }
+      #about p {
+        min-width: 100%;
+      }
+      header {
+        justify-content: center;
+      }
+      nav a {
+        margin: 10px 15px;
+      }
     }
   </style>
 </head>
@@ -66,22 +149,29 @@
 
   <main>
     <section id="about">
-      <h2>مرحباً بك!</h2>
+      <img src="https://i.imgur.com/6RLkqgf.jpg" alt="صورة شخصية" />
       <p>
-        أنا JKA313، وهذا موقعي الرسمي. هنا أشارك أفكاري، مشاريعي البرمجية، وأي شيء أعتقد أنه مفيد للعالم.
+        أنا JKA313، مبرمج ومهتم بالتقنية، أعمل على مشاريع الذكاء الاصطناعي والأمن السيبراني وتطوير الويب.  
+        أشارك هنا أفكاري وأعمالي وكل ما يفيد مجتمعنا العربي والعالمي.  
+        يسعدني تواصلك ومتابعتك.
       </p>
     </section>
 
-    <section id="projects" style="margin-top: 50px;">
+    <section id="projects">
       <h2>مشاريعي</h2>
       <p>
-        قريباً سأعرض بعض المشاريع التي أعمل عليها في مجالات متعددة مثل الذكاء الاصطناعي، الأمن السيبراني، وتطبيقات الويب.
+        سأعرض قريبًا بعض المشاريع المهمة التي أطورها في مجالات مثل الذكاء الاصطناعي، الأمن السيبراني، وتطبيقات الويب.
       </p>
     </section>
 
-    <section id="contact" style="margin-top: 50px;">
+    <section id="contact">
       <h2>تواصل معي</h2>
-      <p>راسلني على <a href="mailto:your@email.com" style="color: #00ffff;">البريد الإلكتروني</a> أو تابعني على GitHub: <a href="https://github.com/jka313" style="color: #00ffff;">jka313</a>.</p>
+      <p>
+        يمكنك مراسلتي عبر البريد الإلكتروني:  
+        <a href="mailto:your@email.com">your@email.com</a>  
+        أو متابعتي على GitHub:  
+        <a href="https://github.com/jka313" target="_blank" rel="noopener">jka313</a>
+      </p>
     </section>
   </main>
 
