@@ -3,387 +3,348 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JKA5 - بوابة الأمن السيبراني</title>
+  <title>JKA5 - الأمن السيبراني</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
-
-    /* الألوان */
     :root {
-      --color-bg-light: #f0f8ff;
-      --color-bg-dark: #00102d;
-      --color-text-light: #001022;
-      --color-text-dark: #c0eaff;
+      --color-bg-dark: #0a0f27;
+      --color-bg-light: #e6f2ff;
       --color-accent: #00ffff;
-      --color-accent-dark: #00b8ff;
-      --color-accent-light: #a0f0ff;
+      --color-accent-dark: #00cccc;
+      --color-text-dark: #001022;
+      --color-text-light: #e0e6ff;
+      --color-news-bg: #001933;
+      --color-news-bg-light: #cceeff;
+      --color-footer-bg: #001933;
     }
 
-    /* الوضع الافتراضي: داكن */
     body {
-      margin: 0; padding: 0;
-      height: 100%;
-      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--color-bg-dark);
-      color: var(--color-text-dark);
-      overflow-x: hidden;
-      position: relative;
-      z-index: 1;
-      transition: background 0.4s ease, color 0.4s ease;
+      color: var(--color-text-light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
+
     body.light-mode {
       background: var(--color-bg-light);
-      color: var(--color-text-light);
+      color: var(--color-text-dark);
     }
 
-    /* شبكة خلفية متحركة */
-    body::before {
-      content: "";
+    /* زر تبديل الوضع */
+    .mode-toggle {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--color-bg-dark);
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      transition: background 0.4s ease;
+      top: 15px;
+      left: 15px;
+      z-index: 100;
+      background: var(--color-accent);
+      border-radius: 25px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      cursor: pointer;
+      box-shadow:
+        0 0 15px var(--color-accent),
+        inset 0 0 10px var(--color-accent-light);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: var(--color-text-dark);
+      user-select: none;
     }
-    body.light-mode::before {
-      background: var(--color-bg-light);
+    .mode-toggle:hover {
+      background: var(--color-accent-dark);
+      box-shadow:
+        0 0 25px var(--color-accent-dark),
+        inset 0 0 15px var(--color-accent-dark);
     }
+
+    /* الخلفية الشبكية */
     .network-bg {
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: radial-gradient(circle at center, #0a0f27, #001933);
+      overflow: hidden;
       z-index: 0;
-      background:
-        linear-gradient(0deg, rgba(0,255,255,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,255,0.07) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: moveGrid 40s linear infinite;
-      transition: background 0.4s ease;
     }
-    body.light-mode .network-bg {
-      background:
-        linear-gradient(0deg, rgba(0,100,150,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,100,150,0.07) 1px, transparent 1px);
+
+    .network-points span {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-accent);
+      box-shadow: 0 0 8px var(--color-accent);
+      animation: pulse 3s ease-in-out infinite alternate;
+      opacity: 0.8;
     }
     .network-points {
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: 0;
-    }
-    .network-points span {
-      position: absolute;
-      width: 6px; height: 6px;
-      background: var(--color-accent);
-      border-radius: 50%;
-      box-shadow:
-        0 0 8px 2px var(--color-accent);
-      animation: pulsePoint 3s ease-in-out infinite alternate;
-      transition: background 0.4s ease, box-shadow 0.4s ease;
-    }
-    body.light-mode .network-points span {
-      background: #0077aa;
-      box-shadow:
-        0 0 8px 2px #0077aa;
+      z-index: 1;
     }
 
-    @keyframes moveGrid {
-      from { background-position: 0 0, 0 0; }
-      to { background-position: 60px 60px, 60px 60px; }
-    }
-    @keyframes pulsePoint {
-      0% { opacity: 0.4; transform: scale(0.7);}
-      100% { opacity: 1; transform: scale(1.3);}
+    @keyframes pulse {
+      0% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.4);
+      }
     }
 
-    /* الهيكل الرئيسي */
-    .main-wrapper {
-      display: flex;
-      height: 100vh;
-      max-width: 1140px;
-      margin: 0 auto;
-      position: relative;
+    /* التنسيق الرئيسي */
+    main.main-wrapper {
       z-index: 10;
-      padding: 60px 40px;
-      box-sizing: border-box;
-      gap: 20px;
-      flex-wrap: wrap;
-      transition: color 0.4s ease;
-    }
-    .logo-container {
-      flex: 1 1 40%;
       display: flex;
-      flex-direction: column;
+      flex-wrap: nowrap;
       justify-content: center;
-      align-items: center;
-      position: relative;
-      background: rgba(0, 51, 102, 0.15);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow:
-        0 0 20px var(--color-accent),
-        inset 0 0 60px var(--color-accent-light);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: background 0.4s ease, box-shadow 0.4s ease;
+      gap: 20px;
+      flex-grow: 1;
+      padding: 80px 40px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    body.light-mode .logo-container {
-      background: rgba(180, 220, 255, 0.15);
-      box-shadow:
-        0 0 20px #0077aa,
-        inset 0 0 60px #88ccff;
-    }
-    .logo-container .logo {
-      font-size: 6rem;
-      font-weight: 900;
-      color: var(--color-accent);
-      text-shadow:
-        0 0 15px var(--color-accent),
-        0 0 40px var(--color-accent),
-        0 0 60px var(--color-accent);
-      user-select: none;
-      margin-bottom: 20px;
-      line-height: 1;
-      mix-blend-mode: screen;
-      transition: color 0.4s ease, text-shadow 0.4s ease;
-    }
-    body.light-mode .logo-container .logo {
-      color: #0077aa;
-      text-shadow:
-        0 0 12px #0077aa,
-        0 0 30px #0099dd,
-        0 0 45px #00aaff;
-    }
-    .logo-container .subtitle {
-      font-size: 1.85rem;
-      color: #a0e0ffcc;
-      letter-spacing: 0.1em;
+
+    /* الشعار والوصف */
+    .logo-container {
+      flex: 0 0 300px;
       text-align: center;
       user-select: none;
-      max-width: 360px;
-      transition: color 0.4s ease;
     }
-    body.light-mode .logo-container .subtitle {
-      color: #006699cc;
+    .logo {
+      font-size: 5rem;
+      font-weight: 900;
+      font-family: 'Consolas', monospace;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      text-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00ddff,
+        0 0 30px #00ffff,
+        0 0 40px #00ffff,
+        0 0 50px #00ffff;
+      animation: glow 2s ease-in-out infinite alternate;
+      margin-bottom: 12px;
+    }
+    @keyframes glow {
+      0% {
+        text-shadow:
+          0 0 5px #00aaff,
+          0 0 10px #00ccff,
+          0 0 15px #00ffff,
+          0 0 20px #00ffff,
+          0 0 30px #00ffff;
+        color: #00ccff;
+      }
+      100% {
+        text-shadow:
+          0 0 20px #00ffff,
+          0 0 30px #00ffff,
+          0 0 40px #00ffff,
+          0 0 50px #00ffff,
+          0 0 60px #00ffff;
+        color: #1affff;
+      }
+    }
+    .subtitle {
+      font-size: 1.25rem;
+      color: #66ccffcc;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    body.light-mode .subtitle {
+      color: #006699;
     }
 
     /* قسم الأخبار */
     .news-section {
-      flex: 1 1 25%;
-      background: rgba(0, 25, 50, 0.7);
-      border-radius: 20px;
-      padding: 30px 25px;
-      box-shadow: 0 0 25px var(--color-accent-dark);
-      max-height: 75vh;
-      overflow-y: auto;
-      font-size: 1.1rem;
-      box-sizing: border-box;
+      flex: 1 1 400px;
+      background: var(--color-news-bg);
+      border-radius: 15px;
+      padding: 20px 25px;
+      max-height: 550px;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      overflow: hidden;
       position: relative;
-      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
     body.light-mode .news-section {
-      background: rgba(230, 245, 255, 0.9);
-      box-shadow: 0 0 25px #0077aa88;
-      color: var(--color-text-light);
+      background: var(--color-news-bg-light);
+      color: var(--color-text-dark);
+      box-shadow: 0 0 25px rgba(0,150,255,0.3);
     }
     .news-section h2 {
-      margin-top: 0;
-      font-size: 2rem;
-      text-align: center;
+      margin: 0 0 15px 0;
+      font-weight: 700;
+      font-size: 1.6rem;
       color: var(--color-accent);
-      text-shadow: 0 0 10px var(--color-accent-dark);
-      margin-bottom: 25px;
-      transition: color 0.4s ease, text-shadow 0.4s ease;
     }
     body.light-mode .news-section h2 {
-      color: #0077aa;
-      text-shadow: 0 0 8px #004466;
+      color: #0077cc;
     }
-    .news-section ul {
-      padding-left: 15px;
-      margin-top: 10px;
-      flex-grow: 1;
+    /* قائمة الأخبار */
+    #news-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       overflow-y: auto;
-      scrollbar-width: thin;
+      flex-grow: 1;
+      font-size: 1rem;
+      border-top: 1px solid #00ffff55;
+      border-bottom: 1px solid #00ffff55;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      outline: none;
     }
-    .news-section ul li {
+    #news-list li {
       margin-bottom: 12px;
-      line-height: 1.4;
-      word-break: break-word;
+      line-height: 1.3;
     }
-    .news-section a {
-      color: #88dfff;
+    #news-list li a {
+      color: var(--color-accent);
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    .news-section a:hover {
-      color: var(--color-accent);
+    #news-list li a:hover,
+    #news-list li a:focus {
+      color: #66ffff;
+      outline: none;
       text-decoration: underline;
     }
-    body.light-mode .news-section a {
-      color: #005577;
+    body.light-mode #news-list li a {
+      color: #0077cc;
     }
-    body.light-mode .news-section a:hover {
-      color: #0088cc;
-    }
-    .news-section::-webkit-scrollbar {
-      width: 8px;
-    }
-    .news-section::-webkit-scrollbar-thumb {
-      background: var(--color-accent-dark);
-      border-radius: 5px;
-    }
-    body.light-mode .news-section::-webkit-scrollbar-thumb {
-      background: #0077aa;
+    body.light-mode #news-list li a:hover,
+    body.light-mode #news-list li a:focus {
+      color: #005fa3;
     }
 
-    /* شاشة تحميل */
+    /* شاشة التحميل */
     .loading-overlay {
       position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      top: 55px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 55px);
+      background: rgba(0,0,0,0.5);
       display: flex;
-      justify-content: center;
       align-items: center;
-      z-index: 5;
-      border-radius: 20px;
+      justify-content: center;
+      border-radius: 15px;
       transition: opacity 0.3s ease;
+      z-index: 20;
     }
     .loading-overlay.hidden {
       opacity: 0;
       pointer-events: none;
     }
-    body.light-mode .loading-overlay {
-      background: rgba(255, 255, 255, 0.7);
-    }
+
+    /* سبينر التحميل */
     .spinner {
       border: 6px solid #00ffff44;
-      border-top: 6px solid #00ffff;
+      border-top: 6px solid var(--color-accent);
       border-radius: 50%;
       width: 48px;
       height: 48px;
-      animation: spin 1s linear infinite;
-    }
-    body.light-mode .spinner {
-      border: 6px solid #0077aa44;
-      border-top: 6px solid #0077aa;
+      animation: spin 1.2s linear infinite;
     }
     @keyframes spin {
-      0% {transform: rotate(0);}
-      100% {transform: rotate(360deg);}
+      to { transform: rotate(360deg); }
     }
 
-    /* قسم الإحصائيات + لوحة التحكم */
+    /* قسم الإحصائيات */
     .stats-section {
-      flex: 1 1 30%;
-      background: rgba(0, 25, 50, 0.7);
-      border-radius: 20px;
-      padding: 30px 25px;
-      box-shadow: 0 0 25px var(--color-accent-dark);
-      color: #a0e0ffcc;
-      font-size: 1.1rem;
-      box-sizing: border-box;
-      max-height: 75vh;
+      flex: 0 0 320px;
+      background: var(--color-news-bg);
+      border-radius: 15px;
+      padding: 20px 25px;
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      color: var(--color-text-light);
       display: flex;
       flex-direction: column;
-      user-select: none;
-      position: relative;
-      transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+      gap: 20px;
+      max-height: 550px;
     }
     body.light-mode .stats-section {
-      background: rgba(230, 245, 255, 0.9);
-      box-shadow: 0 0 25px #0077aa88;
-      color: var(--color-text-light);
+      background: var(--color-news-bg-light);
+      color: var(--color-text-dark);
+      box-shadow: 0 0 25px rgba(0,150,255,0.3);
     }
     .stats-section h2 {
-      margin-top: 0;
-      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.6rem;
       color: var(--color-accent);
-      text-align: center;
-      text-shadow: 0 0 10px var(--color-accent-dark);
-      margin-bottom: 20px;
-      transition: color 0.4s ease, text-shadow 0.4s ease;
     }
     body.light-mode .stats-section h2 {
-      color: #0077aa;
-      text-shadow: 0 0 8px #004466;
+      color: #0077cc;
     }
-
     .stats-content {
       flex-grow: 1;
       overflow-y: auto;
-      margin-bottom: 15px;
+      border-top: 1px solid #00ffff55;
+      border-bottom: 1px solid #00ffff55;
+      padding: 12px 0;
     }
     .stat-item {
-      background: rgba(0, 255, 255, 0.12);
-      padding: 20px 22px;
-      margin-bottom: 18px;
-      border-radius: 14px;
-      box-shadow: inset 0 0 15px var(--color-accent-light);
-      transition: transform 0.3s ease;
-    }
-    body.light-mode .stat-item {
-      background: #d4f3ffcc;
-      box-shadow: inset 0 0 15px #a0cfff;
-      color: #004466;
-    }
-    .stat-item:last-child {
-      margin-bottom: 0;
+      margin-bottom: 14px;
     }
     .stat-item h3 {
-      margin-bottom: 8px;
+      margin: 0 0 4px 0;
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--color-accent);
-      transition: color 0.4s ease;
     }
     body.light-mode .stat-item h3 {
-      color: #005577;
+      color: #0077cc;
     }
     .stat-item p {
       margin: 0;
-      line-height: 1.3;
-      color: #aadfffcc;
-      word-break: break-word;
-      transition: color 0.4s ease;
+      font-size: 1rem;
+      color: var(--color-text-light);
     }
     body.light-mode .stat-item p {
-      color: #004466cc;
+      color: var(--color-text-dark);
     }
 
-    /* رسم بياني الهجمات */
+    /* الرسم البياني */
     #attacksChart {
-      width: 100% !important;
-      max-height: 250px;
-      margin-top: 15px;
-      background: rgba(0, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 15px;
-      box-sizing: border-box;
-      box-shadow: inset 0 0 15px var(--color-accent-light);
-      transition: background 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      height: 180px;
+      border-radius: 12px;
+      background: #001a44;
+      box-shadow: inset 0 0 10px #00ffff44;
     }
     body.light-mode #attacksChart {
-      background: rgba(0, 135, 210, 0.12);
-      box-shadow: inset 0 0 15px #0077aa88;
+      background: #cceeff;
+      box-shadow: inset 0 0 10px #0077cc44;
     }
 
-    /* لوحة تحكم الإدخال */
+    /* لوحة التحكم */
     .control-panel {
-      background: rgba(0, 255, 255, 0.07);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: inset 0 0 10px var(--color-accent-light);
       margin-top: 15px;
+      background: #000f22cc;
+      border-radius: 12px;
+      padding: 15px 20px;
+      box-shadow: inset 0 0 12px #00ffff88;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
       color: var(--color-accent);
-      font-size: 1rem;
-      transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+      transition: background 0.3s ease, color 0.3s ease;
     }
     body.light-mode .control-panel {
-      background: #bceaff55;
+      background: #bceaffcc;
       color: #004466;
     }
     .control-panel label {
@@ -391,7 +352,6 @@
       margin-bottom: 6px;
       font-weight: 700;
       color: var(--color-accent);
-      transition: color 0.4s ease;
     }
     body.light-mode .control-panel label {
       color: #006699;
@@ -411,7 +371,7 @@
     .control-panel button {
       cursor: pointer;
       background: var(--color-accent);
-      color: #001022;
+      color: var(--color-text-dark);
       border: none;
       padding: 10px 18px;
       border-radius: 10px;
@@ -424,58 +384,29 @@
       background: var(--color-accent-dark);
     }
 
-    /* زر تبديل الوضع */
-    .mode-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 20;
-      background: var(--color-accent);
-      border-radius: 25px;
-      width: 48px;
-      height: 48px;
-      border: none;
-      cursor: pointer;
-      box-shadow:
-        0 0 15px var(--color-accent),
-        inset 0 0 10px var(--color-accent-light);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      color: #001022;
-      user-select: none;
-    }
-    .mode-toggle:hover {
-      background: var(--color-accent-dark);
-      box-shadow:
-        0 0 25px var(--color-accent-dark),
-        inset 0 0 15px var(--color-accent-dark);
-    }
-
-    /* استجابة صغيرة للشاشات */
+    /* استجابة */
     @media (max-width: 960px) {
-      .main-wrapper {
+      main.main-wrapper {
         flex-direction: column;
-        height: auto;
-        padding: 30px 20px;
+        padding: 60px 20px 30px;
+        max-width: 100%;
       }
       .logo-container,
       .news-section,
       .stats-section {
-        flex: none;
-        max-width: 100%;
+        flex: none !important;
+        max-width: 100% !important;
         margin-bottom: 25px;
-        max-height: none;
+        max-height: none !important;
       }
     }
 
-    /* إضافات للروابط */
+    /* روابط وأزرار */
     a:focus, button:focus {
       outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
+
   </style>
 </head>
 <body>
@@ -540,7 +471,7 @@
 
   </main>
 
-  <footer style="text-align:center; padding:12px 10px; font-size:0.9rem; background:#001933; color:#99bbffcc; user-select:none;">
+  <footer style="text-align:center; padding:12px 10px; font-size:0.9rem; background: var(--color-footer-bg); color:#99bbffcc; user-select:none;">
     © 2025 JKA5.xyz - جميع الحقوق محفوظة
   </footer>
 
@@ -548,7 +479,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    // الوضع الليلي / النهاري
+    // تبديل الوضع
     const body = document.body;
     const modeToggle = document.querySelector('.mode-toggle');
 
@@ -565,37 +496,35 @@
     updateModeIcon();
 
     // بيانات مبدئية للإحصائيات
-    const statsData = {
-      attacksCount: 165000,
-      topVulns: 'LAMEHUG Malware, BADBOX Botnet, Amadey',
-      topRegions: 'أوكرانيا، الولايات المتحدة، الصين',
-      attacksHistory: [170000, 165000, 158000, 162000, 168000, 170000, 165000],
-      attacksLabels: ['01 يوليو', '05 يوليو', '10 يوليو', '15 يوليو', '20 يوليو', '25 يوليو', '30 يوليو']
-    };
+    let attacksData = [5, 10, 15, 20, 25, 30, 40];
+    const attacksCountEl = document.getElementById('attacks-count');
+    const topVulnsEl = document.getElementById('top-vulns');
+    const topRegionsEl = document.getElementById('top-regions');
 
-    // تحديث نصوص الإحصائيات
-    function updateStatsTexts() {
-      document.getElementById('attacks-count').textContent = statsData.attacksCount.toLocaleString() + " هجمة";
-      document.getElementById('top-vulns').textContent = statsData.topVulns;
-      document.getElementById('top-regions').textContent = statsData.topRegions;
+    // تحديث الإحصائيات النصية
+    function updateStatsText(attacks, vulns, regions) {
+      attacksCountEl.textContent = attacks;
+      topVulnsEl.textContent = vulns || 'لا توجد معلومات';
+      topRegionsEl.textContent = regions || 'لا توجد معلومات';
     }
 
-    // إنشاء الرسم البياني
+    updateStatsText(40, 'ثغرة NVIDIA Container Toolkit، LAMEHUG، BADBOX 2.0', 'أوكرانيا، الولايات المتحدة، الصين');
+
+    // الرسم البياني
     const ctx = document.getElementById('attacksChart').getContext('2d');
-    let attacksChart = new Chart(ctx, {
+    const chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: statsData.attacksLabels,
+        labels: ['1س', '2س', '3س', '4س', '5س', '6س', '7س'],
         datasets: [{
           label: 'عدد الهجمات',
-          data: statsData.attacksHistory,
-          backgroundColor: 'rgba(0, 255, 255, 0.2)',
-          borderColor: '#00ffff',
-          borderWidth: 2,
-          pointRadius: 5,
-          pointBackgroundColor: '#00ffff',
-          tension: 0.3,
-          fill: true,
+          data: attacksData,
+          backgroundColor: 'rgba(0, 255, 255, 0.25)',
+          borderColor: 'rgba(0, 255, 255, 0.75)',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgba(0, 255, 255, 1)',
+          tension: 0.3
         }]
       },
       options: {
@@ -604,110 +533,92 @@
         scales: {
           y: {
             beginAtZero: true,
-            ticks: {
-              color: '#a0e0ff',
-              font: { size: 13 },
-              stepSize: 20000,
-            },
             grid: {
-              color: 'rgba(0, 255, 255, 0.1)',
-              borderColor: '#00ffff',
+              color: '#00ffff44'
+            },
+            ticks: {
+              color: 'cyan',
+              font: {
+                size: 14
+              }
             }
           },
           x: {
-            ticks: {
-              color: '#a0e0ff',
-              font: { size: 13 }
-            },
             grid: {
-              color: 'transparent',
+              color: '#00ffff22'
+            },
+            ticks: {
+              color: 'cyan',
+              font: {
+                size: 14
+              }
             }
           }
         },
         plugins: {
           legend: {
             labels: {
-              color: '#00ffff',
-              font: { size: 14, weight: 'bold' }
+              color: 'cyan',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
             }
-          },
-          tooltip: {
-            enabled: true,
-            backgroundColor: '#00ffffcc',
-            titleColor: '#00102d',
-            bodyColor: '#00102d',
-            cornerRadius: 6,
           }
         }
       }
     });
 
-    updateStatsTexts();
-
-    // التعامل مع تحديث البيانات من لوحة التحكم
-    const updateBtn = document.getElementById('update-stats-btn');
-    const controlPanelForm = document.getElementById('control-panel');
-    controlPanelForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const attacksInput = document.getElementById('input-attacks').value;
-      const vulnsInput = document.getElementById('input-vulns').value.trim();
-      const regionsInput = document.getElementById('input-regions').value.trim();
-
-      if(!attacksInput || attacksInput < 0) {
-        alert('يرجى إدخال عدد صحيح موجب للهجمات.');
-        return;
-      }
-      statsData.attacksCount = Number(attacksInput);
-      statsData.topVulns = vulnsInput || 'غير متوفر';
-      statsData.topRegions = regionsInput || 'غير متوفر';
-
-      // تحديث نصوص الإحصائيات
-      updateStatsTexts();
-
-      // تحديث الرسم البياني (للتجربة نعدل بيانات عشوائية)
-      statsData.attacksHistory = statsData.attacksHistory.map(val => val + Math.floor(Math.random() * 5000 - 2500));
-      attacksChart.data.datasets[0].data = statsData.attacksHistory;
-      attacksChart.update();
-    });
-
-    // جلب الأخبار تلقائيًا - هنا مجرد مثال ثابت (يمكن استبداله بـ API حقيقي)
+    // تحميل الأخبار من API وهمي (تقدر تغير الرابط لمصدر حقيقي)
     const newsList = document.getElementById('news-list');
     const newsLoading = document.getElementById('news-loading');
 
-    const sampleNews = [
-      { title: "Critical NVIDIA Container Toolkit Flaw Allows Privilege Escalation on AI Cloud Services", link: "#" },
-      { title: "CERT-UA Discovers LAMEHUG Malware Linked to APT28, Using LLM for Phishing Campaign", link: "#" },
-      { title: "Google Sues 25 Chinese Entities Over BADBOX 2.0 Botnet Affecting 10M Android Devices", link: "#" },
-      { title: "From Backup to Cyber Resilience: Why IT Leaders Must Rethink Backup in the Age of Ransomware", link: "#" },
-      { title: "Hackers Use GitHub Repositories to Host Amadey Malware and Data Stealers, Bypassing Filters", link: "#" },
-      { title: "Hackers Exploit Apache HTTP Server Flaw to Deploy Linuxsys Cryptocurrency Miner", link: "#" },
-      { title: "Europol Disrupts NoName057(16) Hacktivist Group Linked to DDoS Attacks Against Ukraine", link: "#" }
-    ];
-
-    function loadNews() {
+    async function fetchNews() {
       newsLoading.classList.remove('hidden');
-      newsList.innerHTML = "";
-      setTimeout(() => {
-        sampleNews.forEach(item => {
+      try {
+        // هنا تقدر تغير الرابط ل API حقيقية لأخبار الأمن السيبراني
+        const response = await fetch('https://api.currentsapi.services/v1/latest-news?apiKey=demo&category=technology');
+        if (!response.ok) throw new Error('فشل تحميل الأخبار');
+        const data = await response.json();
+        newsList.innerHTML = '';
+        data.news.slice(0, 8).forEach(item => {
           const li = document.createElement('li');
           const a = document.createElement('a');
-          a.href = item.link;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
+          a.href = item.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer nofollow';
           a.textContent = item.title;
           li.appendChild(a);
           newsList.appendChild(li);
         });
+      } catch (error) {
+        newsList.innerHTML = '<li>لا يمكن تحميل الأخبار حالياً.</li>';
+      } finally {
         newsLoading.classList.add('hidden');
-      }, 2000); // محاكاة تأخير تحميل الأخبار
+      }
     }
+    fetchNews();
 
-    // تحميل الأخبار عند بداية الصفحة
-    loadNews();
+    // لوحة تحكم تحديث الإحصائيات
+    const controlPanel = document.getElementById('control-panel');
+    controlPanel.addEventListener('submit', e => {
+      e.preventDefault();
+      const attacks = document.getElementById('input-attacks').value || '0';
+      const vulns = document.getElementById('input-vulns').value.trim();
+      const regions = document.getElementById('input-regions').value.trim();
+      updateStatsText(attacks, vulns, regions);
 
-    // تحديث الأخبار تلقائي كل 5 دقائق
-    setInterval(loadNews, 5 * 60 * 1000);
-
+      // تحديث الرسم البياني بالهجمات الجديدة (تبسيط)
+      const newVal = Number(attacks);
+      if (!isNaN(newVal)) {
+        attacksData.push(newVal);
+        if (attacksData.length > 7) attacksData.shift();
+        chart.data.datasets[0].data = attacksData;
+        chart.update();
+      }
+      // تنظيف المدخلات
+      controlPanel.reset();
+    });
   </script>
 
 </body>
