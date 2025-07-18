@@ -3,251 +3,252 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>jka5.xyz - بوابة الأمن السيبراني</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>jka5 - بوابة الأمن السيبراني</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* قواعد عامة */
+    /* Reset */
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-      scroll-behavior: smooth;
+      margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif;
     }
     body {
-      background: #12131a;
-      color: #ddd;
-      line-height: 1.6;
+      background: #0f172a;
+      color: #f1f5f9;
       min-height: 100vh;
+      line-height: 1.6;
       padding: 20px;
     }
     a {
-      color: #00ffff;
+      color: #22d3ee;
       text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* الحاوية */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    /* الهيدر */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #00ffff;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    .logo svg {
-      width: 50px;
-      height: 50px;
-      fill: none;
-      stroke: #00ffff;
-      stroke-width: 3;
-    }
-    .logo-text {
-      color: #00ffff;
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    nav {
-      margin-top: 10px;
-      flex-grow: 1;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: flex-end;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-    nav ul li a {
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 5px 10px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      border-radius: 5px;
-    }
-    nav ul li a:hover {
-      background-color: #00ffff;
-      color: #12131a;
-    }
-
-    /* الأقسام */
-    section {
-      margin-top: 50px;
-    }
-    section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      color: #00ffff;
-      border-bottom: 3px solid #00ffff;
-      display: inline-block;
-      padding-bottom: 5px;
-      letter-spacing: 1.5px;
-    }
-    section p {
-      font-size: 1.15rem;
-      margin-bottom: 15px;
-      color: #ccc;
-    }
-    section ul {
-      list-style: inside disc;
-      color: #bbb;
-      margin-left: 10px;
-    }
-    section ul li {
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-    }
-
-    /* روابط المشاريع */
-    .project-link {
-      color: #00ffff;
-      font-weight: 600;
       transition: color 0.3s ease;
     }
-    .project-link:hover {
-      color: #66ffff;
-      text-decoration: underline;
+    a:hover {
+      color: #06b6d4;
     }
 
-    /* الأخبار */
-    .news-item {
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #334155;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      color: #22d3ee;
+    }
+    nav a {
+      margin-left: 25px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    nav a:first-child {
+      margin-left: 0;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    /* قسم الترحيب */
+    #welcome {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    #welcome h2 {
+      font-size: 2.8rem;
       margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #222;
+      color: #22d3ee;
+    }
+    #welcome p {
+      font-size: 1.3rem;
+      color: #cbd5e1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* مشاريع */
+    #projects h2 {
+      font-size: 2rem;
+      color: #38bdf8;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #38bdf8;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 25px;
+    }
+    .project-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+    .project-card h3 {
+      color: #7dd3fc;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+    .project-card p {
+      color: #cbd5e1;
+      font-size: 1rem;
+      min-height: 60px;
+    }
+
+    /* آخر الأخبار */
+    #news h2 {
+      font-size: 2rem;
+      color: #f87171;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #f87171;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .news-item {
+      background: #1e293b;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 15px 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+      transition: background-color 0.3s ease;
+    }
+    .news-item:hover {
+      background: #334155;
+    }
+    .news-item h4 {
+      color: #f87171;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 1.15rem;
+    }
+    .news-item p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-height: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .news-date {
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 5px;
-    }
-    .news-title {
-      font-weight: 700;
-      color: #00ffff;
-      margin-bottom: 5px;
-    }
-    .news-desc {
-      font-size: 1rem;
-      color: #ccc;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 8px;
+      font-style: italic;
     }
 
-    /* الفوتر */
+    /* فوتر */
     footer {
-      margin-top: 80px;
       text-align: center;
+      padding: 20px 10px;
+      border-top: 1px solid #334155;
       font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #222;
-      padding-top: 20px;
+      color: #64748b;
+      margin-top: 40px;
     }
 
-    /* استجابة الهواتف */
+    /* Responsive */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
         align-items: flex-start;
       }
-      nav ul {
-        justify-content: flex-start;
+      nav a {
+        margin: 10px 15px 0 0;
       }
-      .logo-text {
-        font-size: 1.5rem;
+      #welcome h2 {
+        font-size: 2rem;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo" aria-label="شعار الموقع">
-        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <circle cx="32" cy="32" r="30" />
-          <text x="32" y="42" text-anchor="middle" fill="#00ffff" font-size="24" font-weight="700" font-family="Cairo, sans-serif">jka5</text>
-        </svg>
-        <div class="logo-text">jka5.xyz</div>
+
+<header>
+  <h1>jka5</h1>
+  <nav>
+    <a href="#welcome">الرئيسية</a>
+    <a href="#projects">مشاريعي</a>
+    <a href="#news">أخبار الأمن</a>
+    <a href="#contact">تواصل معي</a>
+  </nav>
+</header>
+
+<main>
+  <section id="welcome">
+    <h2>مرحباً بك في jka5.xyz</h2>
+    <p>بوابة الأمن السيبراني — هنا تجد مشاريع، أخبار، وكل ما يتعلق بالأمن السيبراني الأخلاقي والوقاية.</p>
+  </section>
+
+  <section id="projects">
+    <h2>مشاريعي</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Jka313.github.io</h3>
+        <p>موقع شخصي يعرض مشاريعي وأفكاري البرمجية.</p>
       </div>
-      <nav>
-        <ul>
-          <li><a href="#about">عنّي</a></li>
-          <li><a href="#projects">مشاريعي على GitHub</a></li>
-          <li><a href="#security-news">أحدث أخبار الثغرات الأمنية</a></li>
-          <li><a href="#articles">مقالات الأمن السيبراني</a></li>
-          <li><a href="#contact">تواصل معي</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <section id="about">
-      <h2>مرحباً بك في jka5.xyz - بوابة الأمن السيبراني</h2>
-      <p>أنا JKA313، أشارك هنا مشاريعي وأحدث أخبار الثغرات الأمنية، وأيضاً مقالات حول الأمن السيبراني الأخلاقي والوقاية.</p>
-    </section>
-
-    <section id="projects">
-      <h2>مشاريعي على GitHub</h2>
-      <ul>
-        <li><a class="project-link" href="https://github.com/Jka313/Jka313.github.io" target="_blank" rel="noopener noreferrer">Jka313.github.io</a> — مستودع الموقع الرسمي</li>
-        <li><a class="project-link" href="https://github.com/Jka313/jka" target="_blank" rel="noopener noreferrer">jka</a> — مشاريع متنوعة</li>
-        <li><a class="project-link" href="https://github.com/Jka313/instagram-botter" target="_blank" rel="noopener noreferrer">instagram-botter</a> — بوت زيادة المتابعين والإعجابات على إنستغرام</li>
-      </ul>
-    </section>
-
-    <section id="security-news">
-      <h2>آخر أخبار الثغرات الأمنية</h2>
-      <div class="news-item">
-        <div class="news-date">7/18/2025</div>
-        <div class="news-title">ثغرة حرجة في NVIDIA Container Toolkit تسمح بالتصعيد الامتيازات</div>
-        <div class="news-desc">ثغرة في NVIDIA Container Toolkit يمكن أن تؤثر على خدمات AI السحابية، مع تقييم خطورة 9.0/10. يُنصح بالتحديث الفوري.</div>
+      <div class="project-card">
+        <h3>instagram-botter</h3>
+        <p>بوت لجلب المتابعين والإعجابات في إنستغرام.</p>
       </div>
-      <div class="news-item">
-        <div class="news-date">7/18/2025</div>
-        <div class="news-title">CERT-UA يكتشف برنامج LAMEHUG الضار المرتبط بحملة تصيد</div>
-        <div class="news-desc">تم الكشف عن حملة تصيد تستخدم نموذج لغة كبير لتوليد أوامر خبيثة تستهدف أوكرانيا.</div>
+      <div class="project-card">
+        <h3>jka</h3>
+        <p>مشروع برمجي متنوع في مجالات مختلفة.</p>
       </div>
-      <div class="news-item">
-        <div class="news-date">7/18/2025</div>
-        <div class="news-title">جوجل تقاضي 25 جهة صينية بسبب شبكة بوت نت BADBOX 2.0</div>
-        <div class="news-desc">شبكة بوت نت تصيب أكثر من 10 ملايين جهاز أندرويد غير معتمد، وتعمل على إرسال تعليمات خبيثة.</div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="articles">
-      <h2>مقالات الأمن السيبراني والوقاية</h2>
-      <ul>
-        <li><strong>ما هو الأمن السيبراني الأخلاقي؟</strong><br>هو مجال يهدف لحماية الأنظمة والشبكات باكتشاف الثغرات وإصلاحها بطريقة قانونية وأخلاقية.</li>
-        <li><strong>نصائح للوقاية من الهجمات الإلكترونية:</strong>
-          <ul>
-            <li>تحديث الأنظمة والبرامج باستمرار</li>
-            <li>استخدام كلمات مرور قوية وفريدة</li>
-            <li>تفعيل المصادقة الثنائية (2FA)</li>
-            <li>الحذر من رسائل البريد المجهولة والروابط المشبوهة</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
+  <section id="news">
+    <h2>آخر أخبار الثغرات الأمنية</h2>
 
-    <section id="contact">
-      <h2>تواصل معي</h2>
-      <p>راسلني عبر البريد الإلكتروني: <a href="mailto:your@email.com">your@email.com</a></p>
-      <p>أو تابعني على GitHub: <a href="https://github.com/Jka313" target="_blank" rel="noopener noreferrer">Jka313</a></p>
-    </section>
+    <div class="news-item">
+      <h4>ثغرة حرجة في NVIDIA Container Toolkit</h4>
+      <p>اكتشف باحثون ثغرة تمكن من تصعيد الصلاحيات في خدمات السحابة AI الخاصة بـ NVIDIA...</p>
+      <div class="news-date">18 يوليو 2025</div>
+    </div>
 
-    <footer>
-      &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
-    </footer>
-  </div>
+    <div class="news-item">
+      <h4>كشف malware LAMEHUG المرتبط بـ APT28</h4>
+      <p>أعلن فريق CERT-UA عن حملة تصيد تستخدم نماذج لغة كبيرة (LLM) لتنفيذ الهجمات...</p>
+      <div class="news-date">18 يوليو 2025</div>
+    </div>
+
+    <div class="news-item">
+      <h4>Google تقاضي 25 جهة صينية بسبب BADBOX 2.0 Botnet</h4>
+      <p>أعلنت Google عن تحرك قانوني ضد شبكات بوتنت تؤثر على ملايين أجهزة أندرويد...</p>
+      <div class="news-date">18 يوليو 2025</div>
+    </div>
+  </section>
+
+  <section id="contact" style="margin-top: 60px;">
+    <h2>تواصل معي</h2>
+    <p>راسلني على <a href="mailto:your@email.com">البريد الإلكتروني</a> أو تابعني على <a href="https://github.com/jka313" target="_blank">GitHub</a>.</p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
+</footer>
+
 </body>
 </html>
