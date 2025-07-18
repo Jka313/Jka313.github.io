@@ -7,15 +7,32 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
-    body, html {
+    /* الألوان */
+    :root {
+      --color-bg-light: #f0f8ff;
+      --color-bg-dark: #00102d;
+      --color-text-light: #001022;
+      --color-text-dark: #c0eaff;
+      --color-accent: #00ffff;
+      --color-accent-dark: #00b8ff;
+      --color-accent-light: #a0f0ff;
+    }
+
+    /* الوضع الافتراضي: داكن */
+    body {
       margin: 0; padding: 0;
       height: 100%;
       font-family: 'JetBrains Mono', monospace;
-      background: #00102d;
-      color: #c0eaff;
+      background: var(--color-bg-dark);
+      color: var(--color-text-dark);
       overflow-x: hidden;
       position: relative;
       z-index: 1;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    body.light-mode {
+      background: var(--color-bg-light);
+      color: var(--color-text-light);
     }
 
     /* شبكة خلفية متحركة */
@@ -23,10 +40,14 @@
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: #00102d;
+      background: var(--color-bg-dark);
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
+      transition: background 0.4s ease;
+    }
+    body.light-mode::before {
+      background: var(--color-bg-light);
     }
     .network-bg {
       position: fixed;
@@ -38,6 +59,12 @@
         linear-gradient(90deg, rgba(0,255,255,0.07) 1px, transparent 1px);
       background-size: 60px 60px;
       animation: moveGrid 40s linear infinite;
+      transition: background 0.4s ease;
+    }
+    body.light-mode .network-bg {
+      background:
+        linear-gradient(0deg, rgba(0,100,150,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,100,150,0.07) 1px, transparent 1px);
     }
     .network-points {
       position: fixed;
@@ -48,11 +75,17 @@
     .network-points span {
       position: absolute;
       width: 6px; height: 6px;
-      background: #00ffffaa;
+      background: var(--color-accent);
       border-radius: 50%;
       box-shadow:
-        0 0 8px 2px #00ffffcc;
+        0 0 8px 2px var(--color-accent);
       animation: pulsePoint 3s ease-in-out infinite alternate;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    body.light-mode .network-points span {
+      background: #0077aa;
+      box-shadow:
+        0 0 8px 2px #0077aa;
     }
 
     @keyframes moveGrid {
@@ -76,6 +109,7 @@
       box-sizing: border-box;
       gap: 20px;
       flex-wrap: wrap;
+      transition: color 0.4s ease;
     }
     .logo-container {
       flex: 1 1 40%;
@@ -88,23 +122,38 @@
       border-radius: 20px;
       padding: 40px;
       box-shadow:
-        0 0 20px #00ffffaa,
-        inset 0 0 60px #00eaffaa;
+        0 0 20px var(--color-accent),
+        inset 0 0 60px var(--color-accent-light);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    body.light-mode .logo-container {
+      background: rgba(180, 220, 255, 0.15);
+      box-shadow:
+        0 0 20px #0077aa,
+        inset 0 0 60px #88ccff;
     }
     .logo-container .logo {
       font-size: 6rem;
       font-weight: 900;
-      color: rgba(0, 255, 255, 0.8);
+      color: var(--color-accent);
       text-shadow:
-        0 0 15px #00eaff,
-        0 0 40px #00ffff,
-        0 0 60px #00ffff;
+        0 0 15px var(--color-accent),
+        0 0 40px var(--color-accent),
+        0 0 60px var(--color-accent);
       user-select: none;
       margin-bottom: 20px;
       line-height: 1;
       mix-blend-mode: screen;
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+    body.light-mode .logo-container .logo {
+      color: #0077aa;
+      text-shadow:
+        0 0 12px #0077aa,
+        0 0 30px #0099dd,
+        0 0 45px #00aaff;
     }
     .logo-container .subtitle {
       font-size: 1.85rem;
@@ -113,6 +162,10 @@
       text-align: center;
       user-select: none;
       max-width: 360px;
+      transition: color 0.4s ease;
+    }
+    body.light-mode .logo-container .subtitle {
+      color: #006699cc;
     }
 
     /* قسم الأخبار */
@@ -121,7 +174,7 @@
       background: rgba(0, 25, 50, 0.7);
       border-radius: 20px;
       padding: 30px 25px;
-      box-shadow: 0 0 25px #00d8ffcc;
+      box-shadow: 0 0 25px var(--color-accent-dark);
       max-height: 75vh;
       overflow-y: auto;
       font-size: 1.1rem;
@@ -129,14 +182,25 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    body.light-mode .news-section {
+      background: rgba(230, 245, 255, 0.9);
+      box-shadow: 0 0 25px #0077aa88;
+      color: var(--color-text-light);
     }
     .news-section h2 {
       margin-top: 0;
       font-size: 2rem;
       text-align: center;
-      color: #00eaff;
-      text-shadow: 0 0 10px #00b8ff;
+      color: var(--color-accent);
+      text-shadow: 0 0 10px var(--color-accent-dark);
       margin-bottom: 25px;
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+    body.light-mode .news-section h2 {
+      color: #0077aa;
+      text-shadow: 0 0 8px #004466;
     }
     .news-section ul {
       padding-left: 15px;
@@ -148,6 +212,7 @@
     .news-section ul li {
       margin-bottom: 12px;
       line-height: 1.4;
+      word-break: break-word;
     }
     .news-section a {
       color: #88dfff;
@@ -155,16 +220,26 @@
       transition: color 0.3s ease;
     }
     .news-section a:hover {
-      color: #00ffff;
+      color: var(--color-accent);
       text-decoration: underline;
+    }
+    body.light-mode .news-section a {
+      color: #005577;
+    }
+    body.light-mode .news-section a:hover {
+      color: #0088cc;
     }
     .news-section::-webkit-scrollbar {
       width: 8px;
     }
     .news-section::-webkit-scrollbar-thumb {
-      background: #00b8ffaa;
+      background: var(--color-accent-dark);
       border-radius: 5px;
     }
+    body.light-mode .news-section::-webkit-scrollbar-thumb {
+      background: #0077aa;
+    }
+
     /* شاشة تحميل */
     .loading-overlay {
       position: absolute;
@@ -181,6 +256,9 @@
       opacity: 0;
       pointer-events: none;
     }
+    body.light-mode .loading-overlay {
+      background: rgba(255, 255, 255, 0.7);
+    }
     .spinner {
       border: 6px solid #00ffff44;
       border-top: 6px solid #00ffff;
@@ -188,6 +266,10 @@
       width: 48px;
       height: 48px;
       animation: spin 1s linear infinite;
+    }
+    body.light-mode .spinner {
+      border: 6px solid #0077aa44;
+      border-top: 6px solid #0077aa;
     }
     @keyframes spin {
       0% {transform: rotate(0);}
@@ -200,7 +282,7 @@
       background: rgba(0, 25, 50, 0.7);
       border-radius: 20px;
       padding: 30px 25px;
-      box-shadow: 0 0 25px #00d8ffcc;
+      box-shadow: 0 0 25px var(--color-accent-dark);
       color: #a0e0ffcc;
       font-size: 1.1rem;
       box-sizing: border-box;
@@ -209,14 +291,25 @@
       flex-direction: column;
       user-select: none;
       position: relative;
+      transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+    }
+    body.light-mode .stats-section {
+      background: rgba(230, 245, 255, 0.9);
+      box-shadow: 0 0 25px #0077aa88;
+      color: var(--color-text-light);
     }
     .stats-section h2 {
       margin-top: 0;
       font-size: 2rem;
-      color: #00eaff;
+      color: var(--color-accent);
       text-align: center;
-      text-shadow: 0 0 10px #00b8ff;
+      text-shadow: 0 0 10px var(--color-accent-dark);
       margin-bottom: 20px;
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+    body.light-mode .stats-section h2 {
+      color: #0077aa;
+      text-shadow: 0 0 8px #004466;
     }
 
     .stats-content {
@@ -229,8 +322,13 @@
       padding: 20px 22px;
       margin-bottom: 18px;
       border-radius: 14px;
-      box-shadow: inset 0 0 15px #00d8ff55;
+      box-shadow: inset 0 0 15px var(--color-accent-light);
       transition: transform 0.3s ease;
+    }
+    body.light-mode .stat-item {
+      background: #d4f3ffcc;
+      box-shadow: inset 0 0 15px #a0cfff;
+      color: #004466;
     }
     .stat-item:last-child {
       margin-bottom: 0;
@@ -239,13 +337,21 @@
       margin-bottom: 8px;
       font-weight: 700;
       font-size: 1.25rem;
-      color: #00f0ff;
+      color: var(--color-accent);
+      transition: color 0.4s ease;
+    }
+    body.light-mode .stat-item h3 {
+      color: #005577;
     }
     .stat-item p {
       margin: 0;
       line-height: 1.3;
       color: #aadfffcc;
       word-break: break-word;
+      transition: color 0.4s ease;
+    }
+    body.light-mode .stat-item p {
+      color: #004466cc;
     }
 
     /* رسم بياني الهجمات */
@@ -257,7 +363,12 @@
       border-radius: 15px;
       padding: 15px;
       box-sizing: border-box;
-      box-shadow: inset 0 0 15px #00d8ff88;
+      box-shadow: inset 0 0 15px var(--color-accent-light);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    body.light-mode #attacksChart {
+      background: rgba(0, 135, 210, 0.12);
+      box-shadow: inset 0 0 15px #0077aa88;
     }
 
     /* لوحة تحكم الإدخال */
@@ -265,213 +376,204 @@
       background: rgba(0, 255, 255, 0.07);
       border-radius: 15px;
       padding: 20px;
-      box-shadow: inset 0 0 10px #00d8ff88;
+      box-shadow: inset 0 0 10px var(--color-accent-light);
       margin-top: 15px;
-      color: #00ffffcc;
+      color: var(--color-accent);
       font-size: 1rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+    }
+    body.light-mode .control-panel {
+      background: #bceaff55;
+      color: #004466;
     }
     .control-panel label {
       display: block;
       margin-bottom: 6px;
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--color-accent);
+      transition: color 0.4s ease;
     }
-    .control-panel input, .control-panel textarea {
+    body.light-mode .control-panel label {
+      color: #006699;
+    }
+    .control-panel input[type="number"],
+    .control-panel input[type="text"] {
       width: 100%;
-      padding: 6px 10px;
-      border-radius: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
       border: none;
-      background: rgba(0,0,0,0.2);
-      color: #a0e0ff;
+      box-sizing: border-box;
       font-family: 'JetBrains Mono', monospace;
       font-size: 1rem;
-      margin-bottom: 12px;
-      resize: vertical;
+      margin-bottom: 10px;
+      color: var(--color-text-dark);
     }
     .control-panel button {
-      background: #00ffff;
+      cursor: pointer;
+      background: var(--color-accent);
+      color: #001022;
       border: none;
       padding: 10px 18px;
-      border-radius: 14px;
+      border-radius: 10px;
       font-weight: 700;
-      color: #001022;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 1.1rem;
+      transition: background 0.3s ease;
       width: 100%;
     }
     .control-panel button:hover {
-      background: #00e6e6;
+      background: var(--color-accent-dark);
     }
 
-    /* Canvas أسهم الهجمات */
-    #attack-canvas {
-      position: absolute;
-      top: 60px; /* تناسب مع padding ال stats-section */
-      left: 25px;
-      width: calc(100% - 50px);
-      height: 250px;
-      pointer-events: none;
-      z-index: 2;
-      border-radius: 15px;
-      mix-blend-mode: screen;
-    }
-
-    /* الفوتر */
-    footer {
-      height: 60px;
-      line-height: 60px;
-      text-align: center;
-      font-size: 1rem;
-      background: #001933;
-      color: #99bbffcc;
+    /* زر تبديل الوضع */
+    .mode-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 20;
+      background: var(--color-accent);
+      border-radius: 25px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      cursor: pointer;
+      box-shadow:
+        0 0 15px var(--color-accent),
+        inset 0 0 10px var(--color-accent-light);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #001022;
       user-select: none;
-      position: relative;
-      z-index: 10;
-      box-shadow: inset 0 1px 5px #00b8ff44;
-      margin-top: auto;
+    }
+    .mode-toggle:hover {
+      background: var(--color-accent-dark);
+      box-shadow:
+        0 0 25px var(--color-accent-dark),
+        inset 0 0 15px var(--color-accent-dark);
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
+    /* استجابة صغيرة للشاشات */
+    @media (max-width: 960px) {
       .main-wrapper {
         flex-direction: column;
-        padding: 30px 15px;
         height: auto;
-      }
-      .logo-container {
-        margin: 0 0 30px 0;
-        width: 100%;
         padding: 30px 20px;
       }
-      .news-section, .stats-section {
-        width: 100%;
-        margin: 0 0 25px 0;
-        max-height: 300px;
+      .logo-container,
+      .news-section,
+      .stats-section {
+        flex: none;
+        max-width: 100%;
+        margin-bottom: 25px;
+        max-height: none;
       }
-      #attack-canvas {
-        height: 180px;
-      }
+    }
+
+    /* إضافات للروابط */
+    a:focus, button:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
 
-  <div class="network-bg"></div>
-  <div class="network-points" id="network-points"></div>
+  <button class="mode-toggle" aria-label="تبديل الوضع الليلي والنهاري" title="تبديل الوضع">☀️</button>
 
-  <div class="main-wrapper" role="main">
-    <section class="logo-container" aria-label="شعار الموقع">
-      <div class="logo" aria-label="شعار JKA5">JKA5</div>
-      <div class="subtitle">بوابتك إلى عالم الأمن السيبراني</div>
+  <div class="network-bg"></div>
+  <div class="network-points" aria-hidden="true">
+    <span style="top:10%; left:15%; animation-delay:0s;"></span>
+    <span style="top:25%; left:40%; animation-delay:0.8s;"></span>
+    <span style="top:60%; left:35%; animation-delay:1.2s;"></span>
+    <span style="top:40%; left:80%; animation-delay:1.6s;"></span>
+    <span style="top:70%; left:75%; animation-delay:2s;"></span>
+    <span style="top:85%; left:20%; animation-delay:2.5s;"></span>
+    <span style="top:15%; left:85%; animation-delay:3s;"></span>
+  </div>
+
+  <main class="main-wrapper" role="main" aria-label="محتوى الموقع">
+
+    <section class="logo-container" aria-label="شعار الموقع ووصفه">
+      <h1 class="logo" aria-label="شعار JKA5">JKA5</h1>
+      <p class="subtitle">بوابتك إلى عالم الأمن السيبراني</p>
     </section>
 
-    <section class="news-section" aria-label="أحدث الأخبار">
+    <section class="news-section" aria-live="polite" aria-label="أحدث أخبار الأمن السيبراني">
       <h2>أحدث أخبار الثغرات والهجمات</h2>
-
-      <div class="loading-overlay" id="loading-overlay">
-        <div class="spinner"></div>
+      <div class="loading-overlay" id="news-loading">
+        <div class="spinner" aria-hidden="true"></div>
       </div>
-
-      <ul id="news-list" aria-live="polite" aria-busy="true">
-        <li>...جارٍ تحميل الأخبار...</li>
+      <ul id="news-list" tabindex="0" aria-atomic="true" aria-relevant="additions">
+        <!-- الأخبار يتم تحميلها هنا -->
       </ul>
     </section>
 
-    <section class="stats-section" aria-label="الإحصائيات الأمنية">
-      <h2>إحصائيات الأمن السيبراني</h2>
-
-      <canvas id="attack-canvas" aria-hidden="true"></canvas>
-
+    <section class="stats-section" aria-label="إحصائيات الهجمات ولوحة تحكم الإدارة">
+      <h2>إحصائيات الهجمات</h2>
       <div class="stats-content" id="stats-content">
         <div class="stat-item">
-          <h3>الهجمات الإلكترونية اليوم</h3>
-          <p id="attacks-count">-</p>
+          <h3>عدد الهجمات الحالية:</h3>
+          <p id="attacks-count">جاري التحميل...</p>
         </div>
         <div class="stat-item">
-          <h3>أكثر الثغرات استغلالًا</h3>
-          <p id="top-vulns">جميعها: CVE-2024-12345, CVE-2024-67890</p>
+          <h3>أبرز الثغرات:</h3>
+          <p id="top-vulns">جاري التحميل...</p>
         </div>
         <div class="stat-item">
-          <h3>أكثر المناطق تعرضًا للهجمات</h3>
-          <p id="top-regions">أمريكا الشمالية، أوروبا، آسيا</p>
+          <h3>أهم المناطق المستهدفة:</h3>
+          <p id="top-regions">جاري التحميل...</p>
         </div>
-        <canvas id="attacksChart" aria-label="رسم بياني للهجمات الإلكترونية" role="img"></canvas>
+        <canvas id="attacksChart" aria-label="رسم بياني لعدد الهجمات عبر الوقت" role="img"></canvas>
       </div>
-
-      <div class="control-panel" aria-label="لوحة تحكم تحديث الإحصائيات">
-        <h3>تحديث الإحصائيات</h3>
-        <label for="input-attacks">عدد الهجمات الإلكترونية اليوم</label>
-        <input type="number" id="input-attacks" min="0" value="1283675" />
-        
-        <label for="input-vulns">أكثر الثغرات استغلالًا (افصل بفواصل)</label>
-        <textarea id="input-vulns" rows="2">CVE-2024-5678, CVE-2024-9876, CVE-2024-3456</textarea>
-        
-        <label for="input-regions">أكثر المناطق تعرضًا للهجمات (افصل بفواصل)</label>
-        <textarea id="input-regions" rows="2">أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط</textarea>
-        
-        <button id="update-stats-btn">تحديث البيانات</button>
-      </div>
+      <form class="control-panel" aria-label="لوحة تحكم تحديث الإحصائيات" id="control-panel">
+        <label for="input-attacks">عدد الهجمات</label>
+        <input type="number" id="input-attacks" min="0" aria-required="true" aria-describedby="attacks-desc" />
+        <label for="input-vulns">أبرز الثغرات</label>
+        <input type="text" id="input-vulns" aria-required="false" />
+        <label for="input-regions">أهم المناطق المستهدفة</label>
+        <input type="text" id="input-regions" aria-required="false" />
+        <button type="submit" id="update-stats-btn">تحديث الإحصائيات</button>
+      </form>
     </section>
-  </div>
 
-  <footer>© 2025 JKA5.xyz - جميع الحقوق محفوظة</footer>
+  </main>
 
-  <!-- مكتبة الرسم البياني -->
+  <footer style="text-align:center; padding:12px 10px; font-size:0.9rem; background:#001933; color:#99bbffcc; user-select:none;">
+    © 2025 JKA5.xyz - جميع الحقوق محفوظة
+  </footer>
+
+  <!-- مكتبة Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    // إضافة نقاط توهج في الخلفية
-    const pointsContainer = document.getElementById('network-points');
-    const pointsCount = 60;
-    for(let i = 0; i < pointsCount; i++) {
-      const point = document.createElement('span');
-      point.style.top = Math.random() * 100 + 'vh';
-      point.style.left = Math.random() * 100 + 'vw';
-      point.style.animationDelay = (Math.random() * 3) + 's';
-      pointsContainer.appendChild(point);
+    // الوضع الليلي / النهاري
+    const body = document.body;
+    const modeToggle = document.querySelector('.mode-toggle');
+
+    function updateModeIcon() {
+      modeToggle.textContent = body.classList.contains('light-mode') ? '🌙' : '☀️';
+      modeToggle.title = body.classList.contains('light-mode') ? 'تبديل إلى الوضع الليلي' : 'تبديل إلى الوضع النهاري';
     }
 
-    // شاشة التحميل
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const newsList = document.getElementById('news-list');
+    modeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      updateModeIcon();
+    });
 
-    // جلب الأخبار من The Hacker News مع عرض spinner
-    async function fetchRSS() {
-      const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      const rss_url = encodeURIComponent('https://thehackernews.com/feeds/posts/default?alt=rss');
+    updateModeIcon();
 
-      loadingOverlay.classList.remove('hidden');
-      newsList.setAttribute('aria-busy', 'true');
-
-      try {
-        const response = await fetch(proxy + rss_url);
-        const data = await response.json();
-        newsList.innerHTML = '';
-
-        data.items.slice(0, 7).forEach(item => {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer" title="${item.title}">${item.title}</a>`;
-          newsList.appendChild(li);
-        });
-      } catch (error) {
-        console.error('خطأ في جلب الأخبار:', error);
-        newsList.innerHTML = '<li>تعذر تحميل الأخبار الآن.</li>';
-      } finally {
-        loadingOverlay.classList.add('hidden');
-        newsList.setAttribute('aria-busy', 'false');
-      }
-    }
-    fetchRSS();
-
-    // الإحصائيات الافتراضية
-    let statsData = {
-      attacksCount: 1283675,
-      topVulns: 'CVE-2024-5678, CVE-2024-9876, CVE-2024-3456',
-      topRegions: 'أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط',
-      attacksHistory: [120000, 145000, 133000, 160000, 155000, 170000, 165000],
+    // بيانات مبدئية للإحصائيات
+    const statsData = {
+      attacksCount: 165000,
+      topVulns: 'LAMEHUG Malware, BADBOX Botnet, Amadey',
+      topRegions: 'أوكرانيا، الولايات المتحدة، الصين',
+      attacksHistory: [170000, 165000, 158000, 162000, 168000, 170000, 165000],
       attacksLabels: ['01 يوليو', '05 يوليو', '10 يوليو', '15 يوليو', '20 يوليو', '25 يوليو', '30 يوليو']
     };
 
-    // تحديث إحصائيات النصوص
+    // تحديث نصوص الإحصائيات
     function updateStatsTexts() {
       document.getElementById('attacks-count').textContent = statsData.attacksCount.toLocaleString() + " هجمة";
       document.getElementById('top-vulns').textContent = statsData.topVulns;
@@ -544,7 +646,9 @@
 
     // التعامل مع تحديث البيانات من لوحة التحكم
     const updateBtn = document.getElementById('update-stats-btn');
-    updateBtn.addEventListener('click', () => {
+    const controlPanelForm = document.getElementById('control-panel');
+    controlPanelForm.addEventListener('submit', (e) => {
+      e.preventDefault();
       const attacksInput = document.getElementById('input-attacks').value;
       const vulnsInput = document.getElementById('input-vulns').value.trim();
       const regionsInput = document.getElementById('input-regions').value.trim();
@@ -566,76 +670,43 @@
       attacksChart.update();
     });
 
-    // --------- رسوم متحركة أسهم على Canvas ----------
-    const canvas = document.getElementById('attack-canvas');
-    const ctxCanvas = canvas.getContext('2d');
-    let width, height;
-    function resizeCanvas() {
-      width = canvas.width = canvas.clientWidth;
-      height = canvas.height = canvas.clientHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    // جلب الأخبار تلقائيًا - هنا مجرد مثال ثابت (يمكن استبداله بـ API حقيقي)
+    const newsList = document.getElementById('news-list');
+    const newsLoading = document.getElementById('news-loading');
 
-    // تعريف الأسهم والهجمات
-    class Arrow {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * width;
-        this.y = height + 20;
-        this.length = 40 + Math.random() * 40;
-        this.speed = 1 + Math.random() * 1.5;
-        this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.5;
-        this.opacity = 0;
-        this.hit = false;
-      }
-      update() {
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed;
-        if(this.y < height / 3 && !this.hit) {
-          this.hit = true;
-          this.opacity = 1;
-          this.hitTime = 10;
-        }
-        if(this.hit) {
-          this.hitTime--;
-          this.opacity -= 0.1;
-          if(this.hitTime <= 0) this.reset();
-        }
-      }
-      draw(ctx) {
-        ctx.save();
-        ctx.globalAlpha = this.opacity > 0 ? this.opacity : 1;
-        ctx.strokeStyle = '#00ffffcc';
-        ctx.lineWidth = 2;
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, -this.length);
-        ctx.moveTo(0, -this.length);
-        ctx.lineTo(-5, -this.length + 10);
-        ctx.moveTo(0, -this.length);
-        ctx.lineTo(5, -this.length + 10);
-        ctx.stroke();
-        ctx.restore();
-      }
+    const sampleNews = [
+      { title: "Critical NVIDIA Container Toolkit Flaw Allows Privilege Escalation on AI Cloud Services", link: "#" },
+      { title: "CERT-UA Discovers LAMEHUG Malware Linked to APT28, Using LLM for Phishing Campaign", link: "#" },
+      { title: "Google Sues 25 Chinese Entities Over BADBOX 2.0 Botnet Affecting 10M Android Devices", link: "#" },
+      { title: "From Backup to Cyber Resilience: Why IT Leaders Must Rethink Backup in the Age of Ransomware", link: "#" },
+      { title: "Hackers Use GitHub Repositories to Host Amadey Malware and Data Stealers, Bypassing Filters", link: "#" },
+      { title: "Hackers Exploit Apache HTTP Server Flaw to Deploy Linuxsys Cryptocurrency Miner", link: "#" },
+      { title: "Europol Disrupts NoName057(16) Hacktivist Group Linked to DDoS Attacks Against Ukraine", link: "#" }
+    ];
+
+    function loadNews() {
+      newsLoading.classList.remove('hidden');
+      newsList.innerHTML = "";
+      setTimeout(() => {
+        sampleNews.forEach(item => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = item.link;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = item.title;
+          li.appendChild(a);
+          newsList.appendChild(li);
+        });
+        newsLoading.classList.add('hidden');
+      }, 2000); // محاكاة تأخير تحميل الأخبار
     }
 
-    const arrows = [];
-    for(let i = 0; i < 20; i++) arrows.push(new Arrow());
+    // تحميل الأخبار عند بداية الصفحة
+    loadNews();
 
-    function animate() {
-      ctxCanvas.clearRect(0, 0, width, height);
-      arrows.forEach(arrow => {
-        arrow.update();
-        arrow.draw(ctxCanvas);
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
+    // تحديث الأخبار تلقائي كل 5 دقائق
+    setInterval(loadNews, 5 * 60 * 1000);
 
   </script>
 
