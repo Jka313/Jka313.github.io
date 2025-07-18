@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <title>موقعي الشخصي</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jka5 - الموقع الرسمي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #1e1e2f, #2e2e3a);
+      color: white;
+      padding: 40px;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffff;
+    }
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00ffff;
+    }
+    main {
+      margin-top: 60px;
+      max-width: 800px;
+    }
+    p {
+      font-size: 1.3rem;
+      line-height: 1.8;
+    }
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
-  <h1>أهلاً بك في jka5.xyz</h1>
-  <p>هذا هو موقعي الشخصي على الإنترنت.</p>
+  <header>
+    <h1>jka5.xyz</h1>
+    <nav>
+      <a href="#about">عنّي</a>
+      <a href="#projects">مشاريعي</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>مرحباً بك!</h2>
+      <p>
+        أنا JKA313، وهذا موقعي الرسمي. هنا أشارك أفكاري، مشاريعي البرمجية، وأي شيء أعتقد أنه مفيد للعالم.
+      </p>
+    </section>
+
+    <section id="projects" style="margin-top: 50px;">
+      <h2>مشاريعي</h2>
+      <p>
+        قريباً سأعرض بعض المشاريع التي أعمل عليها في مجالات متعددة مثل الذكاء الاصطناعي، الأمن السيبراني، وتطبيقات الويب.
+      </p>
+    </section>
+
+    <section id="contact" style="margin-top: 50px;">
+      <h2>تواصل معي</h2>
+      <p>راسلني على <a href="mailto:your@email.com" style="color: #00ffff;">البريد الإلكتروني</a> أو تابعني على GitHub: <a href="https://github.com/jka313" style="color: #00ffff;">jka313</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 jka5.xyz - جميع الحقوق محفوظة
+  </footer>
 </body>
 </html>
