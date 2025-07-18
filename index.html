@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JKA5 - بوابة الأمن السيبراني</title>
   <style>
-    /* استيراد خط JetBrains Mono */
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
-    /* قواعد أساسية */
     body, html {
       margin: 0; padding: 0;
       height: 100%;
@@ -20,7 +18,7 @@
       z-index: 1;
     }
 
-    /* خلفية شبكة متوهجة */
+    /* شبكة خلفية متحركة */
     body::before {
       content: "";
       position: fixed;
@@ -41,8 +39,6 @@
       background-size: 60px 60px;
       animation: moveGrid 40s linear infinite;
     }
-
-    /* نقاط متوهجة متحركة */
     .network-points {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -63,13 +59,12 @@
       from { background-position: 0 0, 0 0; }
       to { background-position: 60px 60px, 60px 60px; }
     }
-
     @keyframes pulsePoint {
       0% { opacity: 0.4; transform: scale(0.7);}
       100% { opacity: 1; transform: scale(1.3);}
     }
 
-    /* الحاوية الرئيسية */
+    /* الهيكل الرئيسي */
     .main-wrapper {
       display: flex;
       height: 100vh;
@@ -80,11 +75,10 @@
       padding: 60px 40px;
       box-sizing: border-box;
       gap: 20px;
+      flex-wrap: wrap;
     }
-
-    /* شعار الموقع */
     .logo-container {
-      flex: 1 1 45%;
+      flex: 1 1 40%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -124,15 +118,17 @@
     /* قسم الأخبار */
     .news-section {
       flex: 1 1 25%;
-      background: rgba(0, 25, 50, 0.6);
+      background: rgba(0, 25, 50, 0.7);
       border-radius: 20px;
-      padding: 25px 30px;
-      box-shadow:
-        0 0 20px #00d8ffcc;
+      padding: 30px 25px;
+      box-shadow: 0 0 25px #00d8ffcc;
       max-height: 75vh;
       overflow-y: auto;
       font-size: 1.1rem;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
     .news-section h2 {
       margin-top: 0;
@@ -143,12 +139,14 @@
       margin-bottom: 25px;
     }
     .news-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+      padding-left: 15px;
+      margin-top: 10px;
+      flex-grow: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
     }
     .news-section ul li {
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       line-height: 1.4;
     }
     .news-section a {
@@ -160,7 +158,6 @@
       color: #00ffff;
       text-decoration: underline;
     }
-    /* Scrollbar */
     .news-section::-webkit-scrollbar {
       width: 8px;
     }
@@ -168,23 +165,50 @@
       background: #00b8ffaa;
       border-radius: 5px;
     }
+    /* شاشة تحميل */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+      border-radius: 20px;
+      transition: opacity 0.3s ease;
+    }
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .spinner {
+      border: 6px solid #00ffff44;
+      border-top: 6px solid #00ffff;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% {transform: rotate(0);}
+      100% {transform: rotate(360deg);}
+    }
 
-    /* قسم الإحصائيات */
+    /* قسم الإحصائيات + لوحة التحكم */
     .stats-section {
       flex: 1 1 30%;
-      background: rgba(0, 25, 50, 0.6);
+      background: rgba(0, 25, 50, 0.7);
       border-radius: 20px;
       padding: 30px 25px;
-      box-shadow:
-        0 0 20px #00d8ffcc;
+      box-shadow: 0 0 25px #00d8ffcc;
       color: #a0e0ffcc;
       font-size: 1.1rem;
       box-sizing: border-box;
       max-height: 75vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
       user-select: none;
+      position: relative;
     }
     .stats-section h2 {
       margin-top: 0;
@@ -192,35 +216,103 @@
       color: #00eaff;
       text-align: center;
       text-shadow: 0 0 10px #00b8ff;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
-    .stats-section .stat-item {
-      background: rgba(0, 255, 255, 0.1);
-      padding: 22px 30px;
-      margin-bottom: 25px;
-      border-radius: 12px;
-      box-shadow:
-        inset 0 0 15px #00d8ff55;
+
+    .stats-content {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+    .stat-item {
+      background: rgba(0, 255, 255, 0.12);
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      border-radius: 14px;
+      box-shadow: inset 0 0 15px #00d8ff55;
       transition: transform 0.3s ease;
     }
-    .stats-section .stat-item:hover {
-      background: rgba(0, 255, 255, 0.2);
-      transform: scale(1.03);
-      box-shadow:
-        0 0 20px #00ffffcc,
-        inset 0 0 20px #00d8ff88;
-      color: #e0ffff;
+    .stat-item:last-child {
+      margin-bottom: 0;
     }
-    .stats-section .stat-item h3 {
-      margin: 0 0 10px 0;
-      color: #00f0ff;
+    .stat-item h3 {
+      margin-bottom: 8px;
       font-weight: 700;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
+      color: #00f0ff;
     }
-    .stats-section .stat-item p {
+    .stat-item p {
       margin: 0;
       line-height: 1.3;
-      color: #99ddffcc;
+      color: #aadfffcc;
+      word-break: break-word;
+    }
+
+    /* رسم بياني الهجمات */
+    #attacksChart {
+      width: 100% !important;
+      max-height: 250px;
+      margin-top: 15px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      box-shadow: inset 0 0 15px #00d8ff88;
+    }
+
+    /* لوحة تحكم الإدخال */
+    .control-panel {
+      background: rgba(0, 255, 255, 0.07);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: inset 0 0 10px #00d8ff88;
+      margin-top: 15px;
+      color: #00ffffcc;
+      font-size: 1rem;
+    }
+    .control-panel label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .control-panel input, .control-panel textarea {
+      width: 100%;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(0,0,0,0.2);
+      color: #a0e0ff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      resize: vertical;
+    }
+    .control-panel button {
+      background: #00ffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      color: #001022;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    .control-panel button:hover {
+      background: #00e6e6;
+    }
+
+    /* Canvas أسهم الهجمات */
+    #attack-canvas {
+      position: absolute;
+      top: 60px; /* تناسب مع padding ال stats-section */
+      left: 25px;
+      width: calc(100% - 50px);
+      height: 250px;
+      pointer-events: none;
+      z-index: 2;
+      border-radius: 15px;
+      mix-blend-mode: screen;
     }
 
     /* الفوتر */
@@ -255,15 +347,14 @@
         margin: 0 0 25px 0;
         max-height: 300px;
       }
-      .stats-section {
-        margin-left: 0;
+      #attack-canvas {
+        height: 180px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- الخلفية -->
   <div class="network-bg"></div>
   <div class="network-points" id="network-points"></div>
 
@@ -275,35 +366,62 @@
 
     <section class="news-section" aria-label="أحدث الأخبار">
       <h2>أحدث أخبار الثغرات والهجمات</h2>
-      <ul id="news-list">
+
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+      </div>
+
+      <ul id="news-list" aria-live="polite" aria-busy="true">
         <li>...جارٍ تحميل الأخبار...</li>
       </ul>
     </section>
 
     <section class="stats-section" aria-label="الإحصائيات الأمنية">
       <h2>إحصائيات الأمن السيبراني</h2>
-      <div class="stat-item">
-        <h3>الهجمات الإلكترونية اليوم</h3>
-        <p id="attacks-count">-</p>
+
+      <canvas id="attack-canvas" aria-hidden="true"></canvas>
+
+      <div class="stats-content" id="stats-content">
+        <div class="stat-item">
+          <h3>الهجمات الإلكترونية اليوم</h3>
+          <p id="attacks-count">-</p>
+        </div>
+        <div class="stat-item">
+          <h3>أكثر الثغرات استغلالًا</h3>
+          <p id="top-vulns">جميعها: CVE-2024-12345, CVE-2024-67890</p>
+        </div>
+        <div class="stat-item">
+          <h3>أكثر المناطق تعرضًا للهجمات</h3>
+          <p id="top-regions">أمريكا الشمالية، أوروبا، آسيا</p>
+        </div>
+        <canvas id="attacksChart" aria-label="رسم بياني للهجمات الإلكترونية" role="img"></canvas>
       </div>
-      <div class="stat-item">
-        <h3>أكثر الثغرات استغلالًا</h3>
-        <p id="top-vulns">جميعها: CVE-2024-12345, CVE-2024-67890</p>
-      </div>
-      <div class="stat-item">
-        <h3>أكثر المناطق تعرضًا للهجمات</h3>
-        <p id="top-regions">أمريكا الشمالية، أوروبا، آسيا</p>
+
+      <div class="control-panel" aria-label="لوحة تحكم تحديث الإحصائيات">
+        <h3>تحديث الإحصائيات</h3>
+        <label for="input-attacks">عدد الهجمات الإلكترونية اليوم</label>
+        <input type="number" id="input-attacks" min="0" value="1283675" />
+        
+        <label for="input-vulns">أكثر الثغرات استغلالًا (افصل بفواصل)</label>
+        <textarea id="input-vulns" rows="2">CVE-2024-5678, CVE-2024-9876, CVE-2024-3456</textarea>
+        
+        <label for="input-regions">أكثر المناطق تعرضًا للهجمات (افصل بفواصل)</label>
+        <textarea id="input-regions" rows="2">أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط</textarea>
+        
+        <button id="update-stats-btn">تحديث البيانات</button>
       </div>
     </section>
   </div>
 
   <footer>© 2025 JKA5.xyz - جميع الحقوق محفوظة</footer>
 
+  <!-- مكتبة الرسم البياني -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script>
-    // إنشاء نقاط متوهجة متحركة على الخلفية
+    // إضافة نقاط توهج في الخلفية
     const pointsContainer = document.getElementById('network-points');
     const pointsCount = 60;
-
     for(let i = 0; i < pointsCount; i++) {
       const point = document.createElement('span');
       point.style.top = Math.random() * 100 + 'vh';
@@ -312,15 +430,21 @@
       pointsContainer.appendChild(point);
     }
 
-    // جلب الأخبار من The Hacker News (RSS -> JSON)
+    // شاشة التحميل
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const newsList = document.getElementById('news-list');
+
+    // جلب الأخبار من The Hacker News مع عرض spinner
     async function fetchRSS() {
       const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
       const rss_url = encodeURIComponent('https://thehackernews.com/feeds/posts/default?alt=rss');
 
+      loadingOverlay.classList.remove('hidden');
+      newsList.setAttribute('aria-busy', 'true');
+
       try {
         const response = await fetch(proxy + rss_url);
         const data = await response.json();
-        const newsList = document.getElementById('news-list');
         newsList.innerHTML = '';
 
         data.items.slice(0, 7).forEach(item => {
@@ -330,15 +454,189 @@
         });
       } catch (error) {
         console.error('خطأ في جلب الأخبار:', error);
-        document.getElementById('news-list').innerHTML = '<li>تعذر تحميل الأخبار الآن.</li>';
+        newsList.innerHTML = '<li>تعذر تحميل الأخبار الآن.</li>';
+      } finally {
+        loadingOverlay.classList.add('hidden');
+        newsList.setAttribute('aria-busy', 'false');
       }
     }
     fetchRSS();
 
-    // بيانات إحصائية تجريبية (يمكن تحديثها لاحقًا ببيانات حقيقية)
-    document.getElementById('attacks-count').textContent = "1,283,675 هجمة";
-    document.getElementById('top-vulns').textContent = "CVE-2024-5678, CVE-2024-9876, CVE-2024-3456";
-    document.getElementById('top-regions').textContent = "أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط";
+    // الإحصائيات الافتراضية
+    let statsData = {
+      attacksCount: 1283675,
+      topVulns: 'CVE-2024-5678, CVE-2024-9876, CVE-2024-3456',
+      topRegions: 'أمريكا الشمالية، أوروبا، آسيا، الشرق الأوسط',
+      attacksHistory: [120000, 145000, 133000, 160000, 155000, 170000, 165000],
+      attacksLabels: ['01 يوليو', '05 يوليو', '10 يوليو', '15 يوليو', '20 يوليو', '25 يوليو', '30 يوليو']
+    };
+
+    // تحديث إحصائيات النصوص
+    function updateStatsTexts() {
+      document.getElementById('attacks-count').textContent = statsData.attacksCount.toLocaleString() + " هجمة";
+      document.getElementById('top-vulns').textContent = statsData.topVulns;
+      document.getElementById('top-regions').textContent = statsData.topRegions;
+    }
+
+    // إنشاء الرسم البياني
+    const ctx = document.getElementById('attacksChart').getContext('2d');
+    let attacksChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: statsData.attacksLabels,
+        datasets: [{
+          label: 'عدد الهجمات',
+          data: statsData.attacksHistory,
+          backgroundColor: 'rgba(0, 255, 255, 0.2)',
+          borderColor: '#00ffff',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: '#00ffff',
+          tension: 0.3,
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#a0e0ff',
+              font: { size: 13 },
+              stepSize: 20000,
+            },
+            grid: {
+              color: 'rgba(0, 255, 255, 0.1)',
+              borderColor: '#00ffff',
+            }
+          },
+          x: {
+            ticks: {
+              color: '#a0e0ff',
+              font: { size: 13 }
+            },
+            grid: {
+              color: 'transparent',
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#00ffff',
+              font: { size: 14, weight: 'bold' }
+            }
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: '#00ffffcc',
+            titleColor: '#00102d',
+            bodyColor: '#00102d',
+            cornerRadius: 6,
+          }
+        }
+      }
+    });
+
+    updateStatsTexts();
+
+    // التعامل مع تحديث البيانات من لوحة التحكم
+    const updateBtn = document.getElementById('update-stats-btn');
+    updateBtn.addEventListener('click', () => {
+      const attacksInput = document.getElementById('input-attacks').value;
+      const vulnsInput = document.getElementById('input-vulns').value.trim();
+      const regionsInput = document.getElementById('input-regions').value.trim();
+
+      if(!attacksInput || attacksInput < 0) {
+        alert('يرجى إدخال عدد صحيح موجب للهجمات.');
+        return;
+      }
+      statsData.attacksCount = Number(attacksInput);
+      statsData.topVulns = vulnsInput || 'غير متوفر';
+      statsData.topRegions = regionsInput || 'غير متوفر';
+
+      // تحديث نصوص الإحصائيات
+      updateStatsTexts();
+
+      // تحديث الرسم البياني (للتجربة نعدل بيانات عشوائية)
+      statsData.attacksHistory = statsData.attacksHistory.map(val => val + Math.floor(Math.random() * 5000 - 2500));
+      attacksChart.data.datasets[0].data = statsData.attacksHistory;
+      attacksChart.update();
+    });
+
+    // --------- رسوم متحركة أسهم على Canvas ----------
+    const canvas = document.getElementById('attack-canvas');
+    const ctxCanvas = canvas.getContext('2d');
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.width = canvas.clientWidth;
+      height = canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // تعريف الأسهم والهجمات
+    class Arrow {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = height + 20;
+        this.length = 40 + Math.random() * 40;
+        this.speed = 1 + Math.random() * 1.5;
+        this.angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.5;
+        this.opacity = 0;
+        this.hit = false;
+      }
+      update() {
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed;
+        if(this.y < height / 3 && !this.hit) {
+          this.hit = true;
+          this.opacity = 1;
+          this.hitTime = 10;
+        }
+        if(this.hit) {
+          this.hitTime--;
+          this.opacity -= 0.1;
+          if(this.hitTime <= 0) this.reset();
+        }
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.opacity > 0 ? this.opacity : 1;
+        ctx.strokeStyle = '#00ffffcc';
+        ctx.lineWidth = 2;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -this.length);
+        ctx.moveTo(0, -this.length);
+        ctx.lineTo(-5, -this.length + 10);
+        ctx.moveTo(0, -this.length);
+        ctx.lineTo(5, -this.length + 10);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    const arrows = [];
+    for(let i = 0; i < 20; i++) arrows.push(new Arrow());
+
+    function animate() {
+      ctxCanvas.clearRect(0, 0, width, height);
+      arrows.forEach(arrow => {
+        arrow.update();
+        arrow.draw(ctxCanvas);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
   </script>
 
 </body>
