@@ -505,6 +505,177 @@
           <h3>أهم المناطق المستهدفة:</h3>
           <p id="top-regions">جاري التحميل...</p>
         </div>
-        <canvas id="attacksChart" aria-label="رسم بياني لعدد الهجمات عبر الوقت" role="img"></canvas>
       </div>
-      <form class="control-panel" aria-label="
+      <canvas id="attacksChart" aria-label="مخطط إحصائيات الهجمات" role="img"></canvas>
+
+      <div class="control-panel" aria-label="لوحة تحكم الإحصائيات">
+        <label for="newAttacksInput">إضافة هجمات جديدة:</label>
+        <input type="number" id="newAttacksInput" min="0" step="1" value="0" />
+        <button id="updateStatsBtn">تحديث الإحصائيات</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo" aria-label="روابط التواصل الاجتماعي">
+    <a href="https://www.facebook.com/jka5.xyz" target="_blank" rel="noopener" aria-label="فيسبوك">
+      <svg class="social-icon" viewBox="0 0 24 24"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.406.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.466.099 2.797.142v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.588l-.467 3.622h-3.121V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.675 0z"/></svg>
+      فيسبوك
+    </a>
+    <a href="https://www.instagram.com/jka5.xyz" target="_blank" rel="noopener" aria-label="إنستغرام">
+      <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.97.24 2.428.415a4.92 4.92 0 011.675 1.088 4.92 4.92 0 011.088 1.675c.175.458.36 1.258.415 2.428.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.97-.415 2.428a4.903 4.903 0 01-1.088 1.675 4.903 4.903 0 01-1.675 1.088c-.458.175-1.258.36-2.428.415-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.428-.415a4.91 4.91 0 01-1.675-1.088 4.91 4.91 0 01-1.088-1.675c-.175-.458-.36-1.258-.415-2.428C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.85c.054-1.17.24-1.97.415-2.428a4.9 4.9 0 011.088-1.675 4.9 4.9 0 011.675-1.088c.458-.175 1.258-.36 2.428-.415C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.735 0 8.332.013 7.052.072 5.775.131 4.72.31 3.82.659a6.908 6.908 0 00-2.49 1.61A6.908 6.908 0 00.659 4.82c-.348.9-.528 1.956-.586 3.232C.013 8.332 0 8.735 0 12c0 3.265.013 3.668.072 4.948.058 1.276.238 2.332.586 3.232a6.924 6.924 0 001.61 2.49 6.924 6.924 0 002.49 1.61c.9.348 1.956.528 3.232.586 1.28.059 1.683.072 4.948.072s3.668-.013 4.948-.072c1.276-.058 2.332-.238 3.232-.586a6.914 6.914 0 002.49-1.61 6.914 6.914 0 001.61-2.49c.348-.9.528-1.956.586-3.232.059-1.28.072-1.683.072-4.948s-.013-3.668-.072-4.948c-.058-1.276-.238-2.332-.586-3.232a6.914 6.914 0 00-1.61-2.49 6.914 6.914 0 00-2.49-1.61c-.9-.348-1.956-.528-3.232-.586C15.668.013 15.265 0 12 0z"/></svg>
+      إنستغرام
+    </a>
+    <a href="https://www.tiktok.com/@jka5.xyz" target="_blank" rel="noopener" aria-label="تيك توك">
+      <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10v-3.75A6.25 6.25 0 0113.75 2H12zM8 16h2a4 4 0 004-4v-1.5h1v1.5a5 5 0 01-5 5H8v-1z"/></svg>
+      تيك توك
+    </a>
+    <a href="cv.html" target="_blank" rel="noopener" aria-label="السيرة الذاتية">
+      📄 سيرتي الذاتية
+    </a>
+    <a href="mailto:info@jka5.xyz" aria-label="البريد الإلكتروني للتواصل">
+      📧 info@jka5.xyz
+    </a>
+  </footer>
+
+  <!-- Chart.js من CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // تبديل الوضع الليلي والنهاري
+    const modeToggleBtn = document.querySelector('.mode-toggle');
+    const body = document.body;
+    function updateToggleIcon() {
+      modeToggleBtn.textContent = body.classList.contains('light-mode') ? '🌙' : '☀️';
+    }
+    modeToggleBtn.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      updateToggleIcon();
+    });
+    updateToggleIcon();
+
+    // نقاط الشبكة المتحركة
+    // (تم وضعها في الـ HTML مسبقًا مع Animation CSS)
+
+    // تحميل الأخبار من RSS وتحويلها إلى JSON
+    async function fetchRSS(url) {
+      try {
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
+        if (!response.ok) throw new Error('فشل في جلب الأخبار');
+        const data = await response.json();
+        return data.items || [];
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    }
+
+    async function loadNews() {
+      const newsList = document.getElementById('news-list');
+      const loadingOverlay = document.getElementById('news-loading');
+
+      loadingOverlay.classList.remove('hidden');
+      const items = await fetchRSS('https://threatpost.com/feed/');
+      newsList.innerHTML = '';
+
+      if (items.length === 0) {
+        newsList.innerHTML = '<li>تعذر تحميل الأخبار حالياً. حاول لاحقاً.</li>';
+      } else {
+        items.slice(0, 10).forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener">${item.title}</a>`;
+          newsList.appendChild(li);
+        });
+      }
+
+      loadingOverlay.classList.add('hidden');
+    }
+
+    loadNews();
+    setInterval(loadNews, 1800000); // تحديث كل 30 دقيقة
+
+    // إحصائيات هجمات تجريبية مع مخطط Chart.js
+    const ctx = document.getElementById('attacksChart').getContext('2d');
+
+    let attacksCount = 120;
+    let topVulns = ["CVE-2023-1234", "CVE-2024-5678", "Zero Day XYZ"];
+    let topRegions = ["العراق", "الولايات المتحدة", "أوروبا"];
+
+    // تحديث النصوص
+    const attacksCountEl = document.getElementById('attacks-count');
+    const topVulnsEl = document.getElementById('top-vulns');
+    const topRegionsEl = document.getElementById('top-regions');
+
+    function updateStatsText() {
+      attacksCountEl.textContent = attacksCount.toLocaleString();
+      topVulnsEl.textContent = topVulns.join(", ");
+      topRegionsEl.textContent = topRegions.join(", ");
+    }
+    updateStatsText();
+
+    // مخطط الهجمات الشهري
+    const monthlyData = {
+      labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+      datasets: [{
+        label: 'عدد الهجمات',
+        data: [15, 20, 18, 25, 30, 28, 35, 40, 38, 45, 50, 48],
+        backgroundColor: 'rgba(0, 255, 255, 0.5)',
+        borderColor: 'rgba(0, 255, 255, 1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      }]
+    };
+
+    const attacksChart = new Chart(ctx, {
+      type: 'line',
+      data: monthlyData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: body.classList.contains('light-mode') ? '#004466' : '#00ffff' } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: body.classList.contains('light-mode') ? '#004466' : '#00ffff' }
+          },
+          x: {
+            ticks: { color: body.classList.contains('light-mode') ? '#004466' : '#00ffff' }
+          }
+        }
+      }
+    });
+
+    // تحديث ألوان المخطط عند تبديل الوضع
+    function updateChartColors() {
+      const isLight = body.classList.contains('light-mode');
+      attacksChart.options.plugins.legend.labels.color = isLight ? '#004466' : '#00ffff';
+      attacksChart.options.scales.x.ticks.color = isLight ? '#004466' : '#00ffff';
+      attacksChart.options.scales.y.ticks.color = isLight ? '#004466' : '#00ffff';
+      attacksChart.update();
+    }
+    modeToggleBtn.addEventListener('click', updateChartColors);
+
+    // إضافة هجمات جديدة عبر لوحة التحكم
+    const newAttacksInput = document.getElementById('newAttacksInput');
+    const updateStatsBtn = document.getElementById('updateStatsBtn');
+
+    updateStatsBtn.addEventListener('click', () => {
+      const val = Number(newAttacksInput.value);
+      if (!isNaN(val) && val > 0) {
+        attacksCount += val;
+        updateStatsText();
+        // تحديث بيانات المخطط بشكل بسيط (زيادة آخر نقطة)
+        monthlyData.datasets[0].data[monthlyData.datasets[0].data.length - 1] += val;
+        attacksChart.update();
+        newAttacksInput.value = 0;
+      } else {
+        alert('يرجى إدخال عدد صحيح أكبر من صفر');
+      }
+    });
+  </script>
+</body>
+</html>
