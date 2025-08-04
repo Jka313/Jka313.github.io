@@ -14,21 +14,24 @@
     }
     header {
       background-color: #000;
-      padding: 20px;
+      padding: 10px 20px 20px;
       text-align: center;
       border-bottom: 2px solid #00ffff;
       box-shadow: 0 0 10px #00ffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      color: #00ffff;
-      text-shadow: 0 0 5px #00ffff;
+    /* الشعار النيون */
+    #logo-svg {
+      width: 220px;
+      height: 60px;
     }
     nav ul {
       list-style: none;
       padding: 0;
-      margin: 15px 0 0 0;
+      margin: 0;
       display: flex;
       justify-content: center;
       gap: 30px;
@@ -160,7 +163,29 @@
 <body>
   <div class="background-animation"></div>
   <header>
-    <h1>بوابة الأمن السيبراني - JKA5</h1>
+    <!-- شعار JKA5 النيون -->
+    <svg id="logo-svg" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شعار JKA5">
+      <defs>
+        <linearGradient id="neonGradient" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#00ffff"/>
+          <stop offset="100%" stop-color="#00ff99"/>
+        </linearGradient>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <text x="50%" y="55%" text-anchor="middle" fill="url(#neonGradient)" filter="url(#glow)"
+            font-size="48" font-family="Segoe UI, Tahoma, sans-serif" font-weight="900" letter-spacing="4">
+        JKA5
+      </text>
+    </svg>
+
     <nav>
       <ul>
         <li><a href="#hero">الرئيسية</a></li>
@@ -178,7 +203,7 @@
 
   <!-- شعار العين السيبرانية -->
   <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
-    <svg width="300" height="300" viewBox="0 0 300 300">
+    <svg width="300" height="300" viewBox="0 0 300 300" aria-label="شعار العين السيبرانية" role="img">
       <g class="cyber-eye">
         <circle cx="150" cy="150" r="120" stroke="#00ffff" stroke-width="4" fill="none" />
         <text x="150" y="25" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">J</text>
