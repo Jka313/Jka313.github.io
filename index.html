@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -60,6 +59,24 @@
       font-size: 1.2em;
       color: #ccc;
     }
+
+    /* شعار العين السيبرانية */
+    .cyber-eye {
+      animation: rotateEye 20s linear infinite;
+      transform-origin: center;
+    }
+    .eye-pupil {
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes rotateEye {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes blink {
+      0%, 100% { fill: #00ffff; }
+      50% { fill: #00ff99; }
+    }
+
     .about, .tools, .contact {
       background-color: #1a1a1a;
       margin-top: 20px;
@@ -158,6 +175,24 @@
     <h2>مرحبًا بك في JKA5</h2>
     <p>منصة احترافية للأمن السيبراني تقدم أدوات ومقالات ومصادر متقدمة.</p>
   </section>
+
+  <!-- شعار العين السيبرانية -->
+  <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
+    <svg width="300" height="300" viewBox="0 0 300 300">
+      <g class="cyber-eye">
+        <circle cx="150" cy="150" r="120" stroke="#00ffff" stroke-width="4" fill="none" />
+        <text x="150" y="25" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">J</text>
+        <text x="240" y="95" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">K</text>
+        <text x="210" y="245" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">A</text>
+        <text x="60" y="200" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">5</text>
+      </g>
+      <ellipse cx="150" cy="150" rx="60" ry="35" fill="#001f1f" stroke="#00ffff" stroke-width="3" />
+      <circle cx="150" cy="150" r="10" class="eye-pupil" />
+      <circle cx="150" cy="150" r="3" fill="#000" />
+      <line x1="120" y1="150" x2="180" y2="150" stroke="#00ffff" stroke-width="1" stroke-dasharray="4" />
+      <line x1="150" y1="120" x2="150" y2="180" stroke="#00ffff" stroke-width="1" stroke-dasharray="4" />
+    </svg>
+  </div>
 
   <section class="about" id="about">
     <h3>من نحن</h3>
