@@ -1,47 +1,200 @@
 
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الأمن السيبراني - JKA5</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة الأمن السيبراني - JKA5</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #001f1f);
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    header {
+      background-color: #000;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #00ffff;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00ff99;
+    }
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero {
+      background: linear-gradient(135deg, #001f1f, #003333);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .hero h2 {
+      font-size: 2.5em;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+    .about, .tools, .contact {
+      background-color: #1a1a1a;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffff33;
+    }
+    .about h3, .tools h3, .contact h3 {
+      color: #00ffff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px #00ffff;
+    }
+    .tools ul {
+      list-style: none;
+      padding: 0;
+    }
+    .tools li {
+      margin: 10px 0;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+      color: #ccc;
+    }
+    input, textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+    button {
+      padding: 10px;
+      background-color: #00ffff;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #00ff99;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #000;
+      border-top: 2px solid #00ffff;
+      color: #888;
+      box-shadow: 0 -2px 10px #00ffff;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, #00ffff22 0%, transparent 70%);
+      animation: pulse 5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.3; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>بوابة الأمن السيبراني</h1>
-        <nav>
-            <ul>
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#">من نحن</a></li>
-                <li><a href="#">أدوات</a></li>
-                <li><a href="#">تواصل معنا</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="background-animation"></div>
+  <header>
+    <h1>بوابة الأمن السيبراني - JKA5</h1>
+    <nav>
+      <ul>
+        <li><a href="#hero">الرئيسية</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#tools">أدوات</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section class="hero">
-        <h2>مرحبًا بك في JKA5</h2>
-        <p>منصة احترافية للأمن السيبراني تقدم أدوات ومقالات ومصادر متقدمة.</p>
-    </section>
+  <section class="hero" id="hero">
+    <h2>مرحبًا بك في JKA5</h2>
+    <p>منصة احترافية للأمن السيبراني تقدم أدوات ومقالات ومصادر متقدمة.</p>
+  </section>
 
-    <section class="contact">
-        <h3>نموذج التواصل</h3>
-        <form action="mailto:a5855209@gmail.com" method="post" enctype="text/plain">
-            <label for="name">الاسم:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">البريد الإلكتروني:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="message">رسالتك:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-            <button type="submit">إرسال</button>
-        </form>
-    </section>
+  <section class="about" id="about">
+    <h3>من نحن</h3>
+    <p>نحن فريق متخصص في الأمن السيبراني، نقدم محتوى تعليمي وأدوات تحليل ومصادر متقدمة لحماية الأنظمة والمعلومات.</p>
+  </section>
 
-    <footer>
-        <p>© 2024 JKA5 - جميع الحقوق محفوظة</p>
-    </footer>
+  <section class="tools" id="tools">
+    <h3>أدوات الأمن السيبراني</h3>
+    <ul>
+      <li>أداة فحص الثغرات</li>
+      <li>تحليل الشبكات</li>
+      <li>توليد كلمات مرور قوية</li>
+      <li>مراقبة الأنظمة</li>
+    </ul>
+  </section>
 
-    <script src="script.js"></script>
+  <section class="contact" id="contact">
+    <h3>نموذج التواصل</h3>
+    <form action="mailto:a5855209@gmail.com" method="post" enctype="text/plain">
+      <label for="name">الاسم:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">رسالتك:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+      <button type="submit">إرسال</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 JKA5 - جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script>
+    document.querySelector("form").addEventListener("submit", function(e) {
+      alert("تم إرسال رسالتك بنجاح!");
+    });
+  </script>
 </body>
 </html>
