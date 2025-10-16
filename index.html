@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO Meta Tags -->
-    <title>JKA5 | تعلم الأمن السيبراني بالعربية</title>
-    <meta name="description" content="منصة JKA5 هي بوابتك الأولى لتعلم الأمن السيبراني والاختراق الأخلاقي باللغة العربية، من خلال مسارات تعليمية للمبتدئين والمحترفين.">
-    <meta name="keywords" content="الأمن السيبراني, تعلم, دورات, اختراق أخلاقي, JKA5, سايبر سكيورتي, cybersecurity arabic">
+    <title>JKA5 | تعلم الأمن السيبراني بالعربية | دورات اختراق أخلاقي</title>
+    <meta name="description" content="منصة JKA5 هي بوابتك الأولى لتعلم الأمن السيبراني والاختراق الأخلاقي باللغة العربية. ابدأ الآن رحلتك مع دورات متخصصة في حماية الشبكات وأمن المعلومات.">
+    <meta name="keywords" content="الأمن السيبراني, تعلم, دورات, اختراق أخلاقي, JKA5, سايبر سكيورتي, cybersecurity arabic, حماية الشبكات, أمن المعلومات, اختبار الاختراق, دورات الأمن السيبراني">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,6 +56,12 @@
         .accent-color { color: var(--accent-color); }
         .bg-accent { background-color: var(--accent-color); }
 
+        .cta-button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
 
         /* Animated Gradient Background */
         .hero-gradient {
@@ -174,7 +180,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">بوابتك الأولى لعالم الأمن السيبراني</h1>
                 <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">تعلم أحدث التقنيات والمهارات لحماية الأنظمة والشبكات من الهجمات الإلكترونية مع خبراء المجال.</p>
-                <a href="#courses" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-lg shadow-blue-500/30">تصفح الدورات</a>
+                <a href="#courses" class="cta-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-lg shadow-blue-500/30">استكشف دوراتنا الآن</a>
             </div>
         </section>
 
@@ -184,7 +190,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title fade-in-section">من نحن؟</h2>
                 <div class="flex flex-col md:flex-row items-center gap-12">
                     <div class="md:w-1/2 fade-in-section">
-                        <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=فريق+JKA5" alt="فريق عمل JKA5" class="rounded-xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="فريق عمل JKA5 في بيئة عمل تعاونية" class="rounded-xl shadow-2xl">
                     </div>
                     <div class="md:w-1/2 fade-in-section" style="transition-delay: 200ms;">
                         <h3 class="text-2xl font-bold mb-4">رؤيتنا: تمكين الجيل القادم من خبراء الأمن السيبراني العرب</h3>
@@ -248,7 +254,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 fade-in-section">لست متأكداً بعد؟</h2>
                 <p class="text-secondary text-lg max-w-2xl mx-auto mb-8 fade-in-section">جرّب الدرس الأول من دورة "أساسيات الأمن السيبراني" مجاناً وشاهد جودة المحتوى بنفسك. لا حاجة للتسجيل.</p>
-                <a href="#" class="bg-accent hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-lg fade-in-section">شاهد الدرس المجاني</a>
+                <a href="#" class="cta-button bg-accent hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-lg fade-in-section">ابدأ الآن مجاناً</a>
             </div>
         </section>
 
@@ -297,24 +303,24 @@
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title fade-in-section">أحدث المقالات والتحليلات</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-secondary rounded-xl overflow-hidden card-hover-effect fade-in-section">
-                        <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Blog+Post+1" alt="صورة مقال" class="w-full h-48 object-cover">
+                    <div class="bg-primary rounded-xl overflow-hidden card-hover-effect fade-in-section">
+                        <img src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=2070&auto=format&fit=crop" alt="خبير أمني يحلل شيفرة على شاشات متعددة" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-xl mb-3">تحليل لأخطر 5 هجمات إلكترونية في 2025</h3>
                             <p class="text-secondary mb-4">نستعرض أخطر 5 هجمات متوقعة، من التصيد المتقدم المعتمد على الذكاء الاصطناعي إلى برامج الفدية التي تستهدف البنى التحتية الحيوية.</p>
                             <a href="#" class="font-bold text-accent-color hover:underline">اقرأ المزيد</a>
                         </div>
                     </div>
-                    <div class="bg-secondary rounded-xl overflow-hidden card-hover-effect fade-in-section" style="transition-delay: 200ms;">
-                         <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Blog+Post+2" alt="صورة مقال" class="w-full h-48 object-cover">
+                    <div class="bg-primary rounded-xl overflow-hidden card-hover-effect fade-in-section" style="transition-delay: 200ms;">
+                         <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2072&auto=format&fit=crop" alt="ممرات مضيئة في مركز بيانات ضخم" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-xl mb-3">أفضل 10 أدوات مجانية للاختراق الأخلاقي</h3>
                             <p class="text-secondary mb-4">جمعنا لك قائمة بأقوى 10 أدوات مجانية يستخدمها المحترفون، من Nmap لفحص الشبكات إلى Metasploit لاستغلال الثغرات.</p>
                             <a href="#" class="font-bold text-accent-color hover:underline">اقرأ المزيد</a>
                         </div>
                     </div>
-                    <div class="bg-secondary rounded-xl overflow-hidden card-hover-effect fade-in-section" style="transition-delay: 400ms;">
-                         <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Blog+Post+3" alt="صورة مقال" class="w-full h-48 object-cover">
+                    <div class="bg-primary rounded-xl overflow-hidden card-hover-effect fade-in-section" style="transition-delay: 400ms;">
+                         <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" alt="شاشة لابتوب تعرض أكواد برمجية معقدة" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-xl mb-3">كيف تبني مختبرك المنزلي لممارسة الأمن السيبراني؟</h3>
                             <p class="text-secondary mb-4">دليل عملي خطوة بخطوة لإنشاء مختبر افتراضي آمن ومنخفض التكلفة في منزلك باستخدام أدوات مثل VirtualBox لتطبيق ما تتعلمه بأمان.</p>
@@ -398,34 +404,74 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-primary">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title fade-in-section">تواصل معنا</h2>
+                <form class="space-y-6 fade-in-section">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-secondary mb-2">الاسم</label>
+                        <input type="text" id="name" name="name" required class="w-full p-3 rounded-md bg-secondary border border-color focus:outline-none focus:ring-2 focus:ring-blue-500 text-primary">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-secondary mb-2">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" required class="w-full p-3 rounded-md bg-secondary border border-color focus:outline-none focus:ring-2 focus:ring-blue-500 text-primary">
+                    </div>
+                     <div>
+                        <label for="subject" class="block text-sm font-medium text-secondary mb-2">الموضوع</label>
+                        <input type="text" id="subject" name="subject" required class="w-full p-3 rounded-md bg-secondary border border-color focus:outline-none focus:ring-2 focus:ring-blue-500 text-primary">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-secondary mb-2">رسالتك</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full p-3 rounded-md bg-secondary border border-color focus:outline-none focus:ring-2 focus:ring-blue-500 text-primary"></textarea>
+                    </div>
+                    <button type="submit" class="cta-button w-full bg-accent hover:bg-opacity-80 text-white font-bold py-3 px-6 rounded-md transition duration-300">إرسال الرسالة</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Legal Sections -->
+        <section id="legal" class="py-20 bg-secondary">
+             <div class="container mx-auto px-6 max-w-4xl text-center">
+                <div id="privacy-policy" class="mb-12">
+                    <h3 class="text-2xl font-bold mb-4">سياسة الخصوصية</h3>
+                    <p class="text-secondary text-sm">نحن في JKA5 نحترم خصوصيتك. توضح هذه السياسة كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتك الشخصية. عند استخدامك للموقع، فإنك توافق على الممارسات الموضحة هنا. نحن نجمع البيانات الأساسية مثل الاسم والبريد الإلكتروني عند التسجيل في الدورات أو النشرة البريدية لتحسين تجربتك وتزويدك بالمحتوى المناسب. لا نشارك بياناتك مع أي طرف ثالث دون موافقتك الصريحة.</p>
+                </div>
+                 <div id="terms-of-service">
+                    <h3 class="text-2xl font-bold mb-4">شروط الاستخدام</h3>
+                    <p class="text-secondary text-sm">مرحباً بك في JKA5. باستخدام هذا الموقع، فإنك توافق على الالتزام بهذه الشروط والأحكام. المحتوى التعليمي المقدم هو للاستخدام الشخصي وغير التجاري. يمنع منعاً باتاً إعادة نشر أو توزيع أو بيع أي من مواد الدورات. نحتفظ بالحق في تعديل هذه الشروط في أي وقت، ويعتبر استمرارك في استخدام الموقع موافقة على أي تغييرات جديدة.</p>
+                </div>
+             </div>
+        </section>
+
     </main>
     
     <!-- Footer -->
-    <footer id="contact" class="bg-secondary border-t border-color">
+    <footer class="bg-secondary border-t border-color">
         <div class="container mx-auto px-6 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
                 <div class="lg:col-span-1">
                     <h3 class="text-2xl font-bold mb-4 font-cairo">JKA5</h3>
                     <p class="text-secondary">مهمتنا هي تمكينك بالمهارات اللازمة لمواجهة التحديات الأمنية الرقمية.</p>
-                    <div class="flex space-x-4 space-x-reverse mt-6">
+                    <div class="flex justify-center md:justify-start space-x-4 space-x-reverse mt-6">
                         <a href="https://www.instagram.com/jka__53" target="_blank" class="text-secondary hover:text-accent-color"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7.044a4.956 4.956 0 100 9.912 4.956 4.956 0 000-9.912zM12 15.45a3.45 3.45 0 110-6.9 3.45 3.45 0 010 6.9zM16.95 6.402a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" clip-rule="evenodd"></path></svg></a>
                     </div>
                 </div>
                 <div>
-                    <h3 class="font-bold text-xl mb-4">روابط مهمة</h3>
+                    <h3 class="font-bold text-xl mb-4">روابط سريعة</h3>
                     <ul class="space-y-2">
                         <li><a href="#about" class="text-secondary hover:text-accent-color">عن المنصة</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent-color">سياسة الخصوصية</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent-color">شروط الاستخدام</a></li>
+                        <li><a href="#courses" class="text-secondary hover:text-accent-color">الدورات</a></li>
+                        <li><a href="#faq" class="text-secondary hover:text-accent-color">الأسئلة الشائعة</a></li>
                     </ul>
                 </div>
-                <div class="lg:col-span-2">
-                    <h3 class="font-bold text-xl mb-4">النشرة البريدية</h3>
-                    <p class="text-secondary mb-4">انضم لنشرتنا البريدية لتبقى على اطلاع بآخر الدورات والمقالات.</p>
-                    <form class="flex flex-col sm:flex-row gap-2">
-                        <input type="email" placeholder="بريدك الإلكتروني" class="w-full px-4 py-2 rounded-md bg-primary border border-color focus:outline-none focus:ring-2 focus:ring-blue-500 text-primary">
-                        <button type="submit" class="bg-accent hover:bg-opacity-80 text-white font-bold py-2 px-5 rounded-md transition duration-300">اشتراك</button>
-                    </form>
+                 <div>
+                    <h3 class="font-bold text-xl mb-4">روابط قانونية</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#privacy-policy" class="text-secondary hover:text-accent-color">سياسة الخصوصية</a></li>
+                        <li><a href="#terms-of-service" class="text-secondary hover:text-accent-color">شروط الاستخدام</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="mt-8 border-t border-color pt-8 text-center text-secondary">
@@ -592,6 +638,4 @@
     </script>
 </body>
 </html>
-
-
 
