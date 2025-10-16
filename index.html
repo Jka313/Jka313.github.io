@@ -1,260 +1,231 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بوابة الأمن السيبراني - JKA5</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #000000, #001f1f);
-      color: #e0e0e0;
-      overflow-x: hidden;
-    }
-    header {
-      background-color: #000;
-      padding: 10px 20px 20px;
-      text-align: center;
-      border-bottom: 2px solid #00ffff;
-      box-shadow: 0 0 10px #00ffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    /* الشعار النيون */
-    #logo-svg {
-      width: 220px;
-      height: 60px;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
-    nav a {
-      color: #00ffff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #00ff99;
-    }
-    section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .hero {
-      background: linear-gradient(135deg, #001f1f, #003333);
-      animation: fadeIn 1s ease-in-out;
-    }
-    .hero h2 {
-      font-size: 2.5em;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-    }
-    .hero p {
-      font-size: 1.2em;
-      color: #ccc;
-    }
-
-    /* شعار العين السيبرانية */
-    .cyber-eye {
-      animation: rotateEye 20s linear infinite;
-      transform-origin: center;
-    }
-    .eye-pupil {
-      animation: blink 2s ease-in-out infinite;
-    }
-    @keyframes rotateEye {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes blink {
-      0%, 100% { fill: #00ffff; }
-      50% { fill: #00ff99; }
-    }
-
-    .about, .tools, .contact {
-      background-color: #1a1a1a;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #00ffff33;
-    }
-    .about h3, .tools h3, .contact h3 {
-      color: #00ffff;
-      margin-bottom: 20px;
-      text-shadow: 0 0 5px #00ffff;
-    }
-    .tools ul {
-      list-style: none;
-      padding: 0;
-    }
-    .tools li {
-      margin: 10px 0;
-      font-weight: bold;
-      color: #00ffcc;
-    }
-    form {
-      max-width: 500px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    label {
-      font-weight: bold;
-      color: #ccc;
-    }
-    input, textarea {
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #333;
-      color: #fff;
-    }
-    button {
-      padding: 10px;
-      background-color: #00ffff;
-      border: none;
-      border-radius: 5px;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #00ff99;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #000;
-      border-top: 2px solid #00ffff;
-      color: #888;
-      box-shadow: 0 -2px 10px #00ffff;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .background-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at center, #00ffff22 0%, transparent 70%);
-      animation: pulse 5s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-      100% { opacity: 0.3; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الأمن السيبراني | دروس وشروحات احترافية</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Tajawal for Arabic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-gradient {
+            background: linear-gradient(110deg, #0f172a 60%, #1e3a8a 100%);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #3b82f6;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+        }
+    </style>
 </head>
-<body>
-  <div class="background-animation"></div>
-  <header>
-    <!-- شعار JKA5 النيون -->
-    <svg id="logo-svg" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شعار JKA5">
-      <defs>
-        <linearGradient id="neonGradient" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0%" stop-color="#00ffff"/>
-          <stop offset="100%" stop-color="#00ff99"/>
-        </linearGradient>
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      <text x="50%" y="55%" text-anchor="middle" fill="url(#neonGradient)" filter="url(#glow)"
-            font-size="48" font-family="Segoe UI, Tahoma, sans-serif" font-weight="900" letter-spacing="4">
-        JKA5
-      </text>
-    </svg>
+<body class="bg-slate-900 text-white">
 
-    <nav>
-      <ul>
-        <li><a href="#hero">الرئيسية</a></li>
-        <li><a href="#about">من نحن</a></li>
-        <li><a href="#tools">أدوات</a></li>
-        <li><a href="#contact">تواصل معنا</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Header -->
+    <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-slate-900/20">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-500 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span>JKA5</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 space-x-reverse">
+                <a href="#home" class="text-gray-300 hover:text-blue-400 transition duration-300">الرئيسية</a>
+                <a href="#courses" class="text-gray-300 hover:text-blue-400 transition duration-300">الدورات</a>
+                <a href="#blog" class="text-gray-300 hover:text-blue-400 transition duration-300">المقالات</a>
+                <a href="#about" class="text-gray-300 hover:text-blue-400 transition duration-300">من نحن</a>
+                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition duration-300">تواصل معنا</a>
+            </div>
+            <a href="#" class="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg transition duration-300">ابدأ التعلم</a>
+            <button id="mobile-menu-button" class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block text-gray-300 hover:text-blue-400 py-2">الرئيسية</a>
+            <a href="#courses" class="block text-gray-300 hover:text-blue-400 py-2">الدورات</a>
+            <a href="#blog" class="block text-gray-300 hover:text-blue-400 py-2">المقالات</a>
+            <a href="#about" class="block text-gray-300 hover:text-blue-400 py-2">من نحن</a>
+            <a href="#contact" class="block text-gray-300 hover:text-blue-400 py-2">تواصل معنا</a>
+            <a href="#" class="block bg-blue-600 hover:bg-blue-700 text-white text-center font-bold mt-4 py-2 px-5 rounded-lg">ابدأ التعلم</a>
+        </div>
+    </header>
 
-  <section class="hero" id="hero">
-    <h2>مرحبًا بك في JKA5</h2>
-    <p>منصة احترافية للأمن السيبراني تقدم أدوات ومقالات ومصادر متقدمة.</p>
-  </section>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-gradient pt-24 pb-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">بوابتك الأولى لعالم الأمن السيبراني</h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">تعلم أحدث التقنيات والمهارات لحماية الأنظمة والشبكات من الهجمات الإلكترونية مع خبراء المجال.</p>
+                <div class="flex justify-center items-center space-x-4 space-x-reverse">
+                    <a href="#courses" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 shadow-lg shadow-blue-500/30">تصفح الدورات</a>
+                    <a href="#about" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">اعرف المزيد</a>
+                </div>
+            </div>
+        </section>
 
-  <!-- شعار العين السيبرانية -->
-  <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
-    <svg width="300" height="300" viewBox="0 0 300 300" aria-label="شعار العين السيبرانية" role="img">
-      <g class="cyber-eye">
-        <circle cx="150" cy="150" r="120" stroke="#00ffff" stroke-width="4" fill="none" />
-        <text x="150" y="25" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">J</text>
-        <text x="240" y="95" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">K</text>
-        <text x="210" y="245" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">A</text>
-        <text x="60" y="200" text-anchor="middle" fill="#00ffff" font-size="16" font-weight="bold">5</text>
-      </g>
-      <ellipse cx="150" cy="150" rx="60" ry="35" fill="#001f1f" stroke="#00ffff" stroke-width="3" />
-      <circle cx="150" cy="150" r="10" class="eye-pupil" />
-      <circle cx="150" cy="150" r="3" fill="#000" />
-      <line x1="120" y1="150" x2="180" y2="150" stroke="#00ffff" stroke-width="1" stroke-dasharray="4" />
-      <line x1="150" y1="120" x2="150" y2="180" stroke="#00ffff" stroke-width="1" stroke-dasharray="4" />
-    </svg>
-  </div>
+        <!-- Courses Section -->
+        <section id="courses" class="py-20 bg-slate-800">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">مسارات تعليمية متكاملة</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Course Card 1 -->
+                    <div class="bg-slate-900 rounded-xl overflow-hidden card-hover-effect">
+                        <div class="p-8">
+                            <div class="flex items-center justify-center h-16 w-16 bg-blue-500/10 rounded-full mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H5v-2H3v-2H1v-4a6 6 0 016-6h4a6 6 0 016 6z"/></svg>
+                            </div>
+                            <h3 class="font-bold text-2xl text-center mb-3">الاختراق الأخلاقي</h3>
+                            <p class="text-gray-400 text-center leading-relaxed">تعلم كيف يفكر المهاجمون للدفاع بشكل أفضل عن أصولك الرقمية.</p>
+                        </div>
+                    </div>
+                    <!-- Course Card 2 -->
+                    <div class="bg-slate-900 rounded-xl overflow-hidden card-hover-effect">
+                        <div class="p-8">
+                            <div class="flex items-center justify-center h-16 w-16 bg-blue-500/10 rounded-full mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a7.5 7.5 0 0110.606 0M15.89 9.111a5.5 5.5 0 010 7.778m0-7.778l-2.829 2.828-2.828-2.828m0 7.778l2.828-2.828 2.829 2.828m0-7.778a5.5 5.5 0 010 7.778m0-7.778a5.5 5.5 0 010 7.778"/></svg>
+                            </div>
+                            <h3 class="font-bold text-2xl text-center mb-3">أمن الشبكات</h3>
+                            <p class="text-gray-400 text-center leading-relaxed">اكتشف كيفية تأمين البنية التحتية للشبكات من التهديدات الداخلية والخارجية.</p>
+                        </div>
+                    </div>
+                    <!-- Course Card 3 -->
+                    <div class="bg-slate-900 rounded-xl overflow-hidden card-hover-effect">
+                        <div class="p-8">
+                            <div class="flex items-center justify-center h-16 w-16 bg-blue-500/10 rounded-full mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.789-2.756 9.348m-2.286-2.286A11.95 11.95 0 0112 4.904a11.953 11.953 0 017.042 3.158m-11.8 4.676A8.96 8.96 0 0112 8.91a8.964 8.964 0 015.756 2.088m-13.82 2.392A14.945 14.945 0 0112 3c3.967 0 7.581 1.623 10.124 4.268"/></svg>
+                            </div>
+                            <h3 class="font-bold text-2xl text-center mb-3">التحليل الجنائي الرقمي</h3>
+                            <p class="text-gray-400 text-center leading-relaxed">تعلم تقنيات التحقيق في الحوادث السيبرانية وجمع الأدلة الرقمية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section class="about" id="about">
-    <h3>من نحن</h3>
-    <p>نحن فريق متخصص في الأمن السيبراني، نقدم محتوى تعليمي وأدوات تحليل ومصادر متقدمة لحماية الأنظمة والمعلومات.</p>
-  </section>
+        <!-- Blog Section -->
+        <section id="blog" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">أحدث المقالات والأخبار</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Article 1 -->
+                    <div class="bg-slate-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Cyber+Security" alt="صورة مقال عن الأمن السيبراني" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <span class="text-sm text-blue-400 font-medium">أخبار</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3">تحذير من موجة جديدة من هجمات التصيد الاحتيالي</h3>
+                            <p class="text-gray-400 text-sm">تستهدف حملة تصيد جديدة بيانات الاعتماد البنكية للمستخدمين عبر رسائل نصية...</p>
+                            <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 font-semibold">اقرأ المزيد &larr;</a>
+                        </div>
+                    </div>
+                    <!-- Article 2 -->
+                    <div class="bg-slate-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Data+Privacy" alt="صورة مقال عن خصوصية البيانات" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <span class="text-sm text-blue-400 font-medium">شروحات</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3">5 خطوات أساسية لحماية خصوصيتك على الإنترنت</h3>
+                            <p class="text-gray-400 text-sm">في هذا الدليل، نستعرض أهم الإجراءات التي يمكنك اتخاذها لتعزيز خصوصيتك...</p>
+                            <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 font-semibold">اقرأ المزيد &larr;</a>
+                        </div>
+                    </div>
+                    <!-- Article 3 -->
+                    <div class="bg-slate-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/0f172a/3b82f6?text=AI+in+Security" alt="صورة مقال عن الذكاء الاصطناعي" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <span class="text-sm text-blue-400 font-medium">تقنيات</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3">دور الذكاء الاصطناعي في مستقبل الأمن السيبراني</h3>
+                            <p class="text-gray-400 text-sm">كيف يغير الذكاء الاصطناعي قواعد اللعبة في اكتشاف التهديدات والاستجابة لها...</p>
+                            <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 font-semibold">اقرأ المزيد &larr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section class="tools" id="tools">
-    <h3>أدوات الأمن السيبراني</h3>
-    <ul>
-      <li>أداة فحص الثغرات</li>
-      <li>تحليل الشبكات</li>
-      <li>توليد كلمات مرور قوية</li>
-      <li>مراقبة الأنظمة</li>
-    </ul>
-  </section>
+        <!-- About Us Section -->
+        <section id="about" class="py-20 bg-slate-800">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">من نحن؟</h2>
+                        <p class="text-gray-300 leading-loose mb-4">نحن فريق من خبراء الأمن السيبراني والمهندسين المتخصصين، شغوفون بنشر الوعي والمعرفة في هذا المجال الحيوي. مهمتنا هي تمكين الأفراد والشركات بالمهارات اللازمة لمواجهة التحديات الأمنية الرقمية المتزايدة.</p>
+                        <p class="text-gray-300 leading-loose">نقدم محتوى تعليميًا عالي الجودة، من الأساسيات إلى المفاهيم المتقدمة، بأسلوب مبسط وعملي لضمان وصول المعلومة للجميع.</p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="https://placehold.co/500x350/1e293b/3b82f6?text=Our+Team" alt="صورة فريق العمل" class="rounded-xl shadow-2xl shadow-slate-900/50">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <section class="contact" id="contact">
-    <h3>نموذج التواصل</h3>
-    <form action="mailto:a5855209@gmail.com" method="post" enctype="text/plain">
-      <label for="name">الاسم:</label>
-      <input type="text" id="name" name="name" required>
-      <label for="email">البريد الإلكتروني:</label>
-      <input type="email" id="email" name="email" required>
-      <label for="message">رسالتك:</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
-      <button type="submit">إرسال</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>© 2025 JKA5 - جميع الحقوق محفوظة</p>
-  </footer>
-
-  <script>
-    document.querySelector("form").addEventListener("submit", function(e) {
-      alert("تم إرسال رسالتك بنجاح!");
-    });
-  </script>
+    </main>
+    
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl mb-4">JKA5</h3>
+                    <p class="text-gray-400">منصة رائدة في تعليم الأمن السيبراني في العالم العربي.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#courses" class="text-gray-400 hover:text-blue-400">الدورات</a></li>
+                        <li><a href="#blog" class="text-gray-400 hover:text-blue-400">المقالات</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-4">تابعنا</h3>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg></a>
+                        <a href="https://www.instagram.com/jka__53" target="_blank" class="text-gray-400 hover:text-blue-400"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7.044a4.956 4.956 0 100 9.912 4.956 4.956 0 000-9.912zM12 15.45a3.45 3.45 0 110-6.9 3.45 3.45 0 010 6.9zM16.95 6.402a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" clip-rule="evenodd"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-slate-800 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 JKA5. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
+
+
