@@ -3,460 +3,467 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JKA5 | CLASSIFIED ACCESS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <title>JKA5 | SINGULARITY OS v5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #050505;
-            --panel-bg: rgba(10, 12, 10, 0.9);
-            --neon-green: #00ff41;
-            --neon-blue: #008F11; /* لون هكر كلاسيكي */
+            --bg: #020202;
+            --win-bg: rgba(10, 12, 10, 0.95);
+            /* اللون الرئيسي المتغير */
+            --main-neon: #00ff41; 
             --neon-cyan: #00f3ff;
-            --alert-red: #ff003c;
-            --font-ui: 'Share Tech Mono', monospace;
+            --alert: #ff003c;
             --font-code: 'Fira Code', monospace;
         }
 
-        * { box-sizing: border-box; user-select: none; cursor: crosshair; }
+        * { box-sizing: border-box; user-select: none; }
+        body { margin: 0; overflow: hidden; background: var(--bg); font-family: var(--font-code); color: var(--main-neon); transition: color 0.5s; }
+        
+        /* تأثيرات بصرية إضافية */
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 9999; opacity: 0.3; }
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            color: var(--neon-green);
-            font-family: var(--font-ui);
-            height: 100vh; overflow: hidden;
-            display: grid; grid-template-rows: 60px 1fr 25px;
-        }
-
-        /* --- 1. شاشة الدخول (Intro Overlay) --- */
-        #intro-screen {
+        /* --- 1. Enhanced Boot Screen --- */
+        #boot-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: opacity 1s;
+            background: var(--bg); z-index: 9999; padding: 20px;
+            font-size: 12px; display: flex; flex-direction: column; justify-content: flex-end;
         }
-        .access-btn {
-            background: transparent; border: 2px solid var(--neon-green);
-            color: var(--neon-green); padding: 15px 40px;
-            font-family: var(--font-ui); font-size: 1.5rem;
-            letter-spacing: 3px; cursor: pointer;
-            transition: 0.3s; text-transform: uppercase;
-            box-shadow: 0 0 15px var(--neon-green);
-            animation: pulse 2s infinite;
-        }
-        .access-btn:hover { background: var(--neon-green); color: #000; }
+        .ascii-logo { white-space: pre; color: var(--main-neon); font-weight: bold; margin-bottom: 20px; text-align: center;}
+        .boot-text { color: #ccc; margin-bottom: 2px; }
+        .boot-success { color: var(--main-neon); }
+        .boot-warn { color: var(--alert); }
 
-        /* --- CRT Effect (خطوط الشاشة القديمة) --- */
-        .crt-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px; pointer-events: none; z-index: 999;
-            opacity: 0.6;
+        /* --- 2. Desktop Environment --- */
+        #desktop {
+            position: relative; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+            display: none;
         }
-        .vignette {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%);
-            pointer-events: none; z-index: 998;
-        }
+        #matrixCanvas { position: absolute; top: 0; left: 0; opacity: 0.15; z-index: 0; pointer-events: none; }
 
-        /* --- Header --- */
-        header {
-            border-bottom: 1px solid #333; padding: 0 20px;
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 10;
+        /* Taskbar */
+        .taskbar {
+            position: absolute; top: 0; left: 0; width: 100%; height: 45px;
+            background: rgba(5,5,5,0.95); border-bottom: 1px solid #333;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100;
         }
-        .logo { font-size: 1.8rem; text-shadow: 0 0 10px var(--neon-green); }
-        .logo span { color: var(--neon-cyan); }
+        .start-btn { font-weight: bold; font-size: 16px; letter-spacing: 2px; display: flex; align-items: center; gap:10px; }
+        .sys-tray { font-size: 12px; display: flex; gap: 20px; align-items: center; }
+        .theme-btn { cursor: pointer; padding: 5px; border: 1px solid #333; border-radius: 50%; width: 20px; height: 20px; }
 
-        /* --- Grid Layout --- */
-        .main-interface {
-            display: grid; grid-template-columns: 240px 1fr 320px;
-            gap: 2px; padding: 5px; position: relative;
+        /* Desktop Icons */
+        .desktop-icons {
+            position: absolute; top: 70px; left: 30px; z-index: 10;
+            display: flex; flex-direction: column; gap: 25px;
         }
+        .icon {
+            width: 90px; text-align: center; cursor: pointer;
+            transition: 0.2s; opacity: 0.7;
+        }
+        .icon:hover { opacity: 1; transform: scale(1.05); text-shadow: 0 0 15px var(--main-neon); }
+        .icon i { font-size: 32px; margin-bottom: 8px; color: #eee; display: block; filter: drop-shadow(0 0 5px var(--main-neon)); }
+        .icon span { font-size: 11px; background: rgba(0,0,0,0.7); padding: 3px 6px; border-radius: 4px; }
 
-        /* Sidebar */
-        .sidebar {
-            border: 1px solid #333; background: var(--panel-bg);
-            display: flex; flex-direction: column;
+        /* --- 3. Draggable Windows --- */
+        .window {
+            position: absolute; width: 550px; min-height: 350px;
+            background: var(--win-bg); border: 1px solid var(--main-neon);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            display: none; flex-direction: column; z-index: 50;
+            backdrop-filter: blur(10px); border-radius: 8px 8px 0 0; overflow: hidden;
+            transition: border-color 0.5s;
         }
-        .nav-item {
-            padding: 15px 20px; border-bottom: 1px solid #222;
-            color: #666; transition: 0.3s; display: flex; align-items: center; gap: 10px;
+        .win-header {
+            padding: 10px 15px; background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid #333; cursor: grab;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .nav-item:hover, .nav-item.active {
-            color: var(--neon-green); background: rgba(0, 255, 65, 0.05);
-            border-left: 3px solid var(--neon-green); padding-left: 25px;
-            text-shadow: 0 0 8px var(--neon-green);
-        }
+        .win-header:active { cursor: grabbing; }
+        .win-title { font-weight: bold; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 10px;}
+        .btn-close { cursor: pointer; font-size: 16px; transition: 0.2s; color: #666; }
+        .btn-close:hover { color: var(--alert); text-shadow: 0 0 10px var(--alert); }
 
-        /* Viewport (Center) */
-        .viewport {
-            border: 1px solid #333; position: relative; overflow: hidden;
-            background: #000;
+        .win-body { padding: 15px; flex: 1; overflow-y: auto; max-height: 500px; color: #ccc; font-size: 13px; }
+        
+        /* Content Styling */
+        h2 { margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 5px; font-size: 16px; color: var(--main-neon); }
+        .item-row {
+            display: flex; justify-content: space-between; padding: 12px;
+            border-bottom: 1px solid #222; margin-bottom: 5px; transition: 0.2s;
         }
-        .content-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            padding: 30px; display: none; overflow-y: auto;
-            background: rgba(0,0,0,0.85); animation: fadeIn 0.5s;
-        }
-        .content-layer.active { display: block; }
+        .item-row:hover { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--main-neon); }
 
-        /* Threat Map Canvas */
-        #mapCanvas {
-            position: absolute; top: 0; left: 0; z-index: 0;
-            opacity: 0.4; width: 100%; height: 100%;
-        }
+        /* Terminal Specific */
+        #terminal-body { background: #080808; color: #ccc; font-size: 12px; }
+        .prompt { color: var(--main-neon); }
+        .sim-log { margin-bottom: 2px; }
+        .sim-success { color: var(--main-neon); font-weight: bold; }
+        .sim-error { color: var(--alert); }
 
-        /* Matrix Rain Canvas (Hidden by default) */
-        #matrixCanvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9000; display: none; background: black;
-        }
-
-        /* Right Panel */
-        .intel-panel {
-            display: grid; grid-template-rows: 1.5fr 1fr; gap: 5px;
-        }
-        .panel-box {
-            border: 1px solid #333; background: var(--panel-bg);
-            padding: 10px; display: flex; flex-direction: column;
-        }
-        .panel-title {
-            color: var(--neon-cyan); border-bottom: 1px solid #333;
-            padding-bottom: 5px; margin-bottom: 10px; font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-
-        /* Terminal */
-        #term-output {
-            flex: 1; font-family: var(--font-code); font-size: 0.8rem;
-            color: #ccc; overflow-y: auto; padding-right: 5px;
-        }
-        .cmd-line { display: flex; margin-top: 5px; border-top: 1px solid #333; padding-top: 5px;}
-        #cmd-input {
-            background: transparent; border: none; color: var(--neon-green);
-            font-family: var(--font-code); flex: 1; outline: none; margin-left: 5px;
-        }
-
-        /* Cards & Roadmaps */
-        .card {
-            border: 1px solid var(--neon-green); padding: 15px; margin-bottom: 15px;
-            background: rgba(0, 255, 65, 0.02); transition: 0.3s;
-        }
-        .card:hover { box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); transform: translateX(5px); }
-        h2 { color: var(--neon-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed #444; padding-bottom: 10px; }
-
-        /* Footer */
-        footer {
-            background: #020202; border-top: 1px solid #333;
-            display: flex; align-items: center; justify-content: flex-end;
-            padding: 0 20px; font-size: 0.7rem; color: #444;
-        }
-
-        /* Animations */
-        @keyframes pulse { 0% {opacity: 0.8;} 50% {opacity: 1;} 100% {opacity: 0.8;} }
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        /* Task Manager Specific */
+        .task-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #333; font-size: 11px; }
+        .task-name { flex: 2; }
+        .task-cpu { flex: 1; color: var(--neon-cyan); }
+        .task-mem { flex: 1; color: var(--main-neon); }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-green); border-radius: 3px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--main-neon); border-radius: 2px; }
         ::-webkit-scrollbar-track { background: #111; }
-
-        /* Mobile Fixes */
-        @media (max-width: 850px) {
-            .main-interface { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
-            .sidebar, .intel-panel { display: none; } /* Simplified for mobile */
-            .logo { font-size: 1.2rem; }
-        }
     </style>
 </head>
 <body>
+    <div class="scanlines"></div>
 
-    <canvas id="matrixCanvas"></canvas>
-
-    <div id="intro-screen">
-        <h1 style="font-size: 3rem; color: white; text-shadow: 0 0 20px var(--neon-cyan);">JKA<span style="color:var(--neon-cyan)">5</span> SECURE OS</h1>
-        <p style="color: #666; font-family: var(--font-code);">ENCRYPTED CONNECTION ESTABLISHED</p>
-        <br><br>
-        <button class="access-btn" onclick="enterSystem()">INITIALIZE SYSTEM</button>
-    </div>
-
-    <div class="crt-overlay"></div>
-    <div class="vignette"></div>
-
-    <header>
-        <div class="logo">JKA<span>5</span>_CYBER_CORE</div>
-        <div style="display: flex; gap: 15px; font-size: 0.8rem; color: var(--neon-cyan);">
-            <span><i class="fas fa-shield-virus"></i> DEFENSE: ACTIVE</span>
-            <span><i class="fas fa-signal"></i> PING: 12ms</span>
+    <div id="boot-screen">
+        <div class="ascii-logo">
+   ___   __  __    _      ____  
+  |_  | |  |/  |  / \    | ___| 
+  _ | | |  ' /  / _ \   |___ \ 
+ | || | | . \  / ___ \   ___) |
+ |____| |_|\_\/_/   \_\ |____/  v5.0
         </div>
-    </header>
-
-    <div class="main-interface">
-        <aside class="sidebar">
-            <div class="nav-item active" onclick="nav('dashboard')" onmouseenter="playHover()"><i class="fas fa-satellite-dish"></i> THREAT MAP</div>
-            <div class="nav-item" onclick="nav('roadmaps')" onmouseenter="playHover()"><i class="fas fa-project-diagram"></i> ROADMAPS</div>
-            <div class="nav-item" onclick="nav('labs')" onmouseenter="playHover()"><i class="fas fa-flask"></i> JKA5 LABS</div>
-            <div class="nav-item" onclick="nav('tools')" onmouseenter="playHover()"><i class="fas fa-toolbox"></i> ARSENAL</div>
-            <div class="nav-item" style="margin-top:auto; color: var(--alert-red);"><i class="fas fa-power-off"></i> DISCONNECT</div>
-        </aside>
-
-        <main class="viewport">
-            <canvas id="mapCanvas"></canvas>
-
-            <div id="dashboard" class="content-layer active" style="background: transparent; pointer-events: none;">
-                <div style="position: absolute; bottom: 40px; left: 40px; pointer-events: auto;">
-                    <h1 style="font-size: 4rem; line-height: 1; text-shadow: 0 0 10px black; color: white;">GLOBAL<br>SURVEILLANCE</h1>
-                    <p style="background: var(--neon-green); color: black; display: inline-block; padding: 2px 10px; font-weight: bold;">LIVE FEED ONLINE</p>
-                </div>
-            </div>
-
-            <div id="roadmaps" class="content-layer">
-                <h2>// CLASSIFIED LEARNING PATHS</h2>
-                <div class="card">
-                    <h3 style="color:white">01. Ethical Hacking Foundations</h3>
-                    <p>Networking (TCP/IP), Linux Basics, Python for Security.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color:white">02. Web Exploitation</h3>
-                    <p>OWASP Top 10, SQL Injection, XSS, Burp Suite Mastery.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color:white">03. Red Teaming</h3>
-                    <p>Active Directory Attacks, Cobalt Strike, Evasion Techniques.</p>
-                </div>
-            </div>
-
-            <div id="labs" class="content-layer">
-                <h2>// CAPTURE THE FLAG (CTF)</h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="card">
-                        <h3>BOX: MR_ROBOT</h3>
-                        <span style="color:var(--neon-green)">EASY</span>
-                        <br><br>
-                        <button style="background:var(--neon-green); border:none; padding:5px 15px; font-weight:bold; cursor:pointer;">DEPLOY</button>
-                    </div>
-                    <div class="card" style="border-color: var(--alert-red);">
-                        <h3>BOX: BLACK_WIDOW</h3>
-                        <span style="color:var(--alert-red)">INSANE</span>
-                        <br><br>
-                        <button style="background:#333; color:#555; border:none; padding:5px 15px;" disabled>LOCKED</button>
-                    </div>
-                </div>
-            </div>
-             <div id="tools" class="content-layer">
-                <h2>// HACKER ARSENAL</h2>
-                <div class="card">
-                    <h3>Nmap Automator</h3>
-                    <p>سكربت لأتمتة عملية الفحص.</p>
-                    <a href="#" style="color:var(--neon-cyan)">[DOWNLOAD .SH]</a>
-                </div>
-            </div>
-        </main>
-
-        <aside class="intel-panel">
-            <div class="panel-box">
-                <div class="panel-title">>> TERMINAL EMULATOR (ROOT)</div>
-                <div id="term-output">
-                    <div>JKA5 OS v2.0 loaded...</div>
-                    <div>Type <span style="color:var(--neon-cyan)">'help'</span> for commands.</div>
-                    <div>Try <span style="color:var(--neon-cyan)">'matrix'</span> for effect.</div>
-                    <br>
-                </div>
-                <div class="cmd-line">
-                    <span style="color:var(--neon-green); margin-right:5px;">root@jka5:~#</span>
-                    <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
-                </div>
-            </div>
-            <div class="panel-box">
-                <div class="panel-title">>> SYSTEM LOGS</div>
-                <div id="log-box" style="font-size: 0.7rem; color: #888; overflow: hidden;"></div>
-            </div>
-        </aside>
     </div>
 
-    <footer>
-        <div>USER: ADMIN &nbsp;|&nbsp; IP: 10.10.X.X (VPN) &nbsp;|&nbsp; ENCRYPTED</div>
-    </footer>
+    <div id="desktop">
+        <canvas id="matrixCanvas"></canvas>
+
+        <div class="taskbar">
+            <div class="start-btn"><i class="fas fa-biohazard"></i> JKA5_OS</div>
+            <div class="sys-tray">
+                <div class="theme-btn" style="background:#00ff41" onclick="setTheme('#00ff41')"></div>
+                <div class="theme-btn" style="background:#00f3ff" onclick="setTheme('#00f3ff')"></div>
+                <div class="theme-btn" style="background:#ff003c" onclick="setTheme('#ff003c')"></div>
+                <div class="theme-btn" style="background:#bc13fe" onclick="setTheme('#bc13fe')"></div>
+                <span style="border-left:1px solid #333; padding-left:15px;">RAM: 18%</span>
+                <span>CPU: 09%</span>
+                <span id="clock">00:00:00</span>
+            </div>
+        </div>
+
+        <div class="desktop-icons">
+            <div class="icon" onclick="openWindow('win-term')">
+                <i class="fas fa-terminal"></i>
+                <span>Terminal</span>
+            </div>
+            <div class="icon" onclick="openWindow('win-news')">
+                <i class="fas fa-globe-americas"></i>
+                <span>Intel Feed</span>
+            </div>
+            <div class="icon" onclick="openWindow('win-tools')">
+                <i class="fas fa-toolbox"></i>
+                <span>Arsenal</span>
+            </div>
+            <div class="icon" onclick="openWindow('win-tasks')">
+                <i class="fas fa-microchip"></i>
+                <span>Task Mgr</span>
+            </div>
+             <div class="icon" onclick="openWindow('win-labs')">
+                <i class="fas fa-flask" style="color:var(--alert)"></i>
+                <span>Labs / CTF</span>
+            </div>
+        </div>
+
+        <div id="win-term" class="window" style="top: 100px; left: 150px; width: 650px; height: 450px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-terminal"></i> ROOT@JKA5:~</span>
+                <span class="btn-close" onclick="closeWindow('win-term')">✖</span>
+            </div>
+            <div class="win-body" id="terminal-body">
+                <div>JKA5 Singularity OS [Version 5.0.0]</div>
+                <div>Type 'help' for commands. Try <span style="color:var(--main-neon); font-weight:bold;">'run exploit'</span>.</div>
+                <br>
+                <div id="term-output"></div>
+                <div style="display:flex">
+                    <span class="prompt">root@jka5:~#&nbsp;</span>
+                    <input type="text" id="term-input" style="background:transparent; border:none; color:var(--main-neon); flex:1; outline:none; font-family:inherit; font-weight:bold;" autofocus spellcheck="false">
+                </div>
+            </div>
+        </div>
+
+        <div id="win-tasks" class="window" style="top: 250px; left: 600px; width: 400px;">
+             <div class="win-header">
+                <span class="win-title"><i class="fas fa-microchip"></i> SYSTEM PROCESSES</span>
+                <span class="btn-close" onclick="closeWindow('win-tasks')">✖</span>
+            </div>
+            <div class="win-body">
+                <div style="display:flex; font-weight:bold; border-bottom:1px solid #333; padding-bottom:5px;">
+                    <span style="flex:2">NAME</span><span style="flex:1">CPU</span><span style="flex:1">MEM</span>
+                </div>
+                <div id="task-list">
+                    </div>
+            </div>
+        </div>
+
+        <div id="win-news" class="window" style="top: 80px; left: 300px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-satellite"></i> GLOBAL_INTELLIGENCE.exe</span>
+                <span class="btn-close" onclick="closeWindow('win-news')">✖</span>
+            </div>
+            <div class="win-body" id="news-content"></div>
+        </div>
+
+        <div id="win-tools" class="window" style="top: 120px; left: 350px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-tools"></i> HACKER_ARSENAL_V5</span>
+                <span class="btn-close" onclick="closeWindow('win-tools')">✖</span>
+            </div>
+            <div class="win-body" id="tools-content"></div>
+        </div>
+
+         <div id="win-labs" class="window" style="top: 150px; left: 400px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-flask"></i> ACTIVE_CTF_CHALLENGES</span>
+                <span class="btn-close" onclick="closeWindow('win-labs')">✖</span>
+            </div>
+            <div class="win-body">
+                 <div class="item-row">
+                    <div><div style="font-weight:bold">Target: MegaCorp Server</div><div>Diff: Hard</div></div>
+                    <button style="background:var(--alert); border:none; color:black; padding:5px 10px; font-weight:bold; cursor:pointer;">ENGAGE</button>
+                 </div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        // --- Sound FX Synthesis (No external files) ---
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+        // ================= BOOT SEQUENCE =================
+        const bootScreen = document.getElementById('boot-screen');
+        const bootMessages = [
+            "JKA5 BIOS v5.0 release 2024",
+            "CPU: Quantum Core i9 @ 5.2GHz",
+            "RAM: 64GB DDR6 DETECTED OK",
+            "NVMe: 2TB Secure Storage OK",
+            "--------------------------------",
+            "[ <span class='boot-success'>OK</span> ] Started Kernel Thread.",
+            "[ <span class='boot-success'>OK</span> ] Mounted root filesystem (encrypted).",
+            "[ <span class='boot-warn'>WARN</span> ] Detecting intrusive signals...",
+            "[ <span class='boot-success'>OK</span> ] Firewall engaged. level=PARANOID",
+            "Initializing graphical sub-system...",
+            "Loading Singularity Desktop Environment..."
+        ];
 
-        function playBeep(freq = 600, type = 'square') {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-
-        function playHover() { playBeep(800, 'sine'); }
-        function playType() { playBeep(400 + Math.random()*200, 'sawtooth'); }
-        function playAccess() { 
-            // صوت الدخول الطويل
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.5);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 1);
-        }
-
-        // --- System Functions ---
-        function enterSystem() {
-            playAccess();
-            document.getElementById('intro-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
-            }, 1000);
-            initMap();
-            addLog("Session started by USER_ADMIN");
-        }
-
-        function nav(id) {
-            playBeep(600);
-            document.querySelectorAll('.content-layer').forEach(el => el.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            if(id === 'dashboard') {
-                document.getElementById('mapCanvas').style.opacity = '0.5';
-                document.getElementById('dashboard').style.pointerEvents = 'none';
-                document.querySelector('#dashboard div').style.pointerEvents = 'auto';
+        let msgIndex = 0;
+        function runBoot() {
+            if(msgIndex < bootMessages.length) {
+                const p = document.createElement('div');
+                p.className = 'boot-text';
+                p.innerHTML = `> ${bootMessages[msgIndex]}`;
+                bootScreen.appendChild(p);
+                msgIndex++;
+                // تسريع الإقلاع قليلاً في النهاية
+                const delay = msgIndex > 5 ? 150 : 400; 
+                setTimeout(runBoot, delay);
             } else {
-                document.getElementById('mapCanvas').style.opacity = '0.1';
+                setTimeout(() => {
+                    bootScreen.style.display = 'none';
+                    document.getElementById('desktop').style.display = 'block';
+                    initOS();
+                }, 800);
+            }
+        }
+        window.onload = runBoot;
+
+        // ================= OS CORE FUNCTIONS =================
+        function initOS() {
+            updateClock();
+            renderContent();
+            startMatrix();
+            initTaskManager();
+            document.querySelectorAll('.window').forEach(dragElement);
+            // فتح التيرمينال تلقائياً
+            setTimeout(() => openWindow('win-term'), 500);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            setTimeout(updateClock, 1000);
+        }
+
+        // تغيير لون الثيم
+        function setTheme(color) {
+            document.documentElement.style.setProperty('--main-neon', color);
+            // تحديث الماتريكس باللون الجديد
+            startMatrix(color);
+        }
+
+        // ================= WINDOW MANAGER =================
+        let zIndexCounter = 100;
+        function openWindow(id) {
+            const win = document.getElementById(id);
+            win.style.display = 'flex';
+            zIndexCounter++;
+            win.style.zIndex = zIndexCounter;
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function dragElement(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            const header = elmnt.querySelector('.win-header');
+            if (header) { header.onmousedown = dragMouseDown; }
+
+            function dragMouseDown(e) {
+                e = e || window.event; e.preventDefault();
+                pos3 = e.clientX; pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                zIndexCounter++;
+                elmnt.style.zIndex = zIndexCounter;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event; e.preventDefault();
+                pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+                pos3 = e.clientX; pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null; document.onmousemove = null;
             }
         }
 
-        // --- Threat Map Logic ---
-        const canvas = document.getElementById('mapCanvas');
-        const ctx = canvas.getContext('2d');
-        let mapNodes = [];
-        
-        function initMap() {
-            canvas.width = document.querySelector('.viewport').offsetWidth;
-            canvas.height = document.querySelector('.viewport').offsetHeight;
+        // ================= FAKE TASK MANAGER =================
+        function initTaskManager() {
+            const tasks = [
+                {n:"kernel_task", c:1, m:400}, {n:"window_server", c:3, m:250},
+                {n:"matrix_daemon", c:5, m:120}, {n:"network_sniff", c:2, m:80},
+                {n:"chrome (sandbox)", c:12, m:950}
+            ];
+            const taskList = document.getElementById('task-list');
             
-            for(let i=0; i<20; i++) {
-                mapNodes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 2 + 1
-                });
-            }
-            animateMap();
+            setInterval(() => {
+                taskList.innerHTML = tasks.map(t => {
+                    // تحديث عشوائي للقيم
+                    t.c = Math.max(0, t.c + (Math.random()*4 - 2)).toFixed(1);
+                    t.m = Math.max(50, t.m + (Math.random()*20 - 10)).toFixed(0);
+                    return `
+                        <div class="task-row">
+                            <span class="task-name">${t.n}</span>
+                            <span class="task-cpu">${t.c}%</span>
+                            <span class="task-mem">${t.m}MB</span>
+                        </div>
+                    `;
+                }).join('');
+            }, 1000);
         }
 
-        function animateMap() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff41';
-            
-            // رسم النقاط
-            mapNodes.forEach(node => {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, node.r, 0, Math.PI*2);
-                ctx.fill();
-            });
+        // ================= TERMINAL & HACK SIMULATION =================
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+        let isRunningExploit = false;
 
-            // رسم خطوط عشوائية (هجمات)
-            if(Math.random() > 0.9) {
-                const start = mapNodes[Math.floor(Math.random()*mapNodes.length)];
-                const end = mapNodes[Math.floor(Math.random()*mapNodes.length)];
+        termInput.addEventListener('keypress', function(e) {
+            if(e.key === 'Enter' && !isRunningExploit) {
+                const cmd = this.value.toLowerCase().trim();
+                let resp = "";
                 
-                ctx.beginPath();
-                ctx.strokeStyle = Math.random() > 0.5 ? '#00ff41' : '#ff003c';
-                ctx.lineWidth = 1;
-                ctx.moveTo(start.x, start.y);
-                ctx.lineTo(end.x, end.y);
-                ctx.stroke();
-                
-                addLog(`Traffic: ${start.x.toFixed(0)} -> ${end.x.toFixed(0)} protocol=TCP`);
-            }
-            requestAnimationFrame(animateMap);
-        }
+                termOutput.innerHTML += `<div><span class="prompt">root@jka5:~#</span> ${this.value}</div>`;
 
-        // --- Terminal Logic ---
-        const input = document.getElementById('cmd-input');
-        const output = document.getElementById('term-output');
+                if(cmd === 'help') resp = "COMMANDS: help, clear, date, reboot, <span style='font-weight:bold'>run exploit</span>";
+                else if(cmd === 'clear') { termOutput.innerHTML = ""; this.value = ""; return; }
+                else if(cmd === 'reboot') location.reload();
+                else if(cmd === 'run exploit') { 
+                    this.value = ""; runExploitSim(); return; 
+                }
+                else resp = `bash: ${cmd}: command not found`;
 
-        input.addEventListener('keydown', (e) => {
-            playType();
-            if (e.key === 'Enter') {
-                const val = input.value.toLowerCase();
-                output.innerHTML += `<div><span style="color:var(--neon-green)">root@jka5:~#</span> ${val}</div>`;
-                
-                if(val === 'help') output.innerHTML += `<div style="color:#aaa">cmds: help, clear, whoami, matrix, reboot</div>`;
-                else if(val === 'clear') output.innerHTML = '';
-                else if(val === 'whoami') output.innerHTML += `<div>uid=0(root) gid=0(root) groups=0(root)</div>`;
-                else if(val === 'matrix') startMatrix();
-                else if(val === 'reboot') location.reload();
-                else output.innerHTML += `<div style="color:var(--alert-red)">bash: command not found</div>`;
-
-                input.value = '';
-                output.scrollTop = output.scrollHeight;
+                termOutput.innerHTML += `<div style="color:#888; margin-bottom:5px">${resp}</div>`;
+                this.value = "";
+                scrollToBottom();
             }
         });
 
-        function addLog(msg) {
-            const box = document.getElementById('log-box');
-            const time = new Date().toLocaleTimeString().split(' ')[0];
-            box.innerHTML = `<div style="margin-bottom:3px;">[${time}] ${msg}</div>` + box.innerHTML;
+        function scrollToBottom() {
+             const termBody = document.getElementById('terminal-body');
+             termBody.scrollTop = termBody.scrollHeight;
         }
 
-        // --- Matrix Effect ---
-        function startMatrix() {
-            const mCanvas = document.getElementById('matrixCanvas');
-            const mCtx = mCanvas.getContext('2d');
-            mCanvas.style.display = 'block';
-            mCanvas.width = window.innerWidth;
-            mCanvas.height = window.innerHeight;
+        // محاكاة الاختراق
+        function runExploitSim() {
+            isRunningExploit = true;
+            termInput.disabled = true;
+            const steps = [
+                "[+] Initializing Metasploit Framework...",
+                "[*] Setting up reverse handler on 10.10.14.22:4444",
+                "[*] Target IP set to 192.168.1.105",
+                "[*] Exploit target: Windows Server 2019 (SMBv3 vulnerability)",
+                "[-] Sending Stage 1 payload (4096 bytes)...",
+                "[!] Bypassing Windows Defender...",
+                "[+] Defender bypassed successfully using obfuscation.",
+                "[*] Sending Stage 2 (Meterpreter stager)...",
+                "<span class='sim-success'>[+] Meterpreter session 1 opened (10.10.14.22:4444 -> 192.168.1.105:49215)</span>",
+                "meterpreter > getuid",
+                "Server username: NT AUTHORITY\\SYSTEM",
+                "<span class='sim-success'>[+] ROOT ACCESS CONFIRMED. Happy Hacking!</span>"
+            ];
             
-            const chars = '01JKAHACK5';
-            const fontSize = 14;
-            const drops = Array(Math.floor(mCanvas.width/fontSize)).fill(1);
+            let i = 0;
+            function nextStep() {
+                if(i < steps.length) {
+                    termOutput.innerHTML += `<div class="sim-log">${steps[i]}</div>`;
+                    scrollToBottom();
+                    i++;
+                    const delay = Math.random() * 800 + 300; // تأخير عشوائي للواقعية
+                    setTimeout(nextStep, delay);
+                } else {
+                    isRunningExploit = false;
+                    termInput.disabled = false;
+                    termInput.focus();
+                }
+            }
+            nextStep();
+        }
 
-            function drawMatrix() {
-                mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
-                mCtx.fillStyle = '#0F0';
-                mCtx.font = fontSize + 'px monospace';
+        // ================= DATABASE (CONTENT) =================
+        const intelDB = [
+            { title: "New Kernel Vulnerability Detected", desc: "Affects Linux systems prior to v5.15. Patch immediately.", date: "TODAY" },
+            { title: "JKA5 CTF Platform Update", desc: "Added 'Insane' difficulty track and leaderboard.", date: "YESTERDAY" }
+        ];
+        const toolsDB = [
+            { name: "JKA5 Auto-Pwn Script", type: "Python", link: "#" },
+            { name: "Cobalt Strike 4.9 (Cracked)", type: "C2 Framework", link: "#" }
+        ];
 
-                for(let i=0; i<drops.length; i++) {
-                    const text = chars.charAt(Math.floor(Math.random()*chars.length));
-                    mCtx.fillText(text, i*fontSize, drops[i]*fontSize);
-                    if(drops[i]*fontSize > mCanvas.height && Math.random() > 0.975) drops[i] = 0;
+        function renderContent() {
+            document.getElementById('news-content').innerHTML = intelDB.map(i => `
+                <div class="item-row"><div><div style="font-weight:bold">${i.title}</div><div style="font-size:11px; opacity:0.8">${i.desc}</div></div><div style="font-size:10px;">${i.date}</div></div>
+            `).join('');
+            document.getElementById('tools-content').innerHTML = toolsDB.map(t => `
+                <div class="item-row" style="align-items:center"><div><div style="font-weight:bold">${t.name}</div><div style="font-size:10px; background:#222; display:inline-block; padding:2px;">${t.type}</div></div><button style="background:transparent; border:1px solid var(--main-neon); color:var(--main-neon); cursor:pointer;">GET</button></div>
+            `).join('');
+        }
+
+        // ================= MATRIX EFFECT =================
+        let matrixInterval;
+        function startMatrix(color = '#00ff41') {
+            if(matrixInterval) clearInterval(matrixInterval);
+            const c = document.getElementById("matrixCanvas");
+            const ctx = c.getContext("2d");
+            c.width = window.innerWidth; c.height = window.innerHeight;
+            const chars = "01JKA5XYZ"; font_size = 13;
+            const drops = Array(Math.floor(c.width/font_size)).fill(1);
+            
+            function draw() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = color; ctx.font = font_size + "px monospace";
+                for(let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random()*chars.length)];
+                    ctx.fillText(text, i*font_size, drops[i]*font_size);
+                    if(drops[i]*font_size > c.height && Math.random() > 0.98) drops[i] = 0;
                     drops[i]++;
                 }
             }
-            setInterval(drawMatrix, 33);
-            
-            // إغلاق الماتريكس بالضغط على أي مكان
-            mCanvas.addEventListener('click', () => {
-                mCanvas.style.display = 'none';
-                location.reload(); // إعادة تحميل للتنظيف
-            });
+            matrixInterval = setInterval(draw, 35);
         }
-
-        window.addEventListener('resize', () => {
-            initMap();
-        });
-
+        window.onresize = () => startMatrix(getComputedStyle(document.body).getPropertyValue('--main-neon').trim());
     </script>
 </body>
 </html>
