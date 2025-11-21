@@ -3,445 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JKA5 | SINGULARITY OS v5.1</title>
+    <title>JKA5 | OS v6.0 (UTILITY)</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg: #020202;
-            --win-bg: rgba(10, 12, 10, 0.95);
+            --bg: #050505;
+            --win-bg: rgba(15, 15, 15, 0.95);
             --main-neon: #00ff41; 
             --neon-cyan: #00f3ff;
             --alert: #ff003c;
             --font-code: 'Fira Code', monospace;
-            --font-text: 'Cairo', 'Fira Code', monospace; /* الخط الجديد للنصوص */
+            --font-text: 'Cairo', monospace;
         }
 
-        * { box-sizing: border-box; user-select: none; }
+        * { box-sizing: border-box; user-select: none; outline: none; }
         body { margin: 0; overflow: hidden; background: var(--bg); font-family: var(--font-code); color: var(--main-neon); transition: color 0.5s; }
         
-        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 9999; opacity: 0.3; }
+        /* Effects */
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 9999; opacity: 0.2; }
 
-        /* --- Boot Screen --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 9999; padding: 20px;
-            font-size: 12px; display: flex; flex-direction: column; justify-content: flex-end;
-        }
-        .ascii-logo { white-space: pre; color: var(--main-neon); font-weight: bold; margin-bottom: 20px; text-align: center;}
-        .boot-text { color: #ccc; margin-bottom: 2px; }
-        .boot-success { color: var(--main-neon); }
-
-        /* --- Desktop --- */
-        #desktop {
-            position: relative; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-            display: none;
-        }
-        #matrixCanvas { position: absolute; top: 0; left: 0; opacity: 0.15; z-index: 0; pointer-events: none; }
+        /* Desktop */
+        #desktop { position: relative; width: 100vw; height: 100vh; background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%); }
+        #matrixCanvas { position: absolute; top: 0; left: 0; opacity: 0.1; z-index: 0; pointer-events: none; }
 
         /* Taskbar */
         .taskbar {
             position: absolute; top: 0; left: 0; width: 100%; height: 45px;
-            background: rgba(5,5,5,0.95); border-bottom: 1px solid #333;
+            background: rgba(10,10,10,0.95); border-bottom: 1px solid #333;
             display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100;
         }
-        .start-btn { font-weight: bold; font-size: 16px; letter-spacing: 2px; display: flex; align-items: center; gap:10px; }
-        .sys-tray { font-size: 12px; display: flex; gap: 20px; align-items: center; }
-        .theme-btn { cursor: pointer; padding: 5px; border: 1px solid #333; border-radius: 50%; width: 20px; height: 20px; }
+        .start-btn { font-weight: bold; font-size: 16px; display: flex; align-items: center; gap:10px; text-shadow: 0 0 5px var(--main-neon); }
+        .sys-tray { font-size: 12px; display: flex; gap: 15px; align-items: center; }
+        .theme-dot { width: 15px; height: 15px; border-radius: 50%; cursor: pointer; border: 1px solid #444; }
 
         /* Icons */
-        .desktop-icons {
-            position: absolute; top: 70px; left: 30px; z-index: 10;
-            display: flex; flex-direction: column; gap: 25px;
-        }
-        .icon {
-            width: 90px; text-align: center; cursor: pointer;
-            transition: 0.2s; opacity: 0.7;
-        }
-        .icon:hover { opacity: 1; transform: scale(1.05); text-shadow: 0 0 15px var(--main-neon); }
-        .icon i { font-size: 32px; margin-bottom: 8px; color: #eee; display: block; filter: drop-shadow(0 0 5px var(--main-neon)); }
-        .icon span { font-size: 11px; background: rgba(0,0,0,0.7); padding: 3px 6px; border-radius: 4px; font-family: var(--font-text); }
+        .desktop-icons { position: absolute; top: 70px; left: 30px; z-index: 10; display: flex; flex-direction: column; gap: 25px; }
+        .icon { width: 90px; text-align: center; cursor: pointer; transition: 0.2s; opacity: 0.8; }
+        .icon:hover { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px var(--main-neon); }
+        .icon i { font-size: 32px; margin-bottom: 8px; color: #eee; display: block; }
+        .icon span { font-size: 11px; background: rgba(0,0,0,0.6); padding: 3px 6px; border-radius: 4px; font-family: var(--font-text); }
 
-        /* --- Windows --- */
+        /* Windows */
         .window {
-            position: absolute; width: 600px; min-height: 350px;
+            position: absolute; width: 600px; min-height: 300px;
             background: var(--win-bg); border: 1px solid var(--main-neon);
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
             display: none; flex-direction: column; z-index: 50;
-            backdrop-filter: blur(10px); border-radius: 8px 8px 0 0; overflow: hidden;
-            transition: border-color 0.5s;
+            border-radius: 5px 5px 0 0; overflow: hidden;
         }
         .win-header {
-            padding: 10px 15px; background: rgba(255,255,255,0.03);
+            padding: 8px 15px; background: rgba(255,255,255,0.05);
             border-bottom: 1px solid #333; cursor: grab;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .win-header:active { cursor: grabbing; }
-        .win-title { font-weight: bold; font-size: 13px; text-transform: uppercase; display: flex; align-items: center; gap: 10px;}
-        .btn-close { cursor: pointer; font-size: 16px; transition: 0.2s; color: #666; }
+        .win-title { font-weight: bold; font-size: 12px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .btn-close { cursor: pointer; font-size: 16px; color: #666; }
         .btn-close:hover { color: var(--alert); }
+        .win-body { flex: 1; overflow-y: auto; max-height: 500px; color: #ccc; font-size: 13px; }
 
-        .win-body { padding: 0; flex: 1; overflow-y: auto; max-height: 500px; color: #ccc; font-size: 13px; }
-        
-        /* Content Rows (News & Tools) */
-        .item-row {
-            display: flex; justify-content: space-between; padding: 15px;
-            border-bottom: 1px solid #222; transition: 0.2s;
-            font-family: var(--font-text); /* استخدام الخط العربي */
+        /* Specific Window Content */
+        .tool-panel { padding: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--neon-cyan); }
+        .input-group textarea, .input-group input { 
+            width: 100%; background: #000; border: 1px solid #333; color: var(--main-neon); 
+            padding: 10px; font-family: var(--font-code); font-size: 12px; resize: vertical; 
         }
-        .item-row:hover { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--main-neon); }
-        .item-title { font-weight: bold; color: #fff; font-size: 14px; margin-bottom: 4px; }
-        .item-desc { font-size: 12px; color: #888; line-height: 1.4; }
-        .item-meta { font-size: 11px; color: var(--neon-cyan); text-align: right; min-width: 80px;}
+        .btn-action { 
+            background: transparent; border: 1px solid var(--main-neon); color: var(--main-neon); 
+            padding: 8px 20px; cursor: pointer; font-family: var(--font-code); font-weight: bold; transition: 0.3s;
+        }
+        .btn-action:hover { background: var(--main-neon); color: #000; }
 
         /* Terminal */
-        #terminal-body { background: #080808; color: #ccc; font-size: 12px; padding: 15px; font-family: var(--font-code); }
-        .prompt { color: var(--main-neon); }
-        .sim-success { color: var(--main-neon); font-weight: bold; }
+        #terminal-body { background: #0c0c0c; padding: 10px; font-family: var(--font-code); height: 100%; }
+        .prompt { color: var(--main-neon); margin-right: 5px; }
 
-        /* Task Manager */
-        .task-row { display: flex; justify-content: space-between; padding: 8px 15px; border-bottom: 1px dotted #333; font-size: 11px; }
+        /* Notification */
+        #notify-area { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { 
+            background: rgba(0, 20, 0, 0.95); border-left: 4px solid var(--main-neon); 
+            padding: 15px 20px; width: 300px; color: #fff; font-size: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: slideIn 0.3s ease-out;
+            font-family: var(--font-text); display: flex; align-items: center; gap: 10px;
+        }
+        @keyframes slideIn { from {transform: translateX(100%)} to {transform: translateX(0)} }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--main-neon); border-radius: 2px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--main-neon); }
         ::-webkit-scrollbar-track { background: #111; }
     </style>
 </head>
 <body>
     <div class="scanlines"></div>
 
-    <div id="boot-screen">
-        <div class="ascii-logo">
-   ___   __  __    _      ____  
-  |_  | |  |/  |  / \    | ___| 
-  _ | | |  ' /  / _ \   |___ \ 
- | || | | . \  / ___ \   ___) |
- |____| |_|\_\/_/   \_\ |____/  AR/EN
-        </div>
-    </div>
-
     <div id="desktop">
         <canvas id="matrixCanvas"></canvas>
 
         <div class="taskbar">
-            <div class="start-btn"><i class="fas fa-biohazard"></i> JKA5_OS</div>
+            <div class="start-btn"><i class="fas fa-terminal"></i> JKA5_OS v6.0</div>
             <div class="sys-tray">
-                <div class="theme-btn" style="background:#00ff41" onclick="setTheme('#00ff41')"></div>
-                <div class="theme-btn" style="background:#00f3ff" onclick="setTheme('#00f3ff')"></div>
-                <div class="theme-btn" style="background:#ff003c" onclick="setTheme('#ff003c')"></div>
-                <span style="border-left:1px solid #333; padding-left:15px;">RAM: 16%</span>
-                <span>CPU: 04%</span>
-                <span id="clock">00:00</span>
+                <div class="theme-dot" style="background:#00ff41" onclick="setTheme('#00ff41')"></div>
+                <div class="theme-dot" style="background:#00f3ff" onclick="setTheme('#00f3ff')"></div>
+                <div class="theme-dot" style="background:#ff003c" onclick="setTheme('#ff003c')"></div>
+                <span style="border-left:1px solid #333; padding-left:15px;" id="clock">00:00</span>
             </div>
         </div>
 
         <div class="desktop-icons">
-            <div class="icon" onclick="openWindow('win-news')">
-                <i class="fas fa-globe-americas"></i>
-                <span>الأخبار / News</span>
-            </div>
-            <div class="icon" onclick="openWindow('win-tools')">
-                <i class="fas fa-toolbox"></i>
-                <span>الأدوات / Arsenal</span>
-            </div>
             <div class="icon" onclick="openWindow('win-term')">
                 <i class="fas fa-terminal"></i>
                 <span>Terminal</span>
             </div>
-            <div class="icon" onclick="openWindow('win-tasks')">
-                <i class="fas fa-microchip"></i>
-                <span>المهام / Tasks</span>
+            <div class="icon" onclick="openWindow('win-crypto')">
+                <i class="fas fa-lock"></i>
+                <span>Crypto Tools</span>
             </div>
-             <div class="icon" onclick="openWindow('win-labs')">
-                <i class="fas fa-flask" style="color:var(--alert)"></i>
-                <span>Labs / CTF</span>
+            <div class="icon" onclick="openWindow('win-pass')">
+                <i class="fas fa-key"></i>
+                <span>Pass Gen</span>
+            </div>
+            <div class="icon" onclick="openWindow('win-game')">
+                <i class="fas fa-gamepad" style="color: #bd00ff;"></i>
+                <span>Code Breaker</span>
+            </div>
+            <div class="icon" onclick="openWindow('win-browser')">
+                <i class="fas fa-globe"></i>
+                <span>JKA5 Browser</span>
             </div>
         </div>
 
-        <div id="win-news" class="window" style="top: 80px; left: 300px;">
-            <div class="win-header">
-                <span class="win-title"><i class="fas fa-satellite"></i> INTEL FEED | آخر الأخبار</span>
-                <span class="btn-close" onclick="closeWindow('win-news')">✖</span>
-            </div>
-            <div class="win-body" id="news-content"></div>
-        </div>
-
-        <div id="win-tools" class="window" style="top: 120px; left: 350px;">
-            <div class="win-header">
-                <span class="win-title"><i class="fas fa-tools"></i> ARSENAL | مكتبة الأدوات</span>
-                <span class="btn-close" onclick="closeWindow('win-tools')">✖</span>
-            </div>
-            <div class="win-body" id="tools-content"></div>
-        </div>
-
-        <div id="win-term" class="window" style="top: 100px; left: 150px; width: 650px; height: 450px;">
+        <div id="win-term" class="window" style="top: 80px; left: 150px; width: 700px; height: 450px;">
             <div class="win-header">
                 <span class="win-title"><i class="fas fa-terminal"></i> ROOT@JKA5:~</span>
                 <span class="btn-close" onclick="closeWindow('win-term')">✖</span>
             </div>
-            <div class="win-body" id="terminal-body">
-                <div>JKA5 OS [Version 5.1.0] - Arabic Support Loaded.</div>
-                <div>Type <span style="color:var(--main-neon)">'help'</span> or <span style="color:var(--main-neon)">'run exploit'</span>.</div>
+            <div class="win-body" id="terminal-body" onclick="document.getElementById('term-input').focus()">
+                <div>JKA5 OS v6.0 [Utility Update]</div>
+                <div>Type <span style="color:var(--neon-cyan)">'help'</span>. Try filesystem commands: <span style="color:var(--neon-cyan)">ls, cd, mkdir, cat</span></div>
                 <br>
                 <div id="term-output"></div>
                 <div style="display:flex">
-                    <span class="prompt">root@jka5:~#&nbsp;</span>
-                    <input type="text" id="term-input" style="background:transparent; border:none; color:var(--main-neon); flex:1; outline:none; font-family:inherit; font-weight:bold;" autofocus spellcheck="false">
+                    <span class="prompt" id="prompt-text">root@jka5:~#</span>
+                    <input type="text" id="term-input" style="background:transparent; border:none; color:var(--main-neon); flex:1; font-weight:bold;" autofocus spellcheck="false">
                 </div>
             </div>
         </div>
 
-        <div id="win-tasks" class="window" style="top: 250px; left: 600px; width: 400px;">
-             <div class="win-header">
-                <span class="win-title"><i class="fas fa-microchip"></i> PROCESSES | العمليات</span>
-                <span class="btn-close" onclick="closeWindow('win-tasks')">✖</span>
-            </div>
-            <div class="win-body">
-                <div style="display:flex; font-weight:bold; border-bottom:1px solid #333; padding:10px;">
-                    <span style="flex:2">NAME</span><span style="flex:1">CPU</span><span style="flex:1">MEM</span>
-                </div>
-                <div id="task-list"></div>
-            </div>
-        </div>
-
-         <div id="win-labs" class="window" style="top: 150px; left: 400px;">
+        <div id="win-crypto" class="window" style="top: 120px; left: 300px; width: 500px;">
             <div class="win-header">
-                <span class="win-title"><i class="fas fa-flask"></i> CHALLENGES | التحديات</span>
-                <span class="btn-close" onclick="closeWindow('win-labs')">✖</span>
+                <span class="win-title"><i class="fas fa-lock"></i> BASE64 DECODER/ENCODER</span>
+                <span class="btn-close" onclick="closeWindow('win-crypto')">✖</span>
             </div>
-            <div class="win-body">
-                 <div class="item-row">
-                    <div>
-                        <div class="item-title">Target: Baghdad Bank Server</div>
-                        <div class="item-desc">Find the SQL Injection vulnerability.<br>ابحث عن ثغرة حقن قواعد البيانات.</div>
-                    </div>
-                    <button style="background:var(--alert); border:none; color:black; padding:5px 15px; font-weight:bold; cursor:pointer; height:30px;">START</button>
-                 </div>
+            <div class="win-body tool-panel">
+                <div class="input-group">
+                    <label>INPUT TEXT (النص المدخل):</label>
+                    <textarea id="crypto-input" rows="3" placeholder="Enter text here..."></textarea>
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:15px;">
+                    <button class="btn-action" onclick="doBase64('encode')">ENCODE (تشفير)</button>
+                    <button class="btn-action" onclick="doBase64('decode')">DECODE (فك تشفير)</button>
+                </div>
+                <div class="input-group">
+                    <label>OUTPUT RESULT (النتيجة):</label>
+                    <textarea id="crypto-output" rows="3" readonly style="color:var(--neon-cyan)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div id="win-pass" class="window" style="top: 160px; left: 400px; width: 400px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-key"></i> SECURE PASSWORD GEN</span>
+                <span class="btn-close" onclick="closeWindow('win-pass')">✖</span>
+            </div>
+            <div class="win-body tool-panel">
+                <div class="input-group">
+                    <label>GENERATED PASSWORD:</label>
+                    <input type="text" id="pass-output" readonly style="text-align:center; font-size:16px; letter-spacing:2px; color:#fff;">
+                </div>
+                <button class="btn-action" style="width:100%" onclick="generatePass()">GENERATE NEW</button>
+            </div>
+        </div>
+
+        <div id="win-browser" class="window" style="top: 100px; left: 250px; width: 800px; height: 500px;">
+             <div class="win-header">
+                <span class="win-title"><i class="fas fa-globe"></i> JKA5 SECURE BROWSER</span>
+                <span class="btn-close" onclick="closeWindow('win-browser')">✖</span>
+            </div>
+            <div class="win-body" style="padding:0;">
+                <div style="padding:10px; background:#222; border-bottom:1px solid #444; display:flex; gap:10px;">
+                    <span style="color:#888">🔒 https://jka5.xyz/intel-feed</span>
+                </div>
+                <div style="padding:20px;">
+                    <h2 style="border-bottom:1px solid #444; padding-bottom:10px; color:var(--neon-cyan)">LATEST VULNERABILITIES (CVEs)</h2>
+                    <div id="news-feed">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="win-game" class="window" style="top: 200px; left: 500px; width: 350px;">
+            <div class="win-header">
+                <span class="win-title"><i class="fas fa-gamepad"></i> CODE BREAKER</span>
+                <span class="btn-close" onclick="closeWindow('win-game')">✖</span>
+            </div>
+            <div class="win-body tool-panel" style="text-align:center">
+                <p>Guess the 3-digit code (000-999)</p>
+                <input type="number" id="game-input" placeholder="???" style="width:100px; font-size:20px; text-align:center; margin-bottom:10px;">
+                <br>
+                <button class="btn-action" onclick="checkCode()">UNLOCK</button>
+                <p id="game-msg" style="margin-top:10px; font-size:12px; color:#888"></p>
             </div>
         </div>
 
     </div>
 
+    <div id="notify-area"></div>
+
     <script>
-        // ================= DATA CONTENT (AR/EN) =================
-        
-        // 1. أخبار الأمن السيبراني (Intel Feed)
-        const intelDB = [
-            { 
-                title: "Chrome Zero-Day Exploit | ثغرة يوم-صفر في كروم", 
-                desc: "Google has released an urgent update to patch CVE-2024-XXXX.<br>جوجل تطلق تحديثاً عاجلاً لإغلاق ثغرة خطيرة تسمح بالتحكم بالمتصفح.", 
-                date: "TODAY" 
-            },
-            { 
-                title: "Ransomware Hits Healthcare | فيروس فدية يضرب قطاع الصحة", 
-                desc: "A new variant of LockBit is targeting hospitals in the Middle East.<br>نوع جديد من فيروسات الفدية يستهدف المستشفيات في الشرق الأوسط.", 
-                date: "YESTERDAY" 
-            },
-            { 
-                title: "JKA5 Course Update | تحديث دورات الموقع", 
-                desc: "New 'Python for Hackers' module is now live.<br>تم إضافة مسار جديد: لغة بايثون للهاكرز الأخلاقيين.", 
-                date: "2024-11-20" 
-            },
-            { 
-                title: "Data Leak Alert | تنبيه تسريب بيانات", 
-                desc: "Over 5 million records leaked from a major social platform.<br>تسريب أكثر من 5 ملايين سجل من منصة تواصل اجتماعي كبرى.", 
-                date: "2024-11-18" 
-            }
-        ];
-
-        // 2. أدوات الاختراق (Tools Arsenal)
-        const toolsDB = [
-            { 
-                name: "Nmap Automator | فاحص الشبكات الآلي", 
-                type: "Network Scanning", 
-                desc: "Script to automate network discovery and port scanning.<br>سكربت لأتمتة عملية اكتشاف الشبكات وفحص المنافذ المفتوحة." 
-            },
-            { 
-                name: "Burp Suite Config | إعدادات بيرب سويت", 
-                type: "Web Pentesting", 
-                desc: "Optimized configuration for finding XSS and SQLi.<br>ملف إعدادات جاهز لاكتشاف ثغرات المواقع تلقائياً." 
-            },
-            { 
-                name: "Sherlock OSINT | أداة شيرلوك", 
-                type: "Information Gathering", 
-                desc: "Hunt down social media accounts by username.<br>أداة للبحث عن حسابات الأشخاص في جميع المواقع عبر الاسم." 
-            },
-            { 
-                name: "Metasploit Payload Gen | مولد البايلود", 
-                type: "Exploitation", 
-                desc: "Generate undetectable payloads for Windows/Android.<br>توليد برمجيات خبيثة لاختبار اختراق ويندوز وأندرويد." 
-            }
-        ];
-
-        // ================= SYSTEM LOGIC =================
-
+        // ================= 1. SYSTEM CORE =================
         function initOS() {
             updateClock();
-            renderContent();
             startMatrix();
-            initTaskManager();
             document.querySelectorAll('.window').forEach(dragElement);
-            setTimeout(() => openWindow('win-news'), 800); // فتح الأخبار تلقائياً
+            notify("System Loaded Successfully", "success");
+            generatePass(); // Init password tool
+            loadNews(); // Load news
+            // Open Terminal by default
+            setTimeout(()=>openWindow('win-term'), 500);
         }
+        window.onload = initOS;
 
-        function renderContent() {
-            // تعبئة الأخبار
-            document.getElementById('news-content').innerHTML = intelDB.map(i => `
-                <div class="item-row">
-                    <div>
-                        <div class="item-title">${i.title}</div>
-                        <div class="item-desc">${i.desc}</div>
-                    </div>
-                    <div class="item-meta">${i.date}</div>
-                </div>
-            `).join('');
-
-            // تعبئة الأدوات
-            document.getElementById('tools-content').innerHTML = toolsDB.map(t => `
-                <div class="item-row" style="align-items:center">
-                    <div>
-                        <div class="item-title">${t.name}</div>
-                        <div class="item-desc">${t.desc}</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div style="font-size:10px; background:#222; display:inline-block; padding:2px 5px; margin-bottom:5px;">${t.type}</div><br>
-                        <button style="background:transparent; border:1px solid var(--main-neon); color:var(--main-neon); cursor:pointer; font-size:10px; padding:2px 8px;">DOWNLOAD</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Boot Sequence
-        const bootScreen = document.getElementById('boot-screen');
-        const bootMessages = ["Loading JKA5 System...", "Mounting Volumes...", "Loading Arabic Language Pack...", "Starting Interface..."];
-        let msgIndex = 0;
-        window.onload = function() {
-            function runBoot() {
-                if(msgIndex < bootMessages.length) {
-                    const p = document.createElement('div');
-                    p.className = 'boot-text';
-                    p.innerHTML = `> ${bootMessages[msgIndex]}`;
-                    bootScreen.appendChild(p);
-                    msgIndex++;
-                    setTimeout(runBoot, 300);
-                } else {
-                    setTimeout(() => {
-                        bootScreen.style.display = 'none';
-                        document.getElementById('desktop').style.display = 'block';
-                        initOS();
-                    }, 800);
-                }
-            }
-            runBoot();
-        };
-
-        // Clock
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             setTimeout(updateClock, 1000);
         }
 
-        // Theme
         function setTheme(color) {
             document.documentElement.style.setProperty('--main-neon', color);
             startMatrix(color);
+            notify("Theme Updated", "info");
         }
 
-        // Window Manager
-        let zIndexCounter = 100;
+        function notify(msg, type) {
+            const area = document.getElementById('notify-area');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            let icon = type === 'success' ? 'check-circle' : 'info-circle';
+            toast.innerHTML = `<i class="fas fa-${icon}"></i> <span>${msg}</span>`;
+            area.appendChild(toast);
+            
+            // Sound effect
+            playBeep();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.value = 800;
+            gain.gain.value = 0.05;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        // ================= 2. FILE SYSTEM SIMULATION =================
+        // نظام ملفات وهمي في الذاكرة
+        const fileSystem = {
+            "home": {
+                type: "dir",
+                content: {
+                    "user": {
+                        type: "dir",
+                        content: {
+                            "notes.txt": { type: "file", content: "Remember to patch the server." },
+                            "passwords.txt": { type: "file", content: "root:toor\nadmin:admin123" },
+                            "scripts": { type: "dir", content: {} }
+                        }
+                    }
+                }
+            }
+        };
+        
+        let currentPath = ["home", "user"]; // Start path
+
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+        const promptText = document.getElementById('prompt-text');
+
+        termInput.addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                const rawCmd = this.value.trim();
+                const args = rawCmd.split(" ");
+                const cmd = args[0].toLowerCase();
+                
+                printTerm(promptText.innerText + " " + rawCmd);
+
+                if(cmd === 'help') {
+                    printTerm("Commands: ls, cd, cat, mkdir, clear, date, whoami");
+                }
+                else if(cmd === 'clear') {
+                    termOutput.innerHTML = "";
+                }
+                else if(cmd === 'ls') {
+                    const dir = getCurrentDir();
+                    let output = "";
+                    for(let key in dir.content) {
+                        const isDir = dir.content[key].type === 'dir';
+                        const style = isDir ? "color:var(--neon-cyan); font-weight:bold" : "color:#ccc";
+                        output += `<span style="${style}">${key}${isDir?'/':''}</span>  `;
+                    }
+                    printTerm(output || "(empty)");
+                }
+                else if(cmd === 'mkdir') {
+                    if(args[1]) {
+                        const dir = getCurrentDir();
+                        dir.content[args[1]] = { type: "dir", content: {} };
+                        printTerm(`Directory '${args[1]}' created.`);
+                    } else {
+                        printTerm("Usage: mkdir <dirname>", "error");
+                    }
+                }
+                else if(cmd === 'cat') {
+                    if(args[1]) {
+                        const dir = getCurrentDir();
+                        if(dir.content[args[1]] && dir.content[args[1]].type === 'file') {
+                            printTerm(dir.content[args[1]].content);
+                        } else {
+                            printTerm("File not found.", "error");
+                        }
+                    } else {
+                        printTerm("Usage: cat <filename>", "error");
+                    }
+                }
+                else if(cmd === 'cd') {
+                    if(!args[1]) {
+                        // do nothing
+                    } else if(args[1] === "..") {
+                        if(currentPath.length > 1) currentPath.pop();
+                    } else {
+                        const dir = getCurrentDir();
+                        if(dir.content[args[1]] && dir.content[args[1]].type === 'dir') {
+                            currentPath.push(args[1]);
+                        } else {
+                            printTerm("Directory not found.", "error");
+                        }
+                    }
+                    updatePrompt();
+                }
+                else if(cmd === 'whoami') printTerm("root");
+                else if(cmd === 'date') printTerm(new Date().toString());
+                else printTerm("Command not found.", "error");
+
+                this.value = "";
+                scrollToBottom();
+            }
+        });
+
+        function getCurrentDir() {
+            let current = fileSystem;
+            for(let p of currentPath) {
+                current = current.content ? current.content[p] : current[p];
+            }
+            return current;
+        }
+
+        function updatePrompt() {
+            promptText.innerText = `root@jka5:/${currentPath.join("/")}#`;
+        }
+
+        function printTerm(text, type="normal") {
+            const div = document.createElement('div');
+            div.innerHTML = text;
+            if(type === 'error') div.style.color = 'var(--alert)';
+            termOutput.appendChild(div);
+        }
+
+        function scrollToBottom() {
+             const body = document.getElementById('terminal-body');
+             body.scrollTop = body.scrollHeight;
+        }
+
+        // ================= 3. REAL TOOLS =================
+        // Base64 Tool
+        function doBase64(action) {
+            const input = document.getElementById('crypto-input').value;
+            const output = document.getElementById('crypto-output');
+            try {
+                if(action === 'encode') output.value = btoa(input);
+                else output.value = atob(input);
+                notify(action === 'encode' ? "Text Encoded" : "Text Decoded", "success");
+            } catch(e) {
+                output.value = "Error: Invalid Input";
+                notify("Error processing text", "error");
+            }
+        }
+
+        // Password Generator
+        function generatePass() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+            let pass = "";
+            for(let i=0; i<16; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('pass-output').value = pass;
+            notify("New Password Generated", "success");
+        }
+
+        // News Loader
+        function loadNews() {
+            const news = [
+                {title: "CVE-2024-3094 Found", desc: "Malicious backdoor in xz utils."},
+                {title: "JKA5 Platform V6", desc: "New utility tools added for students."},
+                {title: "Python Exploit Released", desc: "PoC available for latest Windows bug."}
+            ];
+            document.getElementById('news-feed').innerHTML = news.map(n => `
+                <div style="margin-bottom:15px; border-bottom:1px dashed #444; padding-bottom:10px;">
+                    <div style="color:#fff; font-weight:bold; margin-bottom:5px;">${n.title}</div>
+                    <div style="font-size:12px; color:#999;">${n.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        // ================= 4. MINIGAME =================
+        const secretCode = Math.floor(Math.random() * 900) + 100; // 100-999
+        function checkCode() {
+            const guess = parseInt(document.getElementById('game-input').value);
+            const msg = document.getElementById('game-msg');
+            
+            if(guess === secretCode) {
+                msg.innerText = "ACCESS GRANTED!";
+                msg.style.color = "var(--main-neon)";
+                notify("Code Cracked!", "success");
+            } else if (guess < secretCode) {
+                msg.innerText = "TOO LOW (جرب رقم أكبر)";
+                msg.style.color = "var(--alert)";
+            } else {
+                msg.innerText = "TOO HIGH (جرب رقم أصغر)";
+                msg.style.color = "var(--alert)";
+            }
+        }
+
+        // ================= 5. WINDOW MANAGER =================
+        let zIndex = 100;
         function openWindow(id) {
             const win = document.getElementById(id);
             win.style.display = 'flex';
-            zIndexCounter++;
-            win.style.zIndex = zIndexCounter;
+            zIndex++; win.style.zIndex = zIndex;
         }
         function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
-
-        // Drag Function
+        
         function dragElement(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             const header = elmnt.querySelector('.win-header');
-            if (header) { header.onmousedown = dragMouseDown; }
+            if(header) header.onmousedown = dragMouseDown;
             function dragMouseDown(e) {
-                e = e || window.event; e.preventDefault();
-                pos3 = e.clientX; pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.onmousemove = elementDrag;
-                zIndexCounter++; elmnt.style.zIndex = zIndexCounter;
+                e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY;
+                document.onmouseup = closeDragElement; document.onmousemove = elementDrag;
+                zIndex++; elmnt.style.zIndex = zIndex;
             }
             function elementDrag(e) {
-                e = e || window.event; e.preventDefault();
-                pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+                e.preventDefault(); pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
                 pos3 = e.clientX; pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px"; elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
             }
             function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
         }
 
-        // Task Manager
-        function initTaskManager() {
-            const tasks = [{n:"system_kernel", c:1, m:400}, {n:"chrome_sandbox", c:12, m:950}, {n:"jka5_daemon", c:2, m:150}];
-            const taskList = document.getElementById('task-list');
-            setInterval(() => {
-                taskList.innerHTML = tasks.map(t => {
-                    t.c = Math.max(0, t.c + (Math.random()*4 - 2)).toFixed(1);
-                    return `<div class="task-row"><span style="flex:2">${t.n}</span><span style="flex:1; color:var(--neon-cyan)">${t.c}%</span><span style="flex:1; color:var(--main-neon)">${t.m}MB</span></div>`;
-                }).join('');
-            }, 1000);
-        }
-
-        // Terminal
-        const termInput = document.getElementById('term-input');
-        const termOutput = document.getElementById('term-output');
-        let isRunningExploit = false;
-        termInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter' && !isRunningExploit) {
-                const cmd = this.value.toLowerCase().trim();
-                termOutput.innerHTML += `<div><span class="prompt">root@jka5:~#</span> ${this.value}</div>`;
-                if(cmd === 'help') termOutput.innerHTML += `<div style="color:#888">Available: help, clear, run exploit, reboot</div>`;
-                else if(cmd === 'clear') termOutput.innerHTML = "";
-                else if(cmd === 'reboot') location.reload();
-                else if(cmd === 'run exploit') runExploitSim();
-                else termOutput.innerHTML += `<div style="color:#888">Command not found.</div>`;
-                this.value = "";
-                document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
-            }
-        });
-
-        function runExploitSim() {
-            isRunningExploit = true; termInput.disabled = true;
-            const steps = ["[+] Initializing...", "[*] Target: 192.168.1.5", "[+] Sending Payload...", "<span class='sim-success'>[+] ROOT ACCESS GRANTED</span>"];
-            let i = 0;
-            function next() {
-                if(i < steps.length) {
-                    termOutput.innerHTML += `<div>${steps[i]}</div>`;
-                    document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
-                    i++; setTimeout(next, 800);
-                } else { isRunningExploit = false; termInput.disabled = false; termInput.focus(); }
-            }
-            next();
-        }
-
-        // Matrix
-        function startMatrix(color = '#00ff41') {
+        // Matrix Background
+        function startMatrix(color='#00ff41') {
             const c = document.getElementById("matrixCanvas");
             const ctx = c.getContext("2d");
             c.width = window.innerWidth; c.height = window.innerHeight;
-            const chars = "01JKA5"; const drops = Array(Math.floor(c.width/14)).fill(1);
-            setInterval(() => {
-                ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,c.width,c.height);
-                ctx.fillStyle = color; ctx.font = "14px monospace";
-                drops.forEach((y, i) => {
-                    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*14, y*14);
-                    if(y*14 > c.height && Math.random() > 0.98) drops[i] = 0;
+            const chars = "01"; const drops = Array(Math.floor(c.width/20)).fill(1);
+            setInterval(()=>{
+                ctx.fillStyle="rgba(0,0,0,0.05)"; ctx.fillRect(0,0,c.width,c.height);
+                ctx.fillStyle=color; ctx.font="15px monospace";
+                drops.forEach((y,i)=>{
+                    ctx.fillText(chars[Math.floor(Math.random()*2)],i*20,y*20);
+                    if(y*20>c.height && Math.random()>0.975) drops[i]=0;
                     drops[i]++;
                 });
-            }, 35);
+            }, 50);
         }
     </script>
 </body>
