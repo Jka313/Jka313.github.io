@@ -1,245 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JKA5 | WARFARE OS v10.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <title>JKA5 | REAL INTEL v12.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg: #020202;
-            --glass: rgba(10, 15, 20, 0.85);
-            --neon-gold: #ffd700; /* لون جديد للتميز */
+            --bg: #050505;
+            --win-bg: rgba(15, 15, 15, 0.95);
+            --neon-green: #00ff41; 
             --neon-cyan: #00f3ff;
-            --neon-green: #00ff41;
-            --alert: #ff2a2a;
-            --font-tech: 'Rajdhani', sans-serif;
+            --alert: #ff003c;
             --font-code: 'Fira Code', monospace;
+            --font-ui: 'Cairo', sans-serif;
         }
 
         * { box-sizing: border-box; user-select: none; outline: none; }
-        body { margin: 0; overflow: hidden; background: #000; font-family: var(--font-tech); color: var(--neon-cyan); }
+        body { margin: 0; overflow: hidden; background: #000; font-family: var(--font-code); color: var(--neon-green); }
 
-        /* --- BOOT SEQUENCE --- */
-        #boot-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000; padding: 40px;
-            font-family: var(--font-code); color: var(--neon-green); font-size: 14px;
-            display: flex; flex-direction: column; justify-content: flex-end;
-        }
-        .boot-line { margin-bottom: 5px; opacity: 0; animation: fadeIn 0.1s forwards; }
-        @keyframes fadeIn { to {opacity: 1;} }
+        /* SCANLINES */
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); pointer-events: none; z-index: 9999; }
 
-        /* --- MAIN INTERFACE --- */
-        #interface { opacity: 0; transition: opacity 1s; display: none; height: 100vh; width: 100vw; position: relative; background: radial-gradient(circle at center, #090a0f 0%, #000 100%); }
-        
-        /* HUD Elements (Decorations) */
-        .hud-corner { position: absolute; width: 150px; height: 150px; border: 2px solid var(--neon-cyan); opacity: 0.5; pointer-events: none; }
-        .hud-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; border-radius: 20px 0 0 0; }
-        .hud-tr { top: 20px; right: 20px; border-left: none; border-bottom: none; border-radius: 0 20px 0 0; }
-        .hud-bl { bottom: 20px; left: 20px; border-right: none; border-top: none; border-radius: 0 0 0 20px; }
-        .hud-br { bottom: 20px; right: 20px; border-left: none; border-top: none; border-radius: 0 0 20px 0; }
-        
-        .hud-circle {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 400px; height: 400px; border: 1px dashed rgba(0, 243, 255, 0.2);
-            border-radius: 50%; pointer-events: none; animation: spin 20s linear infinite;
-        }
-        @keyframes spin { 100% {transform: translate(-50%, -50%) rotate(360deg);} }
+        /* DESKTOP */
+        #desktop { position: relative; width: 100vw; height: 100vh; background: radial-gradient(circle at center, #0a0f0a 0%, #000 100%); overflow: hidden; }
+        #matrixCanvas { position: absolute; top: 0; left: 0; opacity: 0.15; z-index: 0; pointer-events: none; }
 
-        /* Taskbar */
+        /* TASKBAR */
         .taskbar {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
-            background: rgba(0,0,0,0.8); border-top: 1px solid var(--neon-cyan);
-            display: flex; align-items: center; justify-content: center; gap: 30px; z-index: 200;
-            backdrop-filter: blur(10px);
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(10,10,10,0.95); border-top: 1px solid #333;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 200;
         }
-        .dock-icon {
-            font-size: 28px; color: #fff; cursor: pointer; transition: 0.3s;
-            padding: 10px; border-radius: 10px; position: relative;
-        }
-        .dock-icon:hover { background: rgba(0, 243, 255, 0.2); transform: translateY(-10px); color: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
-        .dock-icon::after { content: attr(data-label); position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 12px; background: #000; padding: 2px 5px; opacity: 0; transition: 0.3s; pointer-events: none; border: 1px solid var(--neon-cyan); }
-        .dock-icon:hover::after { opacity: 1; top: -40px; }
+        .sys-info { font-size: 12px; color: #888; }
 
-        /* Windows */
+        /* ICONS */
+        .desktop-icons { position: absolute; top: 40px; left: 40px; display: flex; flex-direction: column; gap: 30px; z-index: 10; }
+        .icon { width: 90px; text-align: center; cursor: pointer; opacity: 0.8; transition: 0.2s; }
+        .icon:hover { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px var(--neon-green); }
+        .icon i { font-size: 32px; margin-bottom: 8px; display: block; color: #e0e0e0; }
+        .icon span { background: rgba(0,0,0,0.7); padding: 3px 6px; border-radius: 4px; font-size: 11px; font-family: var(--font-ui); }
+
+        /* WINDOWS */
         .window {
-            position: absolute; width: 600px; height: 400px;
-            background: var(--glass); border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1); display: none;
-            flex-direction: column; z-index: 100; border-radius: 10px;
-            backdrop-filter: blur(15px); overflow: hidden;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: absolute; background: var(--win-bg); border: 1px solid var(--neon-green);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1); display: none; flex-direction: column;
+            z-index: 50; border-radius: 5px; overflow: hidden; backdrop-filter: blur(5px);
         }
-        @keyframes popIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
-        
         .win-header {
-            padding: 10px 15px; background: rgba(0, 243, 255, 0.1);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.3);
-            display: flex; justify-content: space-between; align-items: center; cursor: grab;
+            padding: 8px 15px; background: rgba(255,255,255,0.05); border-bottom: 1px solid #333;
+            cursor: grab; display: flex; justify-content: space-between; align-items: center;
         }
-        .win-title { font-weight: bold; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; font-size: 14px;}
-        .win-controls span { cursor: pointer; font-size: 16px; margin-left: 10px; transition: 0.2s; }
-        .win-controls span:hover { color: var(--alert); text-shadow: 0 0 10px var(--alert); }
-        .win-body { flex: 1; overflow: hidden; position: relative; }
+        .win-title { font-size: 12px; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .win-controls span { cursor: pointer; margin-left: 10px; font-size: 14px; color: #666; }
+        .win-controls span:hover { color: var(--alert); }
+        .win-body { flex: 1; overflow: hidden; position: relative; color: #ccc; font-size: 13px; }
 
-        /* 3D Globe Window */
-        #canvas-globe { width: 100%; height: 100%; background: #000; }
-
-        /* Terminal Window */
-        #term-content { padding: 15px; font-family: var(--font-code); font-size: 13px; color: #ccc; height: 100%; overflow-y: auto; }
-        .prompt { color: var(--neon-gold); margin-right: 5px; }
+        /* REAL NEWS STYLES */
+        #news-feed { padding: 15px; height: 100%; overflow-y: auto; }
+        .news-card {
+            display: flex; gap: 15px; margin-bottom: 15px; padding: 10px;
+            background: rgba(0, 255, 65, 0.05); border-left: 3px solid var(--neon-green);
+            transition: 0.3s; cursor: pointer;
+        }
+        .news-card:hover { background: rgba(0, 255, 65, 0.1); transform: translateX(5px); }
+        .news-img { width: 80px; height: 60px; object-fit: cover; border: 1px solid #333; opacity: 0.8; }
+        .news-info { flex: 1; }
+        .news-title { font-weight: bold; font-size: 13px; color: #fff; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+        .news-date { font-size: 10px; color: var(--neon-cyan); }
         
-        /* AI Overlay */
-        #ai-overlay {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 200px; height: 200px; pointer-events: none; opacity: 0; transition: 0.5s;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 500;
-        }
-        .ai-ring { width: 100%; height: 100%; border: 5px solid var(--neon-gold); border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite; }
+        /* LOADING SPINNER */
+        .loader { text-align: center; padding-top: 50px; color: var(--neon-green); }
 
-        /* Top Bar */
-        .top-bar {
-            position: absolute; top: 0; left: 0; width: 100%; height: 30px;
-            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
-            font-size: 12px; background: rgba(0,0,0,0.5); border-bottom: 1px solid #333;
-        }
+        /* Terminal */
+        #term-content { padding: 15px; height: 100%; overflow-y: auto; font-family: var(--font-code); }
+        .prompt { color: var(--neon-cyan); margin-right: 5px; }
 
-        /* Inputs */
-        .input-cmd { background: transparent; border: none; color: #fff; width: 100%; font-family: var(--font-code); }
-
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-green); }
     </style>
 </head>
 <body>
+    <div class="scanlines"></div>
 
-    <div id="boot-layer"></div>
+    <div id="desktop">
+        <canvas id="matrixCanvas"></canvas>
 
-    <div id="interface">
-        
-        <div class="hud-corner hud-tl"></div>
-        <div class="hud-corner hud-tr"></div>
-        <div class="hud-corner hud-bl"></div>
-        <div class="hud-corner hud-br"></div>
-        <div class="hud-circle"></div>
-
-        <div class="top-bar">
-            <div>JKA5 WARFARE OS <span style="color:var(--neon-gold)">v10.0</span></div>
-            <div id="clock">00:00:00</div>
+        <div class="desktop-icons">
+            <div class="icon" onclick="openWindow('news')">
+                <i class="fas fa-rss" style="color:var(--neon-cyan)"></i>
+                <span>Global Feed</span>
+            </div>
+            <div class="icon" onclick="openWindow('term')">
+                <i class="fas fa-terminal"></i>
+                <span>Terminal</span>
+            </div>
+            <div class="icon" onclick="location.reload()">
+                <i class="fas fa-sync-alt" style="color:#fff"></i>
+                <span>Reboot System</span>
+            </div>
         </div>
 
-        <div id="ai-overlay">
-            <div class="ai-ring"></div>
-            <div style="position:absolute; color:var(--neon-gold); font-weight:bold;">LISTENING</div>
-        </div>
-
-        <div class="taskbar">
-            <div class="dock-icon" data-label="Terminal" onclick="openWindow('term')"><i class="fas fa-terminal"></i></div>
-            <div class="dock-icon" data-label="Global Map" onclick="openWindow('globe')"><i class="fas fa-globe"></i></div>
-            <div class="dock-icon" data-label="Cyber Tools" onclick="openWindow('tools')"><i class="fas fa-tools"></i></div>
-            <div class="dock-icon" data-label="AI Assistant" onclick="activateAI()"><i class="fas fa-microphone"></i></div>
-            <div class="dock-icon" data-label="Settings" onclick="openWindow('settings')"><i class="fas fa-cogs"></i></div>
-        </div>
-
-        <div id="win-term" class="window" style="top: 100px; left: 100px;">
+        <div id="win-news" class="window" style="top: 60px; left: 200px; width: 700px; height: 500px;">
             <div class="win-header" onmousedown="dragWindow(this.parentElement, event)">
-                <div class="win-title"><i class="fas fa-terminal"></i> ROOT CONSOLE</div>
+                <div class="win-title"><i class="fas fa-satellite-dish"></i> THE HACKER NEWS (LIVE)</div>
+                <div class="win-controls">
+                    <span onclick="fetchRealNews()"><i class="fas fa-sync"></i></span>
+                    <span onclick="closeWindow('win-news')">✖</span>
+                </div>
+            </div>
+            <div class="win-body" id="news-feed">
+                </div>
+        </div>
+
+        <div id="win-term" class="window" style="top: 120px; left: 250px; width: 600px; height: 400px;">
+            <div class="win-header" onmousedown="dragWindow(this.parentElement, event)">
+                <div class="win-title"><i class="fas fa-terminal"></i> ROOT SHELL</div>
                 <div class="win-controls"><span onclick="closeWindow('win-term')">✖</span></div>
             </div>
             <div class="win-body" id="term-content" onclick="document.getElementById('cmd').focus()">
-                <div>JKA5 Systems Online. Type 'help'.</div>
+                <div>JKA5 Real-Time OS v12.0</div>
+                <div>Connected to Global News Network.</div>
+                <br>
                 <div id="term-log"></div>
-                <div style="display:flex; margin-top:5px;">
+                <div style="display:flex">
                     <span class="prompt">root@jka5:~#</span>
-                    <input type="text" id="cmd" class="input-cmd" autofocus autocomplete="off">
+                    <input type="text" id="cmd" style="background:transparent; border:none; color:#fff; width:100%; font-family:var(--font-code);" autofocus autocomplete="off">
                 </div>
             </div>
         </div>
 
-        <div id="win-globe" class="window" style="top: 150px; left: 400px; width: 500px; height: 500px;">
-            <div class="win-header" onmousedown="dragWindow(this.parentElement, event)">
-                <div class="win-title"><i class="fas fa-globe"></i> THREAT INTELLIGENCE MAP</div>
-                <div class="win-controls"><span onclick="closeWindow('win-globe')">✖</span></div>
-            </div>
-            <div class="win-body" style="background:#000;">
-                <canvas id="canvas-globe"></canvas>
-                <div style="position:absolute; bottom:10px; left:10px; font-size:10px; color:var(--neon-green)">
-                    LIVE ATTACKS: <span id="atk-count">0</span>
-                </div>
+        <div class="taskbar">
+            <div style="font-weight:bold;"><i class="fas fa-network-wired"></i> JKA5 ONLINE</div>
+            <div class="sys-info">
+                <span id="ip-addr">IP: DETECTING...</span> | 
+                <span id="clock">00:00:00</span>
             </div>
         </div>
-
-        <div id="win-tools" class="window" style="top: 200px; left: 300px; width: 400px; height: 300px;">
-            <div class="win-header" onmousedown="dragWindow(this.parentElement, event)">
-                <div class="win-title"><i class="fas fa-tools"></i> ARSENAL</div>
-                <div class="win-controls"><span onclick="closeWindow('win-tools')">✖</span></div>
-            </div>
-            <div class="win-body" style="padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <button onclick="log('Initiating Port Scan...', 'info')" style="background:rgba(0,243,255,0.1); border:1px solid var(--neon-cyan); color:#fff; padding:10px; cursor:pointer;">PORT SCANNER</button>
-                <button onclick="log('Brute Force Started...', 'warn')" style="background:rgba(255,42,42,0.1); border:1px solid var(--alert); color:#fff; padding:10px; cursor:pointer;">BRUTE FORCE</button>
-                <button onclick="log('SQL Injection Test...', 'info')" style="background:rgba(255,215,0,0.1); border:1px solid var(--neon-gold); color:#fff; padding:10px; cursor:pointer;">SQL INJECTOR</button>
-                <button onclick="window.open('https://jka5.xyz','_blank')" style="background:rgba(0,255,65,0.1); border:1px solid var(--neon-green); color:#fff; padding:10px; cursor:pointer;">JKA5 SITE</button>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        // ================= 1. BOOT SEQUENCE (NO PASSWORD) =================
-        const bootLayer = document.getElementById('boot-layer');
-        const bootLines = [
-            "BIOS DATE 11/21/25 13:25:00 VER 1.0.0",
-            "CPU: JKA5 QUANTUM CORE - 128 CORES DETECTED",
-            "RAM: 1024 GB DDR6 - OK",
-            "INITIALIZING NEURAL NETWORK...",
-            "LOADING KERNEL MODULES... DONE",
-            "MOUNTING ENCRYPTED VOLUMES... DONE",
-            "BYPASSING SECURITY PROTOCOLS...",
-            "ACCESS GRANTED. WELCOME COMMANDER."
-        ];
+        // ================= CORE INIT =================
+        window.onload = function() {
+            startMatrix();
+            updateClock();
+            getIP();
+            openWindow('news'); // فتح الأخبار تلقائياً
+            fetchRealNews(); // جلب الأخبار الحقيقية
+        };
 
-        let lineIndex = 0;
-        function runBoot() {
-            if(lineIndex < bootLines.length) {
-                const div = document.createElement('div');
-                div.className = 'boot-line';
-                div.innerText = "> " + bootLines[lineIndex];
-                bootLayer.appendChild(div);
-                lineIndex++;
-                setTimeout(runBoot, 200);
-            } else {
-                setTimeout(() => {
-                    bootLayer.style.opacity = 0;
-                    setTimeout(() => {
-                        bootLayer.style.display = 'none';
-                        document.getElementById('interface').style.display = 'block';
-                        setTimeout(() => document.getElementById('interface').style.opacity = 1, 100);
-                        startClock();
-                        initGlobe();
-                        openWindow('term'); // Auto open terminal
-                    }, 500);
-                }, 1000);
+        // ================= 1. REAL NEWS FETCHER (RSS to JSON) =================
+        // نستخدم خدمة rss2json لتحويل رابط الأخبار إلى بيانات يفهمها الموقع
+        const RSS_URL = "https://feeds.feedburner.com/TheHackersNews"; 
+        const API_ENDPOINT = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
+
+        async function fetchRealNews() {
+            const feed = document.getElementById('news-feed');
+            const termLog = document.getElementById('term-log');
+            
+            feed.innerHTML = `
+                <div class="loader">
+                    <i class="fas fa-circle-notch fa-spin" style="font-size:24px"></i><br><br>
+                    CONNECTING TO SATELLITE FEED...<br>
+                    DOWNLOADING INTEL...
+                </div>
+            `;
+
+            try {
+                const res = await fetch(API_ENDPOINT);
+                const data = await res.json();
+
+                if(data.status === 'ok') {
+                    feed.innerHTML = ''; // مسح التحميل
+                    
+                    data.items.forEach(item => {
+                        // استخراج صورة إن وجدت أو وضع صورة افتراضية
+                        let img = item.thumbnail || 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Icon-round-Question_mark.svg';
+                        
+                        const card = document.createElement('div');
+                        card.className = 'news-card';
+                        card.onclick = () => window.open(item.link, '_blank');
+                        
+                        card.innerHTML = `
+                            <img src="${img}" class="news-img" onerror="this.src='https://via.placeholder.com/80?text=JKA5'">
+                            <div class="news-info">
+                                <div class="news-title">${item.title}</div>
+                                <div class="news-date"><i class="fas fa-clock"></i> ${item.pubDate}</div>
+                            </div>
+                        `;
+                        feed.appendChild(card);
+                    });
+
+                    // كتابة في التيرمينال
+                    termLog.innerHTML += `<div style="color:#0f0">[+] Fetched ${data.items.length} new articles from The Hacker News.</div>`;
+                
+                } else {
+                    throw new Error("Feed Error");
+                }
+            } catch (e) {
+                feed.innerHTML = `<div style="color:red; text-align:center; padding:20px;">CONNECTION FAILED. RETRYING...</div>`;
+                termLog.innerHTML += `<div style="color:red">[-] API Error: ${e.message}</div>`;
             }
         }
-        window.onload = runBoot;
 
-        // ================= 2. SYSTEM LOGIC =================
-        function startClock() {
-            const update = () => {
-                const now = new Date();
-                document.getElementById('clock').innerText = now.toLocaleTimeString() + " | BAGHDAD, IQ";
-            };
-            setInterval(update, 1000); update();
+        // ================= 2. IP DETECTOR =================
+        async function getIP() {
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                document.getElementById('ip-addr').innerText = `IP: ${data.ip}`;
+                document.getElementById('ip-addr').style.color = "#00f3ff";
+            } catch(e) {
+                document.getElementById('ip-addr').innerText = "IP: HIDDEN (VPN)";
+            }
         }
 
-        // Window Management
+        // ================= UTILS & UI =================
+        function updateClock() {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+            setTimeout(updateClock, 1000);
+        }
+
+        // Terminal Logic
+        const cmd = document.getElementById('cmd');
+        const log = document.getElementById('term-log');
+        cmd.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') {
+                const val = cmd.value.toLowerCase();
+                log.innerHTML += `<div>root@jka5:~# ${cmd.value}</div>`;
+                if(val === 'refresh') fetchRealNews();
+                else if(val === 'clear') log.innerHTML = '';
+                else if(val === 'exit') window.close();
+                else log.innerHTML += `<div style="color:#666">Command not found. Try 'refresh'.</div>`;
+                cmd.value = '';
+            }
+        });
+
+        // Window Dragging & Manager
         let zIndex = 100;
         function openWindow(id) {
             const win = document.getElementById('win-' + id);
-            win.style.display = 'flex';
-            zIndex++; win.style.zIndex = zIndex;
+            win.style.display = 'flex'; zIndex++; win.style.zIndex = zIndex;
         }
         function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
         
@@ -258,108 +262,22 @@
             function closeDragElement() { document.onmouseup=null; document.onmousemove=null; }
         }
 
-        // ================= 3. TERMINAL =================
-        const cmdInput = document.getElementById('cmd');
-        const termLog = document.getElementById('term-log');
-        
-        cmdInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') {
-                const val = cmdInput.value;
-                log(`root@jka5:~# ${val}`);
-                processCmd(val.toLowerCase());
-                cmdInput.value = '';
-            }
-        });
-
-        function log(text, type='normal') {
-            const div = document.createElement('div');
-            div.innerText = text;
-            if(type === 'warn') div.style.color = 'var(--alert)';
-            if(type === 'info') div.style.color = 'var(--neon-cyan)';
-            termLog.appendChild(div);
-            document.getElementById('term-content').scrollTop = document.getElementById('term-content').scrollHeight;
+        // Matrix Background
+        function startMatrix() {
+            const c = document.getElementById("matrixCanvas");
+            const ctx = c.getContext("2d");
+            c.width = window.innerWidth; c.height = window.innerHeight;
+            const chars = "01JKA5"; const drops = Array(Math.floor(c.width/20)).fill(1);
+            setInterval(()=>{
+                ctx.fillStyle="rgba(0,0,0,0.05)"; ctx.fillRect(0,0,c.width,c.height);
+                ctx.fillStyle="#00ff41"; ctx.font="15px monospace";
+                drops.forEach((y,i)=>{
+                    ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*20,y*20);
+                    if(y*20>c.height && Math.random()>0.98) drops[i]=0;
+                    drops[i]++;
+                });
+            }, 50);
         }
-
-        function processCmd(cmd) {
-            if(cmd === 'help') log('Available: scan, map, clear, ai start, reboot');
-            else if(cmd === 'clear') termLog.innerHTML = '';
-            else if(cmd === 'scan') {
-                log('Scanning network...');
-                setTimeout(()=> log('Found: 192.168.1.55 (Vulnerable)', 'warn'), 1000);
-            }
-            else if(cmd === 'map') openWindow('globe');
-            else if(cmd === 'ai start') activateAI();
-            else if(cmd === 'reboot') location.reload();
-            else log('Unknown command.', 'warn');
-        }
-
-        // ================= 4. 3D GLOBE SIMULATION (CANVAS) =================
-        function initGlobe() {
-            const canvas = document.getElementById('canvas-globe');
-            const ctx = canvas.getContext('2d');
-            let width = canvas.width = 500;
-            let height = canvas.height = 450;
-            let rotation = 0;
-
-            function drawGlobe() {
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, width, height);
-                
-                // Draw Grid Globe
-                ctx.strokeStyle = 'rgba(0, 243, 255, 0.3)';
-                ctx.lineWidth = 1;
-                
-                const cx = width/2, cy = height/2, r = 150;
-                
-                // Longitude
-                for(let i=0; i<12; i++) {
-                    ctx.beginPath();
-                    ctx.ellipse(cx, cy, r * Math.cos(rotation + i * 0.5), r, 0, 0, Math.PI*2);
-                    ctx.stroke();
-                }
-                // Latitude
-                for(let i=1; i<5; i++) {
-                    ctx.beginPath();
-                    ctx.ellipse(cx, cy, r, r * Math.sin(i * 0.5), 0, 0, Math.PI*2);
-                    ctx.stroke();
-                }
-                
-                // Random Attacks
-                if(Math.random() > 0.9) {
-                    const ax = cx + (Math.random() * 200 - 100);
-                    const ay = cy + (Math.random() * 200 - 100);
-                    ctx.fillStyle = '#ff2a2a';
-                    ctx.beginPath(); ctx.arc(ax, ay, 3, 0, Math.PI*2); ctx.fill();
-                    
-                    // Draw line
-                    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ax, ay); 
-                    ctx.strokeStyle = 'rgba(255, 42, 42, 0.5)'; ctx.stroke();
-                    
-                    const count = document.getElementById('atk-count');
-                    count.innerText = parseInt(count.innerText) + 1;
-                }
-
-                rotation += 0.005;
-                requestAnimationFrame(drawGlobe);
-            }
-            drawGlobe();
-        }
-
-        // ================= 5. AI VOICE SIMULATION =================
-        function activateAI() {
-            const ai = document.getElementById('ai-overlay');
-            ai.style.opacity = 1;
-            log("AI Voice Interface Activated...", "info");
-            
-            // Simulate listening
-            setTimeout(() => {
-                log("AI: 'I am listening, Commander.'", "info");
-                setTimeout(() => {
-                    ai.style.opacity = 0;
-                }, 2000);
-            }, 1500);
-        }
-
     </script>
 </body>
 </html>
