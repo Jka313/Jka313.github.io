@@ -241,15 +241,32 @@ async function load(){
   rows=[...DEF];
   try{
     const r=await window.storage.get('sx2',true);
-    if(r&&r.value){const ex=JSON.parse(r.value);rows=[...DEF,...ex];}
-  }catch(e){}
+    if(r&&r.value){
+      const ex=JSON.parse(r.value);
+      // تجنب التكرار
+      const defIds=DEF.map(d=>d.id);
+      const clean=ex.filter(d=>d&&d.id&&!defIds.includes(d.id));
+      rows=[...DEF,...clean];
+    }
+  }catch(e){
+    console.log('load err',e);
+  }
   draw();
 }
 
 async function save(){
   const dids=DEF.map(d=>d.id);
   const ex=rows.filter(d=>!dids.includes(d.id));
-  try{await window.storage.set('sx2',JSON.stringify(ex),true);}catch(e){}
+  let tries=3;
+  while(tries-->0){
+    try{
+      const res=await window.storage.set('sx2',JSON.stringify(ex),true);
+      if(res) return true;
+    }catch(e){
+      await new Promise(r=>setTimeout(r,300));
+    }
+  }
+  return false;
 }
 
 function draw(){
@@ -282,13 +299,17 @@ async function add(){
   if(!am||am<1000){document.getElementById('eA').style.display='block';ok=false;}
   if(!ok)return;
   rows.push({id:'u'+Date.now(),name:nm,role:'زائر / دائن جديد',em:EMJ[Math.floor(Math.random()*EMJ.length)],amt:am,dt:new Date().toISOString().split('T')[0],sts:'غير مدفوع',st:'r',note:nt||'لا توجد ملاحظات.',isNew:true});
-  await save();
+  const saved=await save();
   draw();
   document.getElementById('iName').value='';
   document.getElementById('iAmt').value='';
   document.getElementById('iNote').value='';
   document.getElementById('grid').scrollIntoView({behavior:'smooth',block:'start'});
-  toast('✅ تم تسجيل دين "'+nm+'" وحُفظ! 🎉');
+  if(saved){
+    toast('✅ تم تسجيل دين "'+nm+'" وحُفظ بشكل دائم! 🎉');
+  } else {
+    toast('⚠️ تم التسجيل بس ما انحفظ — جرب مرة ثانية');
+  }
 }
 
 function show(d){
