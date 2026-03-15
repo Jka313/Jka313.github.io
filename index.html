@@ -3,55 +3,313 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>سيد محمد</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Cairo',sans-serif;min-height:100vh;background:linear-gradient(135deg,#0a2a4a 0%,#1a5080 40%,#2e8bc0 80%,#5bb8f5 100%);overflow-x:hidden;}
-.container{max-width:920px;margin:0 auto;padding:30px 18px 60px;position:relative;z-index:1;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;min-height:100vh;background:linear-gradient(135deg,#0a2a4a,#1a5080,#2e8bc0,#5bb8f5);color:#f0f6ff}
+.wrap{max-width:900px;margin:0 auto;padding:28px 16px 60px}
 
-/* HEADER */
-.header{text-align:center;margin-bottom:30px;}
-.hero-wrap{position:relative;display:inline-block;margin-bottom:10px;}
-.spin-ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(#f5c842,#5bb8f5,#c9922a,#1a6fa8,#f5c842);animation:spin 3s linear infinite;z-index:0;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.hero-svg{position:relative;z-index:1;border-radius:50%;border:4px solid #f0f6ff;display:block;}
-.badge{display:inline-block;background:linear-gradient(90deg,#c9922a,#f5c842,#c9922a);color:#1a2a00;font-size:11px;font-weight:900;padding:3px 16px;border-radius:20px;margin-bottom:6px;letter-spacing:1px;}
-.header h1{font-family:‘Tajawal’,sans-serif;font-size:2.2rem;font-weight:900;color:#f0f6ff;}
-.header p{color:rgba(200,230,255,0.8);font-size:0.95rem;margin-top:4px;}
+/* header */
+.hdr{text-align:center;margin-bottom:26px}
+.ring-wrap{position:relative;display:inline-block;margin-bottom:8px}
+.ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(#f5c842,#5bb8f5,#c9922a,#1a6fa8,#f5c842);animation:spin 3s linear infinite;z-index:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ava{width:110px;height:110px;border-radius:50%;border:4px solid #f0f6ff;position:relative;z-index:1;display:block;background:#1a5080}
+.bdg{display:inline-block;background:linear-gradient(90deg,#c9922a,#f5c842,#c9922a);color:#1a2a00;font-size:11px;font-weight:900;padding:3px 16px;border-radius:20px;margin-bottom:6px}
+h1{font-family:‘Tajawal’,sans-serif;font-size:2rem;font-weight:900}
+.sub{color:rgba(200,230,255,.8);font-size:.9rem;margin-top:3px}
 
-/* اسم السيد وأصحابه تحت العنوان */
-.friends-box{background:linear-gradient(135deg,rgba(245,200,66,0.13),rgba(91,184,245,0.10));border:2px solid rgba(245,200,66,0.4);border-radius:18px;padding:18px 22px;margin-bottom:28px;position:relative;overflow:hidden;}
-.friends-box::before{content:‘✨’;position:absolute;top:10px;right:14px;font-size:1.2rem;opacity:0.5;}
-.friends-box::after{content:‘✨’;position:absolute;bottom:10px;left:14px;font-size:1.2rem;opacity:0.5;}
-.friends-title{font-family:‘Tajawal’,sans-serif;font-size:1rem;font-weight:800;color:#f5c842;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.friends-list{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-.friend-chip{background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.18);border-radius:30px;padding:7px 16px;display:flex;align-items:center;gap:8px;transition:transform 0.2s,border-color 0.2s;cursor:default;}
-.friend-chip:hover{transform:translateY(-2px);border-color:rgba(245,200,66,0.5);}
-.friend-chip .fc-emoji{font-size:1.1rem;}
-.friend-chip .fc-name{font-family:‘Tajawal’,sans-serif;font-size:0.85rem;font-weight:700;color:#f0f6ff;}
-.friend-chip .fc-role{font-size:0.7rem;color:rgba(180,210,255,0.6);}
+/* friends box */
+.fbox{background:linear-gradient(135deg,rgba(245,200,66,.13),rgba(91,184,245,.1));border:2px solid rgba(245,200,66,.4);border-radius:18px;padding:18px 20px;margin-bottom:24px;position:relative}
+.fbox-title{font-family:‘Tajawal’,sans-serif;font-size:1rem;font-weight:800;color:#f5c842;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:30px;padding:6px 14px;display:flex;align-items:center;gap:7px}
+.chip-name{font-family:‘Tajawal’,sans-serif;font-size:.82rem;font-weight:700}
+.chip-role{font-size:.68rem;color:rgba(180,210,255,.6)}
 
-/* TOTAL */
-.total-card{background:rgba(245,200,66,0.12);border:1.5px solid rgba(245,200,66,0.35);border-radius:18px;padding:18px 28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);}
-.total-label{color:rgba(200,230,255,0.75);font-size:0.9rem;}
-.total-amount{font-family:‘Tajawal’,sans-serif;font-size:1.7rem;font-weight:900;color:#f5c842;}
+/* total */
+.tot{background:rgba(245,200,66,.12);border:1.5px solid rgba(245,200,66,.35);border-radius:16px;padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.tot-lbl{color:rgba(200,230,255,.75);font-size:.85rem}
+.tot-amt{font-family:‘Tajawal’,sans-serif;font-size:1.6rem;font-weight:900;color:#f5c842}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:28px;}
-.card{background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.2);border-radius:18px;padding:20px 16px 14px;cursor:pointer;backdrop-filter:blur(10px);transition:transform 0.2s,border-color 0.2s;position:relative;overflow:hidden;}
-.card::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5bb8f5,#f5c842,#5bb8f5);}
-.card:hover{transform:translateY(-4px);border-color:rgba(245,200,66,0.5);}
-.card.new-card{border-color:rgba(92,245,160,0.5);}
-.card.new-card::before{background:linear-gradient(90deg,#5cf5a0,#5bb8f5,#5cf5a0);}
-.card.unknown{opacity:0.75;border-style:dashed;}
-.c-emoji{font-size:1.6rem;margin-bottom:8px;}
-.c-name{font-family:‘Tajawal’,sans-serif;font-size:1rem;font-weight:800;color:#f0f6ff;margin-bottom:3px;}
-.c-role{font-size:0.76rem;color:rgba(180,210,255,0.65);margin-bottom:10px;}
-.c-amount{font-size:0.88rem;font-weight:700;color:#f5c842;background:rgba(245,200,66,0.1);border-radius:8px;padding:3px 10px;display:inline-block;}
-.c-hint{font-size:0.7rem;color:rgba(180,210,255,0.4);margin-top:7px;text-align:left;}
-.dot{width:8px;height:8px;border-radius:50%;background:#ff5c5c;display:inline-block;margin-left:5px;animation:pulse 1.5s infinite;}
-.dot.partial{background:#f5c842;}
-.dot.new{background:#5cf5a0;}
-@keyframes pulse{0%,100%{transform:scale(1);}50
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:24px}
+.card{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.2);border-radius:16px;padding:18px 14px 12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.card::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5bb8f5,#f5c842,#5bb8f5)}
+.card:hover{transform:translateY(-4px);border-color:rgba(245,200,66,.5)}
+.card.nc{border-color:rgba(92,245,160,.5)}
+.card.nc::before{background:linear-gradient(90deg,#5cf5a0,#5bb8f5,#5cf5a0)}
+.card.unk{opacity:.75;border-style:dashed}
+.cem{font-size:1.5rem;margin-bottom:7px}
+.cnm{font-family:‘Tajawal’,sans-serif;font-size:.95rem;font-weight:800;margin-bottom:2px}
+.crl{font-size:.73rem;color:rgba(180,210,255,.65);margin-bottom:9px}
+.camt{font-size:.85rem;font-weight:700;color:#f5c842;background:rgba(245,200,66,.1);border-radius:7px;padding:3px 9px;display:inline-block}
+.chnt{font-size:.68rem;color:rgba(180,210,255,.4);margin-top:6px;text-align:left}
+.dot{width:8px;height:8px;border-radius:50%;background:#ff5c5c;display:inline-block;margin-right:4px;animation:pu 1.5s infinite}
+.dot.p{background:#f5c842}
+.dot.n{background:#5cf5a0}
+@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.6}}
+
+/* sections */
+.sec{background:rgba(255,255,255,.09);border-radius:18px;padding:20px;margin-bottom:22px}
+.sec.bl{border:1.5px solid rgba(91,184,245,.3)}
+.sec.gr{border:1.5px solid rgba(92,245,160,.35)}
+.sec.gd{border:1.5px solid rgba(245,200,66,.25)}
+.sec-t{font-family:‘Tajawal’,sans-serif;font-size:1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.sec-t.bl{color:#5bb8f5}.sec-t.gr{color:#5cf5a0}.sec-t.gd{color:#f5c842}
+
+/* traits */
+.traits{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:11px}
+.tr{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:13px 12px}
+.tr-i{font-size:1.6rem;margin-bottom:6px}
+.tr-n{font-family:‘Tajawal’,sans-serif;font-size:.88rem;font-weight:800;margin-bottom:2px}
+.tr-d{font-size:.72rem;color:rgba(180,210,255,.6);line-height:1.5}
+
+/* form */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.fw{grid-column:1/-1}
+.flbl{font-size:.76rem;color:rgba(180,210,255,.75);font-weight:600}
+.fin{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);border-radius:9px;padding:9px 12px;color:#f0f6ff;font-family:‘Cairo’,sans-serif;font-size:.86rem;outline:none;width:100%;transition:border-color .2s}
+.fin::placeholder{color:rgba(180,210,255,.3)}
+.fin:focus{border-color:rgba(92,245,160,.6)}
+textarea.fin{resize:vertical;min-height:70px}
+.err{color:#ff7b7b;font-size:.72rem;margin-top:2px;display:none}
+.sbtn{width:100%;padding:12px;background:linear-gradient(90deg,#1a7a4a,#5cf5a0,#1a7a4a);border:none;border-radius:11px;color:#0a2a1a;font-family:‘Tajawal’,sans-serif;font-size:.95rem;font-weight:900;cursor:pointer;transition:transform .2s}
+.sbtn:hover{transform:translateY(-2px)}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(5,20,40,.8);backdrop-filter:blur(5px);z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.on{opacity:1;pointer-events:all}
+.mdl{background:linear-gradient(145deg,#0d2e50,#1a4a70);border:1.5px solid rgba(245,200,66,.3);border-radius:20px;padding:28px 24px;max-width:400px;width:100%;transform:scale(.9) translateY(20px);transition:transform .3s cubic-bezier(.34,1.56,.64,1);position:relative;direction:rtl}
+.ov.on .mdl{transform:scale(1) translateY(0)}
+.mcl{position:absolute;top:11px;left:11px;background:rgba(255,255,255,.1);border:none;color:#f0f6ff;width:28px;height:28px;border-radius:50%;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mav{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,rgba(91,184,245,.3),rgba(245,200,66,.2));border:2px solid rgba(245,200,66,.35);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 11px}
+.mnm{font-family:‘Tajawal’,sans-serif;font-size:1.25rem;font-weight:900;text-align:center;margin-bottom:3px}
+.mrl{text-align:center;color:rgba(180,210,255,.6);font-size:.78rem;margin-bottom:16px}
+.mrows{display:flex;flex-direction:column;gap:9px}
+.mrow{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.05);border-radius:10px;padding:8px 13px;border:1px solid rgba(255,255,255,.07)}
+.mlbl{color:rgba(180,210,255,.6);font-size:.78rem}
+.mv{font-weight:700;font-size:.88rem}
+.mv.g{color:#f5c842;font-family:‘Tajawal’,sans-serif;font-size:.98rem}
+.mv.r{color:#ff5c5c}
+.mnt{margin-top:12px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.18);border-radius:10px;padding:10px 12px;font-size:.8rem;color:rgba(210,235,255,.82);line-height:1.6}
+.mnt strong{color:#f5c842}
+
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(90deg,#1a7a4a,#2db87a);color:#fff;font-family:‘Cairo’,sans-serif;font-weight:700;font-size:.88rem;padding:10px 24px;border-radius:40px;z-index:200;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.story{color:rgba(200,230,255,.8);font-size:.84rem;line-height:1.85}
+.hl{color:#f5c842;font-weight:700}
+.foot{text-align:center;color:rgba(180,210,255,.3);font-size:.7rem;margin-top:28px}
+
+@media(max-width:480px){
+h1{font-size:1.6rem}
+.grid{grid-template-columns:1fr 1fr;gap:10px}
+.fgrid{grid-template-columns:1fr}
+.traits{grid-template-columns:1fr 1fr}
+.mdl{padding:20px 14px}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="ring-wrap">
+    <div class="ring"></div>
+    <svg class="ava" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="55" cy="55" r="55" fill="#a8d8f0"/>
+      <rect x="20" y="75" width="70" height="40" rx="10" fill="#5b8fc9"/>
+      <ellipse cx="55" cy="82" rx="13" ry="12" fill="#eef2f7"/>
+      <path d="M42 72L50 82L55 78L60 82L68 72" fill="#5b8fc9" stroke="#4a7ab5" stroke-width="1"/>
+      <rect x="49" y="61" width="12" height="14" rx="5" fill="#c8935a"/>
+      <ellipse cx="34" cy="48" rx="4.5" ry="5.5" fill="#c8935a"/>
+      <ellipse cx="76" cy="48" rx="4.5" ry="5.5" fill="#c8935a"/>
+      <ellipse cx="55" cy="44" rx="21" ry="24" fill="#c8935a"/>
+      <path d="M34 38Q34 20 55 20Q76 20 76 38" fill="#1a0f05"/>
+      <ellipse cx="55" cy="48" rx="18" ry="20" fill="#d4a06a"/>
+      <path d="M41 37Q47 34 53 37" stroke="#1a0f05" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M57 37Q63 34 69 37" stroke="#1a0f05" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="47" cy="43" rx="4.5" ry="4" fill="white"/>
+      <ellipse cx="63" cy="43" rx="4.5" ry="4" fill="white"/>
+      <circle cx="48" cy="44" r="3" fill="#1a0f05"/>
+      <circle cx="64" cy="44" r="3" fill="#1a0f05"/>
+      <circle cx="49" cy="43" r="1" fill="white"/>
+      <circle cx="65" cy="43" r="1" fill="white"/>
+      <path d="M55 47Q52 52 50 54Q55 56 60 54Q58 52 55 47" fill="#b8804a"/>
+      <path d="M48 57Q51 55 55 56Q59 55 62 57" fill="#1a0f05"/>
+      <path d="M50 61Q55 65 60 61" stroke="#8b4513" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="55" cy="63" rx="4" ry="2" fill="#1a0f05" opacity="0.4"/>
+    </svg>
+  </div>
+  <div><div class="bdg">⚡ السيد المقاوم ⚡</div></div>
+  <h1>سيد محمد</h1>
+  <p class="sub">متتبع الديون الرسمي | العراق 🇮🇶</p>
+</div>
+
+<!-- أصحاب السيد -->
+
+<div class="fbox">
+  <div class="fbox-title">👥 أصحاب السيد المقربين</div>
+  <div class="chips">
+    <div class="chip"><span>💻</span><div><div class="chip-name">مصطفى VM</div><div class="chip-role">الصاحب التقني</div></div></div>
+    <div class="chip"><span>🌸</span><div><div class="chip-name">حنين</div><div class="chip-role">زميلة العمل</div></div></div>
+    <div class="chip"><span>🤝</span><div><div class="chip-name">محمد القزم</div><div class="chip-role">شريك الحضرة</div></div></div>
+    <div class="chip"><span>🎮</span><div><div class="chip-name">أبو جاسم</div><div class="chip-role">صاحب الجيمنغ</div></div></div>
+    <div class="chip"><span>☕</span><div><div class="chip-name">علي الكرك</div><div class="chip-role">صاحب الكرك</div></div></div>
+    <div class="chip"><span>🚗</span><div><div class="chip-name">حيدر</div><div class="chip-role">سواق الشلة</div></div></div>
+  </div>
+</div>
+
+<!-- المجموع -->
+
+<div class="tot">
+  <div><div class="tot-lbl">إجمالي الديون</div><div class="tot-amt" id="totAmt">—</div></div>
+  <div style="font-size:2rem">💸</div>
+</div>
+
+<!-- البطاقات -->
+
+<div class="grid" id="grid"></div>
+
+<!-- مميزات السيد -->
+
+<div class="sec bl">
+  <div class="sec-t bl">👑 من هو السيد محمد؟</div>
+  <div class="traits">
+    <div class="tr"><div class="tr-i">🤝</div><div class="tr-n">صاحبه صاحب</div><div class="tr-d">ما يخذل أصحابه — بس لو تسأله فلوس يختفي 😅</div></div>
+    <div class="tr"><div class="tr-i">😂</div><div class="tr-n">روح الجمع</div><div class="tr-d">وين ما راح يضحك الكل — موود العشرة كله بيه</div></div>
+    <div class="tr"><div class="tr-i">🕊️</div><div class="tr-n">نسب شريف</div><div class="tr-d">سيد أصيل من نسل النبي ﷺ</div></div>
+    <div class="tr"><div class="tr-i">💪</div><div class="tr-n">مقاوم بطبعه</div><div class="tr-d">يقاوم الضغوط والمصاري وسداد الديون 😂</div></div>
+    <div class="tr"><div class="tr-i">🎯</div><div class="tr-n">واثق بنفسه</div><div class="tr-d">دايماً عنده خطة — حتى لو "بكره إن شاء الله"</div></div>
+    <div class="tr"><div class="tr-i">❤️</div><div class="tr-n">طيب القلب</div><div class="tr-d">يعطي اللي عنده — المشكلة إنه ما عنده شي 😄</div></div>
+  </div>
+</div>
+
+<!-- فورم -->
+
+<div class="sec gr">
+  <div class="sec-t gr">➕ تدين السيد محمد؟ سجّل نفسك!</div>
+  <div class="fgrid">
+    <div class="fg"><label class="flbl">👤 اسمك</label><input class="fin" id="iName" placeholder="مثال: أبو علي"/><span class="err" id="eN">⚠️ اكتب اسمك</span></div>
+    <div class="fg"><label class="flbl">💰 المبلغ (د.ع)</label><input class="fin" id="iAmt" type="number" placeholder="مثال: 50000"/><span class="err" id="eA">⚠️ أدخل مبلغ صحيح</span></div>
+    <div class="fg fw"><label class="flbl">📝 ملاحظات (اختياري)</label><textarea class="fin" id="iNote" placeholder="مثال: استلف بالسوق وقال بكره يرجع 😅"></textarea></div>
+  </div>
+  <button class="sbtn" onclick="add()">📨 إرسال — سجّل الدين</button>
+</div>
+
+<!-- القصة -->
+
+<div class="sec gd">
+  <div class="sec-t gd">📖 قصة السيد محمد</div>
+  <div class="story"><span class="hl">السيد محمد</span> شخص من عشيرة كريمة نسبها للنبي ﷺ، مقاوم وطيب. لكن الأيام شالت منه! يتداين من الموظفين ويستلف من آخرين. وبين <span class="hl">مصطفى</span> و<span class="hl">حنين</span> و<span class="hl">محمد القزم</span> — الدوامة تكبر 😅<br/><br/><em>نحن نعاني... لكن يبقى السيد محمد سيد! 👑</em></div>
+</div>
+
+<div class="foot">صُمِّم بمحبة لتوثيق ديون السيد محمد 🌙</div>
+</div>
+
+<!-- مودال -->
+
+<div class="ov" id="ov" onclick="if(event.target===this)hide()">
+  <div class="mdl">
+    <button class="mcl" onclick="hide()">✕</button>
+    <div class="mav" id="mAv"></div>
+    <div class="mnm" id="mNm"></div>
+    <div class="mrl" id="mRl"></div>
+    <div class="mrows" id="mRws"></div>
+    <div class="mnt" id="mNt" style="display:none"></div>
+  </div>
+</div>
+<div class="toast" id="tst"></div>
+
+<script>
+const DEF=[
+  {id:'d1',name:'مصطفى VM',role:'موظف / صديق قديم',em:'💻',amt:150000,dt:'2024-03-10',sts:'غير مدفوع',st:'r',note:'استلف منه محمد وقال راجعلك بالراتب... الراتب جاء ومحمد ما جاء 😂'},
+  {id:'d2',name:'حنين',role:'موظفة / زميلة العمل',em:'🌸',amt:75000,dt:'2024-05-22',sts:'غير مدفوع',st:'r',note:"قالها 'أسبوع وأرجعلج' — صار أشهر والأسبوع ما رجع 🙂"},
+  {id:'d3',name:'محمد القزم',role:'صاحب / شريك بالحضرة',em:'🤝',amt:200000,dt:'2024-01-05',sts:'مدفوع جزئياً',st:'p',note:'رجعله 50,000 وقال الباقي قريب... قريب يعني متى؟ 😅'},
+  {id:'d4',name:'مجهول #1',role:'شخص مجهول',em:'👤',amt:120000,dt:'2024-07-15',sts:'غير مدفوع',st:'r',note:'حتى اسمه ما نعرفه 😶',unk:true},
+  {id:'d5',name:'مجهول #2',role:'شخص مجهول',em:'👥',amt:100000,dt:'2024-09-01',sts:'غير مدفوع',st:'r',note:'جهة معروفة بالحي لكن ما أحد يصرح 🤐',unk:true},
+  {id:'d6',name:'مجهول #3',role:'شخص مجهول',em:'🕵️',amt:105000,dt:'2024-11-10',sts:'غير مدفوع',st:'r',note:'الدين مؤكد بس صاحبه يفضل بالظل 🌚',unk:true},
+];
+const EMJ=['🧑','👨','👩','🧔','👦','🤵','👮','🙋'];
+let rows=[];
+
+async function load(){
+  rows=[...DEF];
+  try{
+    const r=await window.storage.get('sx2',true);
+    if(r&&r.value){const ex=JSON.parse(r.value);rows=[...DEF,...ex];}
+  }catch(e){}
+  draw();
+}
+
+async function save(){
+  const dids=DEF.map(d=>d.id);
+  const ex=rows.filter(d=>!dids.includes(d.id));
+  try{await window.storage.set('sx2',JSON.stringify(ex),true);}catch(e){}
+}
+
+function draw(){
+  const g=document.getElementById('grid');
+  g.innerHTML='';
+  rows.forEach((d,i)=>{
+    const c=document.createElement('div');
+    c.className='card'+(d.unk?' unk':'')+(d.isNew?' nc':'');
+    c.style.animationDelay=i*.05+'s';
+    c.innerHTML=`<div class="cem">${d.em}</div>
+<div class="cnm"><span class="dot ${d.st==='p'?'p':d.isNew?'n':''}"></span>${d.name}</div>
+<div class="crl">${d.role}</div>
+<div class="camt">💰 ${Number(d.amt).toLocaleString('ar-IQ')} د.ع</div>
+<div class="chnt">اضغط للتفاصيل ←</div>`;
+    c.onclick=()=>show(d);
+    g.appendChild(c);
+  });
+  const tot=rows.reduce((s,d)=>s+Number(d.amt),0);
+  document.getElementById('totAmt').textContent=tot.toLocaleString('ar-IQ')+' د.ع';
+}
+
+async function add(){
+  const nm=document.getElementById('iName').value.trim();
+  const am=parseInt(document.getElementById('iAmt').value);
+  const nt=document.getElementById('iNote').value.trim();
+  document.getElementById('eN').style.display='none';
+  document.getElementById('eA').style.display='none';
+  let ok=true;
+  if(!nm){document.getElementById('eN').style.display='block';ok=false;}
+  if(!am||am<1000){document.getElementById('eA').style.display='block';ok=false;}
+  if(!ok)return;
+  rows.push({id:'u'+Date.now(),name:nm,role:'زائر / دائن جديد',em:EMJ[Math.floor(Math.random()*EMJ.length)],amt:am,dt:new Date().toISOString().split('T')[0],sts:'غير مدفوع',st:'r',note:nt||'لا توجد ملاحظات.',isNew:true});
+  await save();
+  draw();
+  document.getElementById('iName').value='';
+  document.getElementById('iAmt').value='';
+  document.getElementById('iNote').value='';
+  document.getElementById('grid').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('✅ تم تسجيل دين "'+nm+'" وحُفظ! 🎉');
+}
+
+function show(d){
+  document.getElementById('mAv').textContent=d.em;
+  document.getElementById('mNm').textContent=d.name;
+  document.getElementById('mRl').textContent=d.role;
+  const dt=new Date(d.dt).toLocaleDateString('ar-IQ',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('mRws').innerHTML=`
+<div class="mrow"><span class="mlbl">💰 المبلغ</span><span class="mv g">${Number(d.amt).toLocaleString('ar-IQ')} د.ع</span></div>
+<div class="mrow"><span class="mlbl">📅 التاريخ</span><span class="mv">${dt}</span></div>
+<div class="mrow"><span class="mlbl">🔴 الحالة</span><span class="mv${d.st==='r'?' r':''}">${d.sts}</span></div>`;
+  const n=document.getElementById('mNt');
+  if(d.note){n.style.display='block';n.innerHTML='<strong>📝 ملاحظة:</strong> '+d.note;}
+  else n.style.display='none';
+  document.getElementById('ov').classList.add('on');
+}
+function hide(){document.getElementById('ov').classList.remove('on');}
+function toast(m){const t=document.getElementById('tst');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3500);}
+
+load();
+</script>
+
+</body>
+</html>
