@@ -237,62 +237,27 @@ const DEF=[
 const EMJ=['🧑','👨','👩','🧔','👦','🤵','👮','🙋'];
 let rows=[];
 
-const JKEY='$2a$10$nhoGQJ3TyVDT4xZ1m7hwC.c64Q/5fsCT8cAzW4Q2wDYwsPuhAmB0K';
-let BIN_ID=null;
-
-async function getBinId(){
-  // حاول تجيب الـ BIN ID المحفوظ
-  try{
-    const r=await window.storage.get('binid',true);
-    if(r&&r.value) return r.value;
-  }catch(e){}
-  // اسوي bin جديد
-  try{
-    const res=await fetch('https://api.jsonbin.io/v3/b',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','X-Master-Key':JKEY,'X-Bin-Name':'sayyid-debts'},
-      body:JSON.stringify([])
-    });
-    const data=await res.json();
-    const id=data.metadata?.id;
-    if(id){
-      try{await window.storage.set('binid',id,true);}catch(e){}
-      return id;
-    }
-  }catch(e){console.log('bin create err',e);}
-  return null;
-}
+const STORE_KEY='sayyid_debts_v3';
 
 async function load(){
   rows=[...DEF];
-  BIN_ID=await getBinId();
-  if(BIN_ID){
-    try{
-      const res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{
-        headers:{'X-Master-Key':JKEY}
-      });
-      const data=await res.json();
-      const ex=data.record||[];
-      const defIds=DEF.map(d=>d.id);
-      const clean=ex.filter(d=>d&&d.id&&!defIds.includes(d.id));
-      rows=[...DEF,...clean];
-    }catch(e){console.log('load err',e);}
-  }
+  try{
+    const r=await window.storage.get(STORE_KEY,true);
+    if(r&&r.value){
+      const ex=JSON.parse(r.value);
+      const defIds=new Set(DEF.map(d=>d.id));
+      rows=[...DEF,...ex.filter(d=>d&&d.id&&!defIds.has(d.id))];
+    }
+  }catch(e){}
   draw();
 }
 
 async function save(){
-  if(!BIN_ID) BIN_ID=await getBinId();
-  if(!BIN_ID) return false;
-  const dids=DEF.map(d=>d.id);
-  const ex=rows.filter(d=>!dids.includes(d.id));
+  const dids=new Set(DEF.map(d=>d.id));
+  const ex=rows.filter(d=>!dids.has(d.id));
   try{
-    const res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':JKEY},
-      body:JSON.stringify(ex)
-    });
-    return res.ok;
+    await window.storage.set(STORE_KEY,JSON.stringify(ex),true);
+    return true;
   }catch(e){return false;}
 }
 
